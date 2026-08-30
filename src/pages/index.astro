@@ -1,0 +1,659 @@
+---
+// src/pages/index.astro
+import Layout from '../layouts/Layout.astro';
+import ImageCarousel from '../components/ImageCarousel.astro';
+import StaffCard from '../components/StaffCard.astro';
+---
+
+<Layout title="Alcamunero | Periódico Digital - Colegio Aplicación">
+
+  <!-- SECCIÓN: SUMARIO (Portada) -->
+  <section id="sumario" class="newspaper-section max-w-4xl mx-auto px-4 py-8">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 flex justify-between items-center text-xs text-gray-600 font-sans">
+      <span>Portada / Edición Especial Aniversario</span>
+      <span>Redacción Alcamunero • Junio, 2026</span>
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h1 class="text-2xl md:text-4xl font-serif font-bold text-gray-900 leading-tight">
+        LA UNIDAD EDUCATIVA FUNDACIÓN COLEGIO APLICACIÓN CELEBRÓ CON ORGULLO SU 56 ANIVERSARIO
+      </h1>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Especial Aniversario</span>
+        <span>•</span>
+        <span>Del 15 al 19 de junio</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-1"
+          slides={[
+            { src: "public/img1.webp", alt: "Fotografía institucional - 56 Aniversario Colegio Aplicación" },
+         ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          Autoridades, docentes y estudiantes reunidos en la conmemoración de los 56 años de trayectoria educativa ininterrumpida de la institución en San Cristóbal. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        Con motivo de sus 56 años de crecimiento, excelencia y servicio ininterrumpido, la Unidad Educativa Fundación Colegio Aplicación celebró su Semana Aniversaria con una programación especial diseñada para rendir homenaje a su historia, reconocer el esfuerzo de su equipo de trabajo y reafirmar su compromiso con la comunidad.
+      </p>
+
+      <p>
+        Del 15 al 19 de junio, las distintas instalaciones de la institución sirvieron de escenario para una serie de eventos de carácter educativo, cultural y deportivo. La agenda central estuvo integrada por la Misa de Acción de Gracias, la Gala Cultural, la Jornada Deportiva y el tradicional Acto de Coronación de la Mini-Princesa, Princesa y Reina.
+      </p>
+
+      <p>
+        Entre los momentos más destacados de la celebración figuró el 1.ᵉʳ Encuentro de Talent Show, evento a cargo del profesor del área de inglés, Víctor Dieguez, concebida como un espacio para proyectar la creatividad y destrezas de los estudiantes. Asimismo, la exposición Hitos e Historia Fotográfica ofreció un emotivo recorrido visual por más de cinco décadas de evolución institucional.
+      </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        En un ambiente impregnado de emoción, solemnidad y orgullo, la conmemoración de este 56 aniversario sirvió de marco para que toda la comunidad educativa rindiera tributo al legado de la institución y a las numerosas generaciones de alumnos que han transitado por sus aulas desde su fundación.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: RELIGIÓN -->
+  <section id="religion" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Religión y Comunidad
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        INICIA SEMANA ANIVERSARIA COLEGIO APLICACIÓN CON MISA DE ACCIÓN DE GRACIAS
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Carlos Arellano</span>
+        <span>•</span>
+        <span>15 de junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-2"
+          slides={[
+            { src: "public/religion.webp", alt: "Fotografía: Misa de Acción de Gracias - Padre Geico" },
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          El Padre Geico durante la ceremonia litúrgica central realizada en la cancha techada de la institución como apertura espiritual de los festejos aniversarios. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        La Unidad Educativa Fundación Colegio Aplicación dio inicio formal a su esperada Semana Aniversaria este 15 de junio con la celebración de la Misa de Acción de Gracias. La jornada marcó el punto de partida espiritual para una serie de actividades culturales, deportivas y recreativas con las que la institución conmemoró su trayectoria educativa.
+      </p>
+
+      <p>
+        La ceremonia litúrgica se realizó en la cancha techada del Colegio y estuvo a cargo del Padre Geico, quien ofreció un emotivo mensaje enfocado en la gratitud, la unidad y la importancia de fortalecer los valores institucionales. Durante este acto, el sacerdote encomendó a la comunidad escolar y bendijo el trabajo diario de educadores y trabajadores.
+      </p>
+
+      <p>
+        El encuentro destacó por la participación unánime de todos los niveles educativos desde Educación Inicial hasta Educación Media General junto al personal docente, administrativo y obrero. En un ambiente de comunión y respeto, los presentes elevaron sus oraciones por el presente y el futuro de la institución.
+      </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        Con esta eucaristía de apertura, la comunidad del Colegio Aplicación renovó su compromiso con la formación integral, dando paso a una semana de festejos diseñados para rendir tributo a su historia y legado.
+      </p>
+    </div>
+  </section>
+
+<!-- SECCIÓN: CULTURA -->
+  <section id="cultura" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Cultura y Tradición
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        1ER ENCUENTRO DE TALENT SHOW Y GALA CULTURAL
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Niria Colina</span>
+        <span>•</span>
+        <span>Junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-4"
+          slides={[
+            { src: "public/cultura1.webp", alt: "Fotografía: 1.er Talent Show Estudiantil y Gala Cultural" },
+            { src: "public/cultura2.webp", alt: "Otra toma del mismo evento (foto pendiente)" },
+            { src: "public/cultura3.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+            { src: "public/cultura4.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+            { src: "public/cultura5.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+            { src: "public/cultura6.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+          
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          Estudiantes demostrando su talento artístico y muestras folclóricas durante las actividades centrales de la Semana Aniversaria. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        Como parte de la programación alusiva a la Semana Aniversaria, el Colegio Aplicación llevó a cabo la primera edición de su Talent Show, un espacio concebido para proyectar la creatividad y la expresión artística de su comunidad estudiantil. Este encuentro sirvió de escenario para que los alumnos de los diversos niveles demostraran sus habilidades en disciplinas como el canto, la danza y la ejecución instrumental.
+      </p>
+
+      <p>
+        Asimismo, el Colegio Aplicación vistió sus instalaciones de gala para llevar a cabo su tradicional Gala Cultural, una de las actividades centrales y más esperadas de su agenda conmemorativa. El evento reunió a estudiantes de los distintos niveles académicos, quienes tomaron el escenario para rendir homenaje a la identidad cultural y a la riqueza folclórica a través de muestras de bailes, canciones y un variado recorrido coreográfico por ritmos tradicionales y contemporáneos.
+      </p>
+
+      <p>
+        Cada presentación reflejó días de ensayo, dedicación estudiantil y el acompañamiento constante del cuerpo docente en la preparación de los números artísticos. De acuerdo con el comité organizador de Cultura, la jornada tuvo como propósito fortalecer el desarrollo integral, la confianza y la libre expresión fuera del aula de clases.
+      </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        "La formación integral trasciende las aulas de clase; el arte y la cultura son pilares esenciales para formar ciudadanos sensibles, creativos y conscientes de sus raíces. Ver a nuestros estudiantes expresarse con tanta entrega en estos 56 años de historia nos llena de profundo orgullo."
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: CORONACIÓN DE SOBERANAS -->
+  <section id="coronacion" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Certamen y Soberanas
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        GALA DE ELECCIÓN Y CORONACIÓN DE LA MINI PRINCESA, PRINCESA Y REINA ANIVERSARIA
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Niria Colina</span>
+        <span>•</span>
+        <span>Junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-5"
+          slides={[
+            { src: "public/reinas0.webp", alt: "Fotografía: Coronación de Soberanas Aniversarias" },
+            { src: "public/reinas1.webp", alt: "Fotografía: Coronación de Soberanas Aniversarias" },
+            { src: "public/reinas2.webp", alt: "Otra toma del mismo evento (foto pendiente)" },
+            { src: "public/profe.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+            { src: "public/profe2.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+            { src: "public/equipo2.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          Momento de la coronación oficial de las soberanas con la conducción del subdirector Douglas Medina y la profesora Jenifer Velandia. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        En un ambiente impregnado de alegría, elegancia y entusiasmo institucional, el Colegio Aplicación llevó a cabo la gala de elección de la Mini Princesa, Princesa y Reina de su Semana Aniversaria, en el marco de las festividades por sus 56 años de trayectoria educativa. La conducción del evento estuvo a cargo del subdirector Douglas Medina, quien junto a la profesora Jenifer Velandia imprimió dinamismo y fluidez a la jornada.
+      </p>
+
+      <p>
+        El certamen reunió a las candidatas representantes de los distintos niveles formativos, quienes deslumbraron a los asistentes luciendo vistosos trajes temáticos y de gala. Durante sus apariciones en pasarela, las participantes demostraron desenvoltura, simpatía, carisma y un notable talento sobre el escenario.
+      </p>
+
+      <p>
+        La rigurosa evaluación estuvo bajo la responsabilidad de un jurado calificador de alto nivel, integrado por el director de la institución, Dr. Lidimo Chacón; la coordinadora académica, Dra. Adnedy Díaz; y la coordinadora de Educación Inicial y Primaria, Esp. Niria Colina, junto a miembros del personal docente e invitados especiales.
+      </p>
+
+      <div class="bg-gray-50 border border-gray-200 p-4 my-4 font-sans text-xs space-y-2">
+        <p class="font-bold text-gray-900 uppercase tracking-wide">Cuadro de Soberanas Aniversarias:</p>
+        <ul class="list-disc list-inside space-y-1 text-gray-700">
+          <li><strong>Mini Princesa:</strong> Jimena Salome Gomez</li>
+          <li><strong>Princesa:</strong> Hanna Fiorella Rey</li>
+          <li><strong>Reina del Aniversario:</strong> Joheli Guerrero</li>
+        </ul>
+      </div>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        "Este certamen representa una fiesta de integración familiar donde resaltamos el talento, la seguridad y la gracia de nuestras estudiantes, fortaleciendo el sentido de pertenencia por nuestra casa de estudios en esta fecha tan significativa".
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: DEPORTES -->
+  <section id="deportes" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Deportes e Integración
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        PASIÓN, DEPORTE Y FAMILIA PRESENTES EN LA SEMANA ANIVERSARIA
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Carlos Arellano</span>
+        <span>•</span>
+        <span>18 de junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-6"
+          slides={[
+            { src: "public/deporte1.webp", alt: "Fotografía: Jornada Deportiva y Homenaje al Día del Padre" },
+            { src: "public/deporte2.webp", alt: "Otra toma del mismo evento (foto pendiente)" },
+            { src: "public/deporte3.webp", alt: "Vista adicional de la actividad (foto pendiente)" },
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          Padres, representantes y estudiantes compartiendo en los torneos relámpago de futbolito, baloncesto y voleibol durante la jornada especial. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        En el marco de la celebración de sus 56 años de trayectoria educativa, el Colegio Aplicación llevó a cabo su Jornada Deportiva Especial por el Día del Padre, con la participacion de la UNELLEZ. La actividad, realizada el pasado jueves 18 de junio, fue concebida para promover la integración familiar, el trabajo en equipo y el sano esparcimiento dentro de la comunidad escolar.
+      </p>
+
+      <p>
+        La mañana de convivencia reunió a padres, representantes, docentes y estudiantes en una variada programación recreativa. Durante el encuentro se desarrollaron torneos relámpago de disciplinas como futbolito y voleibol, además de divertidos juegos tradicionales y dinámicas de integración grupal.
+      </p>
+
+      <p>
+        Esta jornada buscó rendir un merecido homenaje a la figura paterna, integrándola de forma activa en la vida escolar y reafirmando los valores de fraternidad y salud física que defendemos desde hace más de cinco décadas, señaló un vocero del comité organizador.
+      </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        Con una masiva asistencia y un ambiente festivo, el evento se consolidó como un valioso espacio para estrechar los lazos entre el hogar y la institución, formando parte de la agenda pautada durante la Semana Aniversaria.
+      </p>
+    </div>
+  </section>
+
+ <!-- SECCIÓN: REPORTAJE -->
+  <section id="reportaje" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Reportaje Especial
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        56 AÑOS AL SERVICIO DE LA FORMACION DE GENERACIONES "EDUCANDO PARA SERVIR"
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Niria Colina</span>
+        <span>•</span>
+        <span>Junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-7"
+          slides={[
+            { src: "public/colegio.webp", alt: "Fotografía: Instalaciones y Trayectoria Institucional" },
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          Fachada e instalaciones principales de la Unidad Educativa Fundación Colegio Aplicación en San Cristóbal. Credit: Archivo Fotográfico Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed mb-8">
+      
+   <p>
+    Inaugurado el 5 de noviembre de 1970 por iniciativa del entonces obispo de la Diócesis del Táchira, monseñor Dr. Alejandro Fernández Feo, el plantel surgió originalmente con el propósito de servir como centro de prácticas pedagógicas. Con el pasar de los años, y consolidado en su actual ubicación dentro del municipio Cárdenas, se transformó en un referente formativo tanto para la comunidad de Palo Gordo como para el resto de la región andina.
+  </p>
+
+  <p>
+    A lo largo de estas más de cinco décadas de trayectoria, la institución privada ha afianzado su rol como un pilar fundamental de la enseñanza local, forjando generaciones de profesionales, líderes y ciudadanos ejemplares que hoy sobresalen dentro y fuera del país.
+  </p>
+
+  <p>
+    Este legado se sostiene gracias al esfuerzo conjunto de directivos, profesores, obreros y administrativos, quienes han sabido adaptar los métodos de enseñanza a las exigencias contemporáneas sin descuidar la calidez humana ni los valores cristianos e institucionales que distinguen su identidad.
+  </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        "Nuestro compromiso sigue intacto: sembrar conocimiento, cultivar valores y cosechar un futuro brillante para cada estudiante que cruza nuestras puertas."
+      </p>
+    </div>
+
+    <!-- NUEVO: Contenedor para el Short de YouTube en vista vertical -->
+    <div class="mt-8 pt-6 border-t border-gray-300 flex flex-col items-center">
+      <h3 class="text-sm font-sans font-bold uppercase tracking-wider text-gray-800 mb-3 text-center">
+        Momento Institucional en Video
+      </h3>
+      
+      <!-- Contenedor adaptado para YouTube Shorts (relación 9:16) -->
+      <div class="w-full max-w-xs sm:max-w-sm aspect-[9/16] bg-black rounded-lg overflow-hidden shadow-md">
+        <iframe 
+          class="w-full h-full border-0" 
+          src="https://www.youtube.com/embed/mwMJf8NRXfc" 
+          title="YouTube video player" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+      
+      <p class="text-xs text-gray-600 font-sans mt-2 text-center">
+        Testimonios y recorrido por las instalaciones del Colegio Aplicación.
+      </p>
+    </div>
+  </section>
+
+    <!-- SECCIÓN: EDITORIAL -->
+  <section id="editorial" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Editorial
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        MÁS DE CINCO DÉCADAS DE LEGADO Y FORMACIÓN INTEGRAL
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por la Dirección</span>
+        <span>•</span>
+        <span>Junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-8"
+          slides={[
+            { src: "public/equipo.webp", alt: "Fotografía: Cuerpo Directivo y Docente" },
+            ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          El equipo directivo liderado por el Dr. Lidimo Chacón junto al cuerpo docente que impulsa la excelencia educativa en la institución. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        Al cierre de la Semana Aniversaria, la Dirección del Colegio Aplicación ofreció un mensaje reflexivo sobre el significado de los 56 años de trayectoria institucional. El Dr. Lidimo Chacón compartió su visión acerca del compromiso colectivo que sostiene a la institución y del rol que cumple cada miembro de la comunidad educativa en la construcción de ese legado.
+      </p>
+
+      <p>
+        Para el director de la institución, la identidad institucional no se limita a la conmemoración de una fecha, sino que se forja a diario en el trabajo conjunto de docentes, representantes y estudiantes. A continuación, sus palabras:
+      </p>
+
+      <blockquote class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-4 space-y-4">
+        <p>
+          "El verdadero sentido de pertenencia no se decreta ni se impone; 
+          se construye día a día cuando cada miembro de la comunidad educativa 
+          comprende que su rol es fundamental para el futuro de los estudiantes.
+        </p>
+        
+        <p>
+          Cuando los representantes se involucran activamente y los docentes 
+          entregan su vocación con mística, la institución deja de ser un simple 
+          edificio para convertirse en un segundo hogar y en un proyecto de vida compartido.
+        </p>
+        
+        <p>
+          Esa sinergia es la que sostiene la calidad y los valores de la 
+          Unidad Educativa Colegio Aplicación.
+        </p>
+        
+        <p>
+          Cuando todos reman en la misma dirección, con respeto, transparencia y 
+          amor por lo que se hace, se genera un arraigo tan fuerte que el colegio 
+          se transforma en un referente de identidad para la comunidad de Palo Gordo. 
+          ¡Esa es la verdadera clave de una gestión institucional con sinergia!"
+        </p>
+        
+        <footer class="block not-italic font-sans font-bold uppercase tracking-wider text-xs text-gray-700 pt-2">
+          — Dr. Lidimo Chacón, Director
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+<!-- SECCIÓN: OPINIÓN -->
+  <section id="opinion" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Tribuna de Opinión
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        VOCES Y TESTIMONIOS DE LA FAMILIA APLICATENSE
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Carlos Arellano</span>
+        <span>•</span>
+        <span>Junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-9"
+          slides={[
+            { src: "public/opinion.webp", alt: "Fotografía: Comunidad y Representantes" },
+            { src: "public/opinion2.webp", alt: "Fotografía: Comunidad y Representantes" },
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          Padres, representantes y miembros del comité organizador compartiendo impresiones durante las festividades. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        Al cierre de la Semana Aniversaria, padres, representantes y miembros del comité organizador compartieron sus impresiones sobre lo vivido durante los festejos por los 56 años de la institución.
+      </p>
+
+      <p>
+        Por su parte, miembros de la institución enfatizaron que el potencial de los alumnos es el reflejo directo de la formación en valores e integridad promovida incansablemente durante más de cinco décadas.
+      </p>
+
+      <p>
+        En opinion de los padres y representantes afirman que este tipo de actividad representa: 
+      </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        "Un espacio maravilloso para celebrar en comunidad y compartir el legado histórico del plantel", expresaron con emoción representantes de la familia aplicatense.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN: ACTUALIDAD -->
+  <section id="actualidad" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Actualidad Institucional
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        ¡CUMPLEAÑOS FELIZ Y HOMENAJE A LA TRAYECTORIA INSTITUCIONAL!
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Niria Colna</span>
+        <span>•</span>
+        <span>15 de junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-3"
+          slides={[
+            { src: "public/cumple.webp", alt: "Fotografía: Canto de Cumpleaños y Pasteles Aniversarios" }, 
+            { src: "public/img2.webp", alt: "Otra toma del mismo evento (foto pendiente)" },
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          El personal docente, administrativo y obrero congregado alrededor del pastel para celebrar el 56.º aniversario junto a educadores de larga trayectoria.
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        En un ambiente marcado por el júbilo y la fraternidad, el personal docente, administrativo y obrero del Colegio Aplicación se congregó este 15 de junio para cantarle el tradicional Cumpleaños Feliz a la institución con motivo de su 56.º aniversario. La jornada tuvo como punto central un emotivo encuentro donde toda la familia Aplicatense se reunió alrededor de un pastel para rendir tributo a más de cinco décadas de historia y compromiso pedagógico.
+      </p>
+
+      <p>
+        El homenaje contó con la presencia especial de docentes de larga trayectoria, cuyas vivencias y años de servicio representan la memoria viva del plantel. En compañía del resto del equipo institucional, estos educadores veteranos encabezaron el momento del canto aniversario.
+      </p>
+
+      <p>
+        Tras la bendición y el tradicional soplo de velas, los asistentes disfrutaron de un espacio de convivencia en el que se compartió el pastel aniversario. La actividad sirvió para afianzar los lazos de mística y compañerismo entre el personal, renovando el compromiso colectivo de seguir garantizando una educación integral de excelencia para las futuras generaciones.
+      </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        "Un recorrido emotivo que demuestra cómo el esfuerzo y la unión del equipo humano cimentan el éxito ininterrumpido de nuestra casa de estudios."
+      </p>
+    </div>
+  </section>
+
+    <!-- SECCIÓN: TECNOLOGÍA (Rediseñada exclusivamente sobre la creación del nuevo periódico digital) -->
+  <section id="tecnologia" class="newspaper-section hidden max-w-4xl mx-auto px-4 py-8 border-t border-gray-300">
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      Innovación y Desarrollo Digital
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h2 class="text-xl md:text-3xl font-serif font-bold text-gray-900 leading-tight">
+        ALCAMUNERO: EL NACIMIENTO DEL NUEVO PERIÓDICO DIGITAL DE LA INSTITUCIÓN
+      </h2>
+      
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>Por Jesús M. Soto C.</span>
+        <span>•</span>
+        <span>Junio, 2026</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel
+          sectionId="seccion-11"
+          slides={[
+            { src: "public/tec.webp", alt: "Interfaz del nuevo periódico digital Alcamunero" },
+          ]}
+        />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          Visualización de la plataforma web moderna desarrollada para la cobertura interactiva del 56 aniversario y efemérides escolares. Credit: Prensa Alcamunero
+        </p>
+      </div>
+    </div>
+
+    <div class="prose prose-slate max-w-none font-serif text-gray-900 space-y-4 text-base md:text-lg leading-relaxed">
+      <p>
+        Como parte de la evolución tecnológica y la modernización de los canales informativos del Colegio Aplicación, se ha dado inicio oficial al desarrollo y lanzamiento del nuevo formato digital del periodico <strong>Alcamunero</strong>, un nuevo periódico digital diseñado para documentar y difundir la historia, eventos y logros de la comunidad educativa bajo un formato web moderno y accesible.
+      </p>
+
+      <p>
+        La creación de este proyecto digital surge con el propósito de trascender el formato tradicional, aprovechando las ventajas de las tecnologías web modernas para estructurar secciones dinámicas, galerías fotográficas y una navegación optimizada que permite a padres, alumnos y docentes mantenerse conectados con el acontecer institucional en tiempo real.
+      </p>
+
+      <p>
+        Implementando estándares avanzados de diseño responsivo y arquitectura web, el portal digital categoriza de manera interactiva hitos clave como: la Semana Aniversaria, la misa de acción de gracias, las galas culturales, los encuentros deportivos y los certámenes de coronación, convirtiéndose en el archivo histórico digital oficial de la institución.
+      </p>
+
+      <p class="border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3">
+        "La transformacion digital de Alcamunero representa un hito fundamental en nuestra trayectoria como institución, fusionando el periodismo escolar con la innovación tecnológica para inmortalizar el legado de nuestros 56 años de historia."
+      </p>
+    </div>
+  </section>
+
+  <section id="directorio" class="newspaper-section hidden w-full bg-blue-900 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-serif font-bold text-white mb-2">Directorio</h2>
+        <p class="text-xs text-blue-200 max-w-xl mx-auto">
+          Conoce al equipo de estudiantes, profesores y editores que hacen posible cada edición de Alcamunero.
+        </p>
+      </div>
+
+      <div class="space-y-14">
+
+        <!-- Categoría: Dirección -->
+        <div>
+          <div class="flex items-center gap-3 mb-8 max-w-4xl mx-auto">
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+            <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 whitespace-nowrap">Dirección</h3>
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+          </div>
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-12 sm:gap-x-10">
+            <StaffCard 
+              name="Dr. Lidimo Chacón" 
+              role="Director" 
+              image="public/images/staff/lidimo.webp"
+              bio="Encarna la visión institucional y lidera la gestión educativa con compromiso y excelencia."
+              articlesCount={1}
+            />
+          </div>
+        </div>
+
+        <!-- Categoría: Coordinación -->
+        <div>
+          <div class="flex items-center gap-3 mb-8 max-w-4xl mx-auto">
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+            <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 whitespace-nowrap">Coordinación</h3>
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+          </div>
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-12 sm:gap-x-10">
+            <StaffCard 
+              name="Esp. Niria Colina" 
+              role="Coordinadora General de Redacción"
+              image="public/images/staff/niria.webp" 
+              bio="Comprometida con llevar información veraz y oportuna a toda la comunidad."
+              articlesCount={3}
+            />
+          </div>
+        </div>
+
+        <!-- Categoría: Desarrollo y Programación -->
+        <div>
+          <div class="flex items-center gap-3 mb-8 max-w-4xl mx-auto">
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+            <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 whitespace-nowrap">Desarrollo y Programación</h3>
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+          </div>
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-12 sm:gap-x-10">
+            <StaffCard 
+              name="Jesús M. Soto C." 
+              role="Desarrollo Web" 
+              image="public/images/staff/jesus.webp"
+              bio="Diseño y programación del periódico digital"
+            />
+          </div>
+        </div>
+
+        <!-- Categoría: colaboradores -->
+        <div>
+          <div class="flex items-center gap-3 mb-8 max-w-4xl mx-auto">
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+            <h3 class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 whitespace-nowrap">Colaboradores</h3>
+            <span class="h-px flex-1 bg-blue-700/60"></span>
+          </div>
+          <div class="flex flex-wrap justify-center gap-x-8 gap-y-12 sm:gap-x-10">
+            <StaffCard 
+              name="Prof. Carlos Arellano" 
+              role="Colaborador" 
+              image="public/images/staff/carlos.webp"
+              bio="Encargado de la cobertura de diferentes fuentes."
+              articlesCount={3}
+            />
+            <!-- Puedes agregar más componentes StaffCard aquí -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+</Layout>

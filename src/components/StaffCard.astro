@@ -1,0 +1,92 @@
+---
+// src/components/StaffCard.astro
+// Estilo "página de desarrolladores": avatar en burbuja flotante,
+// nombre y cargo debajo. Sin caja/tarjeta contenedora.
+
+interface Props {
+  name: string;
+  role: string;
+  image?: string;
+  articlesCount?: number;
+  bio?: string;
+}
+
+const {
+  name,
+  role,
+  image = "/default-avatar.png",
+  articlesCount,
+  bio,
+} = Astro.props;
+
+// Pequeña variación aleatoria en duración y retraso de la animación
+// para que las burbujas no floten todas sincronizadas (efecto orgánico).
+const duration = (3.6 + Math.random() * 1.6).toFixed(2); // 3.6s - 5.2s
+const delay = (Math.random() * 2).toFixed(2); // 0s - 2s
+const fallbackAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0284c7&color=fff&bold=true`;
+---
+
+<div
+  class="staff-bubble group flex flex-col items-center text-center w-32 sm:w-36"
+  style={`animation-duration: ${duration}s; animation-delay: -${delay}s;`}
+>
+  <!-- Avatar / Burbuja flotante -->
+  <div class="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full p-[3px] bg-gradient-to-br from-cyan-400 via-blue-500 to-blue-900 shadow-lg shadow-blue-950/50 group-hover:shadow-cyan-400/40 transition-shadow duration-300">
+    <div class="w-full h-full rounded-full overflow-hidden border-2 border-blue-950 bg-blue-950">
+      <img
+        src={image}
+        alt={`Foto de ${name}`}
+        class="w-full h-full object-cover"
+        loading="lazy"
+        onerror={`this.onerror=null;this.src='${fallbackAvatar}';`}
+      />
+    </div>
+  </div>
+
+  <!-- Nombre -->
+  <h3 class="mt-3 text-white font-semibold text-sm sm:text-base tracking-tight leading-tight">
+    {name}
+  </h3>
+
+  <!-- Cargo -->
+  <span class="mt-1 inline-block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-cyan-300 bg-blue-950/80 px-2.5 py-0.5 rounded-full border border-blue-800">
+    {role}
+  </span>
+
+  <!-- Bio: solo visible al pasar el mouse, para no romper el estilo minimalista -->
+  {bio && (
+    <p class="mt-2 max-w-[11rem] text-[10.5px] text-blue-200/80 leading-snug opacity-0 max-h-0 overflow-hidden group-hover:opacity-100 group-hover:max-h-24 transition-all duration-300">
+      {bio}
+    </p>
+  )}
+
+  {articlesCount !== undefined && (
+    <span class="mt-1 text-[10px] text-cyan-400/80 font-medium">
+      {articlesCount} {articlesCount === 1 ? 'artículo' : 'artículos'}
+    </span>
+  )}
+</div>
+
+<style>
+  .staff-bubble {
+    animation-name: float-bubble;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes float-bubble {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* Respeta a quienes prefieren menos movimiento */
+  @media (prefers-reduced-motion: reduce) {
+    .staff-bubble {
+      animation: none;
+    }
+  }
+</style>

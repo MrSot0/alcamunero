@@ -1,0 +1,96 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-blue-950 text-white border-t border-blue-900">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-blue-900/60">
+      
+      <!-- Columna 1: Identidad -->
+      <div class="space-y-3 md:col-span-1">
+        <h2 class="text-2xl font-serif font-extrabold tracking-tight text-white">
+          ALCAMUNERO
+        </h2>
+        <p class="text-xs text-blue-200 leading-relaxed">
+          Periódico digital de San Cristóbal y la región tachirense. Compromiso con la verdad, la cultura y el desarrollo informativo.
+        </p>
+        <span class="inline-block text-[10px] font-bold bg-blue-900 text-cyan-300 px-2.5 py-1 rounded border border-blue-800">
+          Edición Digital 2026
+        </span>
+      </div>
+
+      <!-- Columna 2: Secciones Principales -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Secciones</h3>
+        <ul class="space-y-2 text-xs text-blue-200">
+          <li><a href="#actualidad" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Actualidad</a></li>
+          <li><a href="#editorial" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Editorial</a></li>
+          <li><a href="#opinion" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Opinión</a></li>
+          <li><a href="#cultura" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Cultura</a></li>
+          <li><a href="#religion" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Religión</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 3: Más Secciones -->
+      <div class="space-y-3 pt-6 md:pt-0">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Especiales</h3>
+        <ul class="space-y-2 text-xs text-blue-200">
+          <li><a href="#deportes" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Deportes</a></li>
+          <li><a href="#coronacion" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Coronación</a></li>
+          <li><a href="#reportaje" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Reportaje Especial</a></li>
+          <li><a href="#tecnologia" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Tecnología</a></li>
+          <!-- Nuevo enlace rápido al Directorio -->
+          <li><a href="#directorio" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer font-medium text-cyan-300">Directorio y Créditos</a></li>
+        </ul>
+      </div>
+
+      <!-- Columna 4: Contacto y Ubicación -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Contacto</h3>
+        <p class="text-xs text-blue-200">
+          San Cristóbal, Estado Táchira, Venezuela.
+        </p>
+        <p class="text-xs text-cyan-300 font-medium">
+          canivelprimaria@gmail.com
+        </p>
+
+        <a
+          href="https://www.instagram.com/colegioaplicacionsc"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram del Colegio Aplicación"
+          class="inline-flex items-center gap-2 text-xs text-blue-200 hover:text-cyan-300 transition-colors group"
+        >
+          <svg class="w-5 h-5 text-blue-200 group-hover:text-cyan-300 transition-colors" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="3" width="18" height="18" rx="5" ry="5"></rect>
+            <path d="M16 11.37a4 4 0 1 1-7.914 1.174 4 4 0 0 1 7.914-1.174z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span>@colegioaplicacionsc</span>
+        </a>
+
+        <div class="pt-2 text-[11px] text-blue-300/80">
+          Desarrollado con estándares web modernos y diseño responsivo.
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sub-footer / Derechos de autor -->
+    <div class="pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-blue-300/70 space-y-3 sm:space-y-0">
+      <p>&copy; {currentYear} Alcamunero. Todos los derechos reservados.</p>
+      <div class="flex flex-wrap justify-center gap-4 text-[11px]">
+        <a href="#directorio" class="footer-link hover:text-cyan-300 transition-colors cursor-pointer">Directorio</a>
+        <span class="hover:text-cyan-300 cursor-pointer transition-colors">Términos de uso</span>
+        <span class="hover:text-cyan-300 cursor-pointer transition-colors">Política de privacidad</span>
+        <span class="hover:text-cyan-300 cursor-pointer transition-colors">Hemeroteca</span>
+      </div>
+    </div>
+
+    <!-- Crédito de desarrollo -->
+    <div class="pt-4 text-center text-[11px] text-blue-400/60">
+      Página desarrollada por <a href="https://www.instagram.com/mrsoto.dev" target="_blank" rel="noopener noreferrer" class="text-cyan-400 font-semibold hover:text-cyan-300 transition-colors">Marfil Labs</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,155 @@
+---
+// src/components/ImageCarousel.astro
+// Carrusel adaptativo en tono oscuro que respeta las proporciones originales de las imágenes.
+
+interface Slide {
+  src?: string;     // Ruta de la imagen real
+  alt: string;      // Texto alternativo / descripción
+  caption?: string; // Pie de foto opcional
+}
+
+interface Props {
+  slides: Slide[];
+  sectionId?: string;
+}
+
+const { slides, sectionId = "carousel" } = Astro.props as Props;
+const uid = `${sectionId}-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div
+  class="carousel-wrapper relative w-full max-w-4xl mx-auto overflow-hidden shadow-sm border border-slate-800 bg-slate-900"
+  data-carousel={uid}
+>
+  <!-- Pista deslizable -->
+  <div
+    class="carousel-track flex w-full overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar items-center"
+  >
+    {slides.map((slide) => (
+      <div class="carousel-slide relative w-full shrink-0 snap-center flex items-center justify-center p-2">
+        {slide.src ? (
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            class="max-h-[75vh] w-auto h-auto object-contain mx-auto select-none"
+            loading="lazy"
+          />
+        ) : (
+          <div class="h-64 w-full flex items-center justify-center text-slate-400 font-medium font-sans px-6 text-center text-sm bg-slate-800">
+            {slide.alt}
+          </div>
+        )}
+      </div>
+    ))}
+  </div>
+
+  {slides.length > 1 && (
+    <>
+      <!-- Flecha izquierda -->
+      <button
+        type="button"
+        class="carousel-prev hidden md:flex items-center justify-center absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors z-10 shadow-md"
+        aria-label="Imagen anterior"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+
+      <!-- Flecha derecha -->
+      <button
+        type="button"
+        class="carousel-next hidden md:flex items-center justify-center absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-sm transition-colors z-10 shadow-md"
+        aria-label="Imagen siguiente"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+
+      <!-- Indicadores (puntos) -->
+      <div class="carousel-dots absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
+        {slides.map((_, i) => (
+          <span
+            class="carousel-dot w-1.5 h-1.5 rounded-full bg-white/50 transition-all cursor-pointer"
+            data-index={i}
+          ></span>
+        ))}
+      </div>
+    </>
+  )}
+</div>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const wrappers = document.querySelectorAll('.carousel-wrapper');
+
+    wrappers.forEach((wrapper) => {
+      const track = wrapper.querySelector('.carousel-track');
+      const prevBtn = wrapper.querySelector('.carousel-prev');
+      const nextBtn = wrapper.querySelector('.carousel-next');
+      const dots = wrapper.querySelectorAll('.carousel-dot');
+      if (!track) return;
+
+      function scrollToIndex(index) {
+        const slideWidth = track.clientWidth;
+        track.scrollTo({ left: slideWidth * index, behavior: 'smooth' });
+      }
+
+      function currentIndex() {
+        const slideWidth = track.clientWidth || 1;
+        return Math.round(track.scrollLeft / slideWidth);
+      }
+
+      function updateDots() {
+        const idx = currentIndex();
+        dots.forEach((dot) => {
+          const dotIndex = Number(dot.getAttribute('data-index'));
+          if (dotIndex === idx) {
+            dot.classList.remove('bg-white/50');
+            dot.classList.add('bg-white', 'w-4');
+          } else {
+            dot.classList.remove('bg-white', 'w-4');
+            dot.classList.add('bg-white/50');
+          }
+        });
+      }
+
+      prevBtn?.addEventListener('click', () => {
+        const idx = Math.max(currentIndex() - 1, 0);
+        scrollToIndex(idx);
+      });
+
+      nextBtn?.addEventListener('click', () => {
+        const maxIndex = track.children.length - 1;
+        const idx = Math.min(currentIndex() + 1, maxIndex);
+        scrollToIndex(idx);
+      });
+
+      let scrollTimeout;
+      track.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(updateDots, 80);
+      });
+
+      dots.forEach((dot) => {
+        dot.addEventListener('click', () => {
+          const index = Number(dot.getAttribute('data-index'));
+          scrollToIndex(index);
+        });
+      });
+
+      updateDots();
+    });
+  });
+</script>

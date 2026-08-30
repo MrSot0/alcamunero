@@ -1,0 +1,45 @@
+---
+// src/components/FloatingButtons.astro
+---
+
+<div class="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+  
+ {/* Botón para subir arriba (Scroll to Top) - Oculto por defecto hasta hacer scroll */}
+<button 
+  id="scroll-to-top"
+  aria-label="Volver arriba"
+  class="flex items-center justify-center w-12 h-12 bg-[#2B54A8] hover:bg-[#3b65ba] backdrop-blur-md text-white border border-white/20 rounded-full shadow-lg transition-all duration-300 transform hover:scale-110 active:scale-95 opacity-0 pointer-events-none translate-y-4 group"
+>
+  <svg class="w-5 h-5 transition-transform duration-300 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path>
+  </svg>
+  <span class="absolute right-14 bg-white text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-xl shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+    Volver arriba
+  </span>
+</button>
+
+</div>
+
+<script>
+  // Lógica para mostrar/ocultar el botón de "Volver arriba" y hacer el scroll suave
+  const scrollTopBtn = document.getElementById('scroll-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      // Muestra el botón cuando el usuario baja más de 400px
+      scrollTopBtn?.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+      scrollTopBtn?.classList.add('opacity-100', 'translate-y-0');
+    } else {
+      // Lo oculta si está arriba de todo
+      scrollTopBtn?.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      scrollTopBtn?.classList.remove('opacity-100', 'translate-y-0');
+    }
+  });
+
+  scrollTopBtn?.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
