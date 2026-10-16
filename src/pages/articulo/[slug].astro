@@ -1,0 +1,110 @@
+---
+// src/pages/articulo/[slug].astro
+// Una página por artículo. El cuerpo viene de src/components/articles/<component>.astro
+import Layout from '../../layouts/Layout.astro';
+import ImageCarousel from '../../components/ImageCarousel.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { articles, sections, sortedArticles, getRelated } from '../../data/articles';
+import type { Article } from '../../data/articles';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+
+// Carga todos los componentes de artículo y toma el que corresponde
+const bodies = import.meta.glob('../../components/articles/*.astro', { eager: true }) as Record<
+  string,
+  { default: any }
+>;
+const Body = bodies[`../../components/articles/${article.component}.astro`]?.default;
+if (!Body) {
+  throw new Error(
+    `No existe src/components/articles/${article.component}.astro (artículo "${article.slug}")`
+  );
+}
+
+const section = sections[article.section];
+const related = getRelated(article, 3);
+
+const position = sortedArticles.findIndex((a) => a.slug === article.slug);
+const prev = position > 0 ? sortedArticles[position - 1] : null;
+const next = position < sortedArticles.length - 1 ? sortedArticles[position + 1] : null;
+---
+
+<Layout
+  title={`${article.title} | Alcamunero`}
+  description={article.excerpt}
+  active={article.section}
+  image={article.slides[0].src}
+>
+  <article class="max-w-4xl mx-auto px-4 py-8">
+
+    <!-- Migas de pan + kicker -->
+    <div class="mb-4 border-b-2 border-gray-900 pb-2 flex flex-wrap justify-between items-center gap-2 text-xs text-gray-600 font-sans uppercase tracking-wider">
+      <nav aria-label="Ruta de navegación" class="flex items-center gap-2">
+        <a href="/" class="hover:text-blue-800 hover:underline">Inicio</a>
+        <span aria-hidden="true">/</span>
+        <a href={`/seccion/${article.section}`} class="hover:text-blue-800 hover:underline">{section.label}</a>
+      </nav>
+      <span>{article.kicker}</span>
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <h1 class="text-2xl md:text-4xl font-serif font-bold text-gray-900 leading-tight">
+        {article.title}
+      </h1>
+
+      <div class="text-xs text-gray-500 font-sans flex items-center space-x-3 border-y border-gray-200 py-2">
+        <span>{article.author}</span>
+        <span>•</span>
+        <span>{article.date}</span>
+      </div>
+
+      <div class="space-y-2">
+        <ImageCarousel sectionId={article.slug} slides={article.slides} />
+        <p class="text-xs text-gray-600 font-sans leading-normal border-b border-gray-300 pb-3">
+          {article.caption}
+        </p>
+      </div>
+    </div>
+
+    <div class="article-body">
+      <Body />
+    </div>
+
+    <!-- Anterior / siguiente en la edición -->
+    <nav aria-label="Artículos anterior y siguiente" class="mt-12 pt-6 border-t border-gray-300 grid grid-cols-1 sm:grid-cols-2 gap-4 font-sans">
+      {prev ? (
+        <a href={`/articulo/${prev.slug}`} class="group block border border-gray-200 bg-white p-4 hover:border-blue-800 transition-colors">
+          <span class="block text-[10px] font-bold uppercase tracking-widest text-gray-500">← Anterior</span>
+          <span class="block mt-1 font-serif font-bold text-gray-900 group-hover:text-blue-800 leading-snug">{prev.title}</span>
+        </a>
+      ) : <span></span>}
+      {next && (
+        <a href={`/articulo/${next.slug}`} class="group block border border-gray-200 bg-white p-4 text-right hover:border-blue-800 transition-colors">
+          <span class="block text-[10px] font-bold uppercase tracking-widest text-gray-500">Siguiente →</span>
+          <span class="block mt-1 font-serif font-bold text-gray-900 group-hover:text-blue-800 leading-snug">{next.title}</span>
+        </a>
+      )}
+    </nav>
+  </article>
+
+  <!-- Seguir leyendo -->
+  <section class="max-w-7xl mx-auto px-4 pb-12" aria-labelledby="seguir-leyendo">
+    <h2 id="seguir-leyendo" class="border-t-4 border-blue-950 pt-2 mb-6 font-serif text-xl font-bold text-gray-900">
+      Seguir leyendo
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      {related.map((a) => <ArticleCard article={a} variant="card" />)}
+    </div>
+  </section>
+</Layout>

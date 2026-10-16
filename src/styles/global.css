@@ -4,8 +4,20 @@
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   }
-  
+
   h1, h2, h3, .font-serif {
     font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+}
+
+@layer components {
+  /* Cuerpo de los artículos: tipografía editorial y espaciado entre bloques.
+     Reemplaza las clases "prose" que antes no tenían efecto (no hay plugin typography). */
+  .article-body {
+    @apply font-serif text-gray-900 text-base md:text-lg leading-relaxed;
+  }
+
+  .article-body > * + * {
+    @apply mt-4;
   }
 }

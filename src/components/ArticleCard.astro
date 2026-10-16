@@ -1,0 +1,145 @@
+---
+// src/components/ArticleCard.astro
+// Tarjeta de artículo para el index y las páginas de sección.
+//
+// Variantes:
+//   lead  → nota principal grande (portada)
+//   side  → miniatura a la izquierda, ideal para columnas laterales
+//   list  → texto a la izquierda, imagen a la derecha (listado de noticias)
+//   card  → imagen arriba, texto abajo (grilla)
+//   text  → solo texto (opinión, listas compactas)
+import type { Article } from '../data/articles';
+import { sections } from '../data/articles';
+
+interface Props {
+  article: Article;
+  variant?: 'lead' | 'side' | 'list' | 'card' | 'text';
+}
+
+const { article, variant = 'card' } = Astro.props;
+const href = `/articulo/${article.slug}`;
+const cover = article.slides[0];
+const sectionLabel = sections[article.section].label;
+---
+
+{variant === 'lead' && (
+  <article class="group">
+    <a href={href} class="block bg-slate-900 overflow-hidden">
+      <img
+        src={cover.src}
+        alt={cover.alt}
+        class="w-full aspect-[16/10] object-cover group-hover:scale-[1.02] transition-transform duration-500"
+        loading="eager"
+      />
+    </a>
+    <div class="mt-4 space-y-3">
+      <p class="text-[11px] font-sans font-bold uppercase tracking-widest text-blue-800">
+        {article.kicker}
+      </p>
+      <h2 class="text-2xl md:text-4xl font-serif font-bold leading-tight text-gray-900">
+        <a href={href} class="hover:text-blue-800 hover:underline decoration-2 underline-offset-4">
+          {article.title}
+        </a>
+      </h2>
+      <p class="font-serif text-base md:text-lg text-gray-700 leading-relaxed">
+        {article.excerpt}
+      </p>
+      <p class="text-xs font-sans text-gray-500">
+        {article.author} <span aria-hidden="true">•</span> {article.date}
+      </p>
+    </div>
+  </article>
+)}
+
+{variant === 'side' && (
+  <article class="group flex gap-4 py-4 first:pt-0 last:pb-0">
+    <div class="flex-1 min-w-0 space-y-1.5">
+      <p class="text-[10px] font-sans font-bold uppercase tracking-widest text-blue-800">
+        {article.kicker}
+      </p>
+      <h3 class="text-base font-serif font-bold leading-snug text-gray-900">
+        <a href={href} class="hover:text-blue-800 hover:underline underline-offset-2">
+          {article.title}
+        </a>
+      </h3>
+      <p class="text-[11px] font-sans text-gray-500">{article.date}</p>
+    </div>
+    <a href={href} class="shrink-0 block w-24 h-24 sm:w-28 sm:h-28 bg-slate-900 overflow-hidden" tabindex="-1" aria-hidden="true">
+      <img
+        src={cover.src}
+        alt=""
+        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    </a>
+  </article>
+)}
+
+{variant === 'list' && (
+  <article class="group flex flex-col-reverse sm:flex-row gap-4 sm:gap-6 py-6 first:pt-0">
+    <div class="flex-1 min-w-0 space-y-2">
+      <p class="text-[11px] font-sans font-bold uppercase tracking-widest text-blue-800">
+        {article.kicker}
+      </p>
+      <h3 class="text-xl md:text-2xl font-serif font-bold leading-snug text-gray-900">
+        <a href={href} class="hover:text-blue-800 hover:underline underline-offset-2">
+          {article.title}
+        </a>
+      </h3>
+      <p class="font-serif text-sm md:text-base text-gray-700 leading-relaxed">
+        {article.excerpt}
+      </p>
+      <p class="text-xs font-sans text-gray-500">
+        {article.author} <span aria-hidden="true">•</span> {article.date}
+      </p>
+    </div>
+    <a href={href} class="shrink-0 block sm:w-52 sm:self-start overflow-hidden" tabindex="-1" aria-hidden="true">
+      <img
+        src={cover.src}
+        alt=""
+        class="w-full aspect-[16/10] sm:aspect-[4/3] object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    </a>
+  </article>
+)}
+
+{variant === 'card' && (
+  <article class="group flex flex-col">
+    <a href={href} class="block bg-slate-900 overflow-hidden" tabindex="-1" aria-hidden="true">
+      <img
+        src={cover.src}
+        alt=""
+        class="w-full aspect-[16/10] object-cover group-hover:scale-105 transition-transform duration-500"
+        loading="lazy"
+      />
+    </a>
+    <div class="mt-3 space-y-1.5">
+      <p class="text-[10px] font-sans font-bold uppercase tracking-widest text-blue-800">
+        {sectionLabel}
+      </p>
+      <h3 class="text-lg font-serif font-bold leading-snug text-gray-900">
+        <a href={href} class="hover:text-blue-800 hover:underline underline-offset-2">
+          {article.title}
+        </a>
+      </h3>
+      <p class="text-xs font-sans text-gray-500">
+        {article.author} <span aria-hidden="true">•</span> {article.date}
+      </p>
+    </div>
+  </article>
+)}
+
+{variant === 'text' && (
+  <article class="py-4 first:pt-0 last:pb-0 space-y-1.5">
+    <p class="text-[10px] font-sans font-bold uppercase tracking-widest text-blue-800">
+      {article.kicker}
+    </p>
+    <h3 class="text-base font-serif font-bold leading-snug text-gray-900">
+      <a href={href} class="hover:text-blue-800 hover:underline underline-offset-2">
+        {article.title}
+      </a>
+    </h3>
+    <p class="text-[11px] font-sans text-gray-500">{article.author}</p>
+  </article>
+)}

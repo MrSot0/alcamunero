@@ -1,0 +1,99 @@
+---
+// src/pages/directorio.astro
+import Layout from '../layouts/Layout.astro';
+import StaffCard from '../components/StaffCard.astro';
+import { countByAuthor } from '../data/articles';
+
+// `match` es el texto que se busca en la firma de cada artículo para contar sus publicaciones.
+const groups = [
+  {
+    title: 'Dirección',
+    staff: [
+      {
+        name: 'Dr. Lidimo Chacón',
+        role: 'Director',
+        image: '/images/staff/lidimo.webp',
+        bio: 'Encarna la visión institucional y lidera la gestión educativa con compromiso y excelencia.',
+        match: 'Dirección',
+      },
+    ],
+  },
+  {
+    title: 'Coordinación',
+    staff: [
+      {
+        name: 'Esp. Niria Colina',
+        role: 'Coordinadora General y Redacción',
+        image: '/images/staff/niria.webp',
+        bio: 'Comprometida con llevar información veraz y oportuna a toda la comunidad.',
+        match: 'Niria Colina',
+      },
+    ],
+  },
+  {
+    title: 'Desarrollo y Programación',
+    staff: [
+      {
+        name: 'Dev. Jesús M. Soto C.',
+        role: 'Desarrollo Web',
+        image: '/images/staff/jesus.webp',
+        bio: 'Diseño y programación del periódico digital',
+        match: 'Jesús M. Soto',
+      },
+    ],
+  },
+  {
+    title: 'Redacción',
+    staff: [
+      {
+        name: 'Prof. Carlos Arellano',
+        role: 'Redactor',
+        image: '/images/staff/carlos.webp',
+        bio: 'Encargado de la cobertura de diferentes fuentes.',
+        match: 'Carlos Arellano',
+      },
+      // Agrega más integrantes aquí
+    ],
+  },
+];
+---
+
+<Layout
+  title="Directorio | Alcamunero"
+  description="Conoce al equipo que hace posible cada edición de Alcamunero."
+  active="directorio"
+>
+  <section class="w-full bg-blue-900 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-14">
+        <h1 class="text-3xl font-serif font-bold text-white mb-2">Directorio</h1>
+        <p class="text-xs text-blue-200 max-w-xl mx-auto">
+          Conoce al equipo que hace posible cada edición de Alcamunero.
+        </p>
+      </div>
+
+      <div class="space-y-14">
+        {groups.map((group) => (
+          <div>
+            <div class="flex items-center gap-3 mb-8 max-w-4xl mx-auto">
+              <span class="h-px flex-1 bg-blue-700/60"></span>
+              <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-cyan-400 whitespace-nowrap">{group.title}</h2>
+              <span class="h-px flex-1 bg-blue-700/60"></span>
+            </div>
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-12 sm:gap-x-10">
+              {group.staff.map((person) => (
+                <StaffCard
+                  name={person.name}
+                  role={person.role}
+                  image={person.image}
+                  bio={person.bio}
+                  articlesCount={countByAuthor(person.match) || undefined}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,215 @@
+---
+// src/components/SearchBar.astro
+// Buscador en vivo sobre los datos de src/data/articles.ts (título, etiqueta, resumen,
+// autor, sección y fecha). Sin servidor: el índice viaja en la página como JSON.
+// Ignora mayúsculas y acentos ("opinion" encuentra "Opinión").
+import { sortedArticles, sections } from '../data/articles';
+
+const searchData = sortedArticles.map((a) => ({
+  slug: a.slug,
+  title: a.title,
+  kicker: a.kicker,
+  excerpt: a.excerpt,
+  author: a.author,
+  date: a.date,
+  sectionLabel: sections[a.section].label,
+  cover: a.slides[0].src,
+}));
+---
+
+<div class="relative max-w-2xl" data-search>
+  <form role="search" action="#" class="relative" onsubmit="return false;">
+    <label for="search-input" class="sr-only">Buscar en el periódico</label>
+    <svg
+      class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7"></circle>
+      <path stroke-linecap="round" d="M21 21l-4.3-4.3"></path>
+    </svg>
+    <input
+      id="search-input"
+      type="search"
+      autocomplete="off"
+      placeholder="Buscar noticias, secciones o autores…"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="search-panel"
+      aria-autocomplete="list"
+      class="w-full bg-white border border-gray-300 focus:border-blue-800 focus:ring-2 focus:ring-blue-800/20 outline-none pl-10 pr-4 py-2.5 text-sm font-sans text-gray-900 placeholder:text-gray-400 transition-colors"
+    />
+  </form>
+
+  <div
+    id="search-panel"
+    role="listbox"
+    aria-label="Resultados de búsqueda"
+    data-search-panel
+    class="hidden absolute left-0 right-0 top-full mt-1 z-40 bg-white border border-gray-300 shadow-lg max-h-[70vh] overflow-y-auto"
+  >
+  </div>
+
+  <script type="application/json" data-search-data is:inline set:html={JSON.stringify(searchData)} />
+</div>
+
+<script>
+  interface SearchItem {
+    slug: string;
+    title: string;
+    kicker: string;
+    excerpt: string;
+    author: string;
+    date: string;
+    sectionLabel: string;
+    cover: string;
+    hay?: string;
+  }
+
+  // Minúsculas y sin acentos, para que "opinion" encuentre "Opinión"
+  const normalize = (s: string) =>
+    s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+  document.querySelectorAll<HTMLElement>('[data-search]').forEach((root) => {
+    const input = root.querySelector<HTMLInputElement>('input');
+    const panel = root.querySelector<HTMLElement>('[data-search-panel]');
+    const dataEl = root.querySelector('[data-search-data]');
+    if (!input || !panel || !dataEl) return;
+
+    const items: SearchItem[] = JSON.parse(dataEl.textContent || '[]');
+    items.forEach((a) => {
+      a.hay = normalize(
+        [a.title, a.kicker, a.excerpt, a.author, a.sectionLabel, a.date].join(' ')
+      );
+    });
+
+    let links: HTMLAnchorElement[] = [];
+    let activeIndex = -1;
+
+    function setActive(i: number) {
+      links.forEach((l, n) => {
+        const on = n === i;
+        l.setAttribute('aria-selected', String(on));
+        l.classList.toggle('bg-blue-50', on);
+      });
+      activeIndex = i;
+      if (i >= 0) links[i].scrollIntoView({ block: 'nearest' });
+    }
+
+    function close() {
+      panel!.classList.add('hidden');
+      input!.setAttribute('aria-expanded', 'false');
+      activeIndex = -1;
+    }
+
+    function search(query: string): SearchItem[] {
+      const terms = normalize(query).split(/\s+/).filter(Boolean);
+      if (!terms.length) return [];
+      return items
+        .map((a) => {
+          const title = normalize(a.title);
+          let score = 0;
+          for (const t of terms) {
+            if (!a.hay!.includes(t)) return null; // deben aparecer todas las palabras
+            score += title.includes(t) ? 2 : 1;
+          }
+          return { a, score };
+        })
+        .filter((r): r is { a: SearchItem; score: number } => r !== null)
+        .sort((x, y) => y.score - x.score)
+        .map((r) => r.a);
+    }
+
+    function render(query: string) {
+      panel!.replaceChildren();
+      links = [];
+      activeIndex = -1;
+
+      if (!query.trim()) {
+        close();
+        return;
+      }
+
+      const results = search(query);
+
+      if (!results.length) {
+        const empty = document.createElement('p');
+        empty.className = 'px-4 py-3 text-sm font-sans text-gray-600';
+        empty.textContent = `Sin resultados para “${query.trim()}”.`;
+        panel!.appendChild(empty);
+      } else {
+        const count = document.createElement('p');
+        count.className =
+          'px-4 py-2 text-[11px] font-sans font-bold uppercase tracking-widest text-gray-500 border-b border-gray-200';
+        count.textContent = `${results.length} ${results.length === 1 ? 'resultado' : 'resultados'}`;
+        panel!.appendChild(count);
+
+        results.forEach((a) => {
+          const link = document.createElement('a');
+          link.href = `/articulo/${a.slug}`;
+          link.setAttribute('role', 'option');
+          link.className =
+            'flex items-center gap-3 px-4 py-3 border-b border-gray-100 last:border-b-0 hover:bg-blue-50 transition-colors';
+
+          const img = document.createElement('img');
+          img.src = a.cover;
+          img.alt = '';
+          img.loading = 'lazy';
+          img.className = 'shrink-0 w-14 h-14 object-cover bg-slate-200';
+
+          const text = document.createElement('div');
+          text.className = 'min-w-0';
+
+          const kicker = document.createElement('p');
+          kicker.className = 'text-[10px] font-sans font-bold uppercase tracking-widest text-blue-800';
+          kicker.textContent = `${a.sectionLabel} · ${a.kicker}`;
+
+          const title = document.createElement('p');
+          title.className = 'font-serif font-bold text-gray-900 leading-snug text-sm sm:text-base';
+          title.textContent = a.title;
+
+          const meta = document.createElement('p');
+          meta.className = 'text-[11px] font-sans text-gray-500';
+          meta.textContent = `${a.author} • ${a.date}`;
+
+          text.append(kicker, title, meta);
+          link.append(img, text);
+          panel!.appendChild(link);
+          links.push(link);
+        });
+      }
+
+      panel!.classList.remove('hidden');
+      input!.setAttribute('aria-expanded', 'true');
+    }
+
+    input.addEventListener('input', () => render(input.value));
+    input.addEventListener('focus', () => {
+      if (input.value.trim()) render(input.value);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        close();
+        input.blur();
+      } else if (e.key === 'ArrowDown' && links.length) {
+        e.preventDefault();
+        setActive((activeIndex + 1) % links.length);
+      } else if (e.key === 'ArrowUp' && links.length) {
+        e.preventDefault();
+        setActive(activeIndex <= 0 ? links.length - 1 : activeIndex - 1);
+      } else if (e.key === 'Enter' && links.length) {
+        e.preventDefault();
+        (links[activeIndex >= 0 ? activeIndex : 0]).click();
+      }
+    });
+
+    // Cerrar al hacer clic fuera del buscador
+    document.addEventListener('click', (e) => {
+      if (!root.contains(e.target as Node)) close();
+    });
+  });
+</script>

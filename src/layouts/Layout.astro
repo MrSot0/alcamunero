@@ -7,26 +7,40 @@ import '../styles/global.css';
 
 interface Props {
   title?: string;
+  description?: string;
+  /** Item activo del menú: 'inicio', 'directorio' o el id de una sección */
+  active?: string;
+  /** Imagen para compartir en redes (ruta absoluta dentro de /public) */
+  image?: string;
 }
 
-const { title = "Alcamunero | Periódico Digital" } = Astro.props;
+const {
+  title = "Alcamunero | Periódico Digital",
+  description = "Alcamunero - Periódico digital de San Cristóbal, Táchira, Venezuela",
+  active = 'inicio',
+  image,
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Alcamunero - Periódico digital de San Cristóbal, Táchira, Venezuela" />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {image && <meta property="og:image" content={image} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>
   <body class="bg-gray-50 text-gray-900 font-sans antialiased flex flex-col min-h-screen">
-    
-    <!-- Navbar Fijo Superior -->
-    <Navbar />
 
-    <!-- Contenido Principal (Single Page Sections) -->
+    <!-- Navbar Fijo Superior -->
+    <Navbar active={active} />
+
+    <!-- Contenido Principal -->
     <main class="flex-grow">
       <slot />
     </main>
@@ -45,7 +59,7 @@ const { title = "Alcamunero | Periódico Digital" } = Astro.props;
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
-  
+
   h1, h2, h3, .font-serif {
     font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   }
