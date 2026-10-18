@@ -14,8 +14,13 @@ export interface Slide {
 
 export type SectionId =
   | 'actualidad'
+  | 'eventos'
   | 'cultura'
   | 'deportes'
+  | 'religion'
+  | 'comunidad'
+  | 'ciencia'
+  | 'efemerides'
   | 'opinion'
   | 'reportajes';
 
@@ -48,7 +53,11 @@ export interface Article {
 export const sections: Record<SectionId, { label: string; description: string }> = {
   actualidad: {
     label: 'Actualidad',
-    description: 'Lo que pasó en la Semana Aniversaria del Colegio Aplicación.',
+    description: 'Noticias y novedades del Colegio Aplicación.',
+  },
+  eventos: {
+    label: 'Eventos',
+    description: 'Actos de prosecución, graduaciones y otras ceremonias del colegio.',
   },
   cultura: {
     label: 'Cultura',
@@ -57,6 +66,22 @@ export const sections: Record<SectionId, { label: string; description: string }>
   deportes: {
     label: 'Deportes',
     description: 'Jornadas deportivas e integración familiar.',
+  },
+  religion: {
+    label: 'Religión',
+    description: 'Misas, celebraciones y tradiciones de fe de la comunidad aplicatense.',
+  },
+  comunidad: {
+    label: 'Comunidad',
+    description: 'Solidaridad y trabajo conjunto de la familia Colegio Aplicación.',
+  },
+  ciencia: {
+    label: 'Ciencia y Tecnología',
+    description: 'Formación, innovación y actualización profesional en el colegio.',
+  },
+  efemerides: {
+    label: 'Efemérides',
+    description: 'Fechas para recordar, mes a mes.',
   },
   opinion: {
     label: 'Opinión',
@@ -69,6 +94,171 @@ export const sections: Record<SectionId, { label: string; description: string }>
 };
 
 export const articles: Article[] = [
+  // ───────── Septiembre 2026 · nuevo año escolar ─────────
+  {
+    slug: 'bienvenida-nuevo-anio-escolar',
+    component: 'BienvenidaAnioEscolar',
+    section: 'actualidad',
+    kicker: 'Inicio del año escolar',
+    title: 'U.E. Colegio Aplicación dio la bienvenida a sus estudiantes en el inicio del nuevo año escolar',
+    author: 'Por Carlos Arellano',
+    date: '21 de septiembre, 2026',
+    excerpt:
+      'Con entusiasmo y alegría, el colegio recibió a sus estudiantes de Educación Inicial y Primaria en el inicio oficial de un nuevo año escolar.',
+    slides: [
+      { src: '/bienvenida1.webp', alt: 'Estudiantes y una docente con un cartel de “Bienvenidos” en el primer día de clases' },
+      { src: '/bienvenida2.webp', alt: 'Estudiantes posando con crayones gigantes en la ambientación de bienvenida' },
+      { src: '/bienvenida3.webp', alt: 'Estudiantes y docentes en un salón durante la jornada de inicio de clases' },
+      { src: '/bienvenida4.webp', alt: 'Ambientación con globos y crayones para el inicio del nuevo año escolar' },
+    ],
+    caption: 'Estudiantes y personal del colegio durante la jornada de bienvenida al nuevo año escolar.',
+    featured: true,
+    order: 1,
+  },
+  {
+    slug: 'efemerides-septiembre',
+    component: 'EfemeridesSeptiembre',
+    section: 'efemerides',
+    kicker: 'Efemérides del mes',
+    title: 'Efemérides del mes de septiembre',
+    author: 'Por Rosanna Cifelli',
+    date: 'Septiembre, 2026',
+    excerpt:
+      'Tres fechas para recordar: la Mujer Indígena, la preservación de la capa de ozono y el natalicio de Miguel de Cervantes.',
+    slides: [
+      { src: '/efemerides1.webp', alt: 'Mujer indígena con tocado de plumas' },
+      { src: '/efemerides2.webp', alt: 'Ilustración de la Tierra y la radiación solar sobre la capa de ozono' },
+      { src: '/efemerides3.webp', alt: 'Retrato ilustrado de Miguel de Cervantes escribiendo' },
+    ],
+    caption: 'Ilustraciones de las efemérides de septiembre.',
+    order: 2,
+  },
+  {
+    slug: 'formacion-pedagogica-docentes',
+    component: 'FormacionDocente',
+    section: 'ciencia',
+    kicker: 'Formación docente',
+    title: 'Docentes del Colegio Aplicación participaron en jornadas de formación pedagógica y desarrollo emocional',
+    author: 'Por Carlos Arellano',
+    date: 'Septiembre, 2026',
+    excerpt:
+      'Un ciclo de capacitación con las ponencias “Teorías del Aprendizaje” y “Planificación y Evaluación”, y un taller de control de emociones.',
+    slides: [
+      { src: '/formacion1.webp', alt: 'Docentes atendiendo una ponencia en el salón' },
+      { src: '/formacion2.webp', alt: 'Docentes en una sesión de formación con computadoras' },
+      { src: '/formacion3.webp', alt: 'Ponente y docentes durante la jornada de capacitación' },
+    ],
+    caption: 'Docentes durante las jornadas de formación pedagógica y desarrollo emocional.',
+    order: 3,
+  },
+  {
+    slug: 'serenata-jesus-nazareno',
+    component: 'SerenataJesusNazareno',
+    section: 'religion',
+    kicker: 'Religión y tradición',
+    title: 'El Colegio Aplicación rindió homenaje a Jesús Nazareno con una emotiva serenata de fe y tradición',
+    author: 'Por Marlon Moreno',
+    date: '12 de septiembre, 2026',
+    excerpt:
+      'La cancha del colegio se vistió de fiesta para la tradicional serenata en honor al Santo Patrono.',
+    slides: [
+      { src: '/serenata1.webp', alt: 'Altar con la imagen de Jesús Nazareno en la cancha del colegio' },
+      { src: '/serenata2.webp', alt: 'Familias reunidas en la cancha durante la serenata' },
+    ],
+    caption: 'La comunidad reunida en la cancha del colegio durante la serenata en honor a Jesús Nazareno.',
+    order: 4,
+  },
+  // ───────── Cierre del año escolar 2025-2026 ─────────
+  {
+    slug: 'reconocimiento-frank-sanchez',
+    component: 'ReconocimientoFrankSanchez',
+    section: 'actualidad',
+    kicker: 'Orgullo aplicatense',
+    title: 'Estudiante egresado del Colegio Aplicación fue reconocido entre los ocho mejores promedios del estado Táchira por el MPPE',
+    author: 'Por Niria Colina',
+    date: '2026',
+    excerpt:
+      'El exalumno Frank Sánchez recibió un reconocimiento honorífico del MPPE por situarse entre los ocho mejores promedios del estado.',
+    slides: [
+      { src: '/frank1.webp', alt: 'Felicitación al egresado Frank Sánchez, entre los ocho mejores promedios del estado Táchira' },
+    ],
+    caption: 'Felicitación del Colegio Aplicación al egresado Frank Antony Sánchez Ramírez.',
+    highlight: true,
+    order: 5,
+  },
+  {
+    slug: 'graduacion-media-general-unet',
+    component: 'GraduacionUNET',
+    section: 'eventos',
+    kicker: 'Especial graduación',
+    title: 'El Teatro de la UNET se viste de gala para celebrar la graduación de la Promoción de Media General',
+    author: 'Por Niria Colina',
+    date: '2026',
+    excerpt:
+      'La nueva promoción de Bachilleres en Educación Media General recibió sus títulos en una solemne ceremonia con reconocimiento al mérito académico.',
+    slides: [
+      { src: '/graduacion3.webp', alt: 'Mesa directiva y graduandos en el escenario del teatro' },
+      { src: '/graduacion1.webp', alt: 'Graduandos junto a su ambientación “Promo 44”' },
+      { src: '/graduacion2.webp', alt: 'Entrega de un diploma a una graduanda durante el acto' },
+    ],
+    caption: 'Directivos, docentes y graduandos durante el acto de graduación.',
+    highlight: true,
+    order: 6,
+  },
+  {
+    slug: 'actos-prosecucion-inicial-primaria',
+    component: 'ActosProsecucion',
+    section: 'eventos',
+    kicker: 'Eventos institucionales',
+    title: 'El Colegio Aplicación celebró los Actos de Prosecución de Educación Inicial y Primaria en un emotivo ambiente institucional',
+    author: 'Redacción Alcamunero',
+    date: '30 de julio, 2026',
+    excerpt:
+      'El colegio celebró el cierre del ciclo escolar con los actos de prosecución de Educación Inicial y Primaria.',
+    slides: [
+      { src: '/prosecucion1.webp', alt: 'Directivos y docentes junto a la ambientación de los actos de prosecución' },
+      { src: '/prosecucion2.webp', alt: 'Estudiantes de Inicial con sus recuerdos de prosecución' },
+      { src: '/prosecucion3.webp', alt: 'Promovidos con birretes durante el acto en el salón' },
+      { src: '/prosecucion4.webp', alt: 'Estudiantes de Primaria con medallas y diplomas durante el acto' },
+    ],
+    caption: 'Estudiantes, docentes y directivos durante los actos de prosecución de Educación Inicial y Primaria.',
+    highlight: true,
+    order: 7,
+  },
+  {
+    slug: 'misas-culminacion-anio-escolar',
+    component: 'MisasCulminacionAnio',
+    section: 'religion',
+    kicker: 'Religión y comunidad',
+    title: 'La comunidad del Colegio Aplicación celebró la culminación del año escolar con dos solemnes Misas de Acción de Gracias',
+    author: 'Por Niria Colina',
+    date: 'Julio, 2026',
+    excerpt:
+      'Dos Eucaristías en julio bendijeron la culminación de las etapas de Inicial, 6to Grado y Media General, con el acompañamiento del Padre Geico.',
+    slides: [
+      { src: '/misas1.webp', alt: 'Directivos y docentes en una de las misas de acción de gracias' },
+      { src: '/misas2.webp', alt: 'Promovidos de Educación Inicial junto a docentes tras la celebración' },
+    ],
+    caption: 'Directivos, docentes y promovidos tras las misas de acción de gracias por el cierre del año escolar.',
+    order: 8,
+  },
+  {
+    slug: 'centro-de-acopio-terremoto',
+    component: 'CentroAcopioTerremoto',
+    section: 'comunidad',
+    kicker: 'Comunidad y solidaridad',
+    title: 'El Colegio Aplicación sirvió como centro de acopio para apoyar a los damnificados del reciente terremoto',
+    author: 'Por Rosanna Cifelli',
+    date: '27 y 28 de junio, 2026',
+    excerpt:
+      'Los días 27 y 28 de junio, la institución abrió sus puertas como centro de acopio para apoyar a las familias afectadas por el sismo del 24 de junio.',
+    slides: [
+      { src: '/acopio1.webp', alt: 'Voluntarios clasificando donaciones durante la jornada de acopio' },
+      { src: '/acopio2.webp', alt: 'Voluntario cargando una caja con donaciones' },
+    ],
+    caption: 'Voluntarios y personal del colegio durante la recepción y clasificación de donaciones.',
+    order: 9,
+  },
   {
     slug: 'aniversario',
     component: 'Aniversario',
@@ -84,13 +274,12 @@ export const articles: Article[] = [
     ],
     caption:
       'Autoridades, docentes y estudiantes reunidos en la conmemoración de los 56 años de trayectoria educativa ininterrumpida de la institución en Cárdenas. Credit: Prensa Alcamunero',
-    featured: true,
-    order: 1,
+    order: 10,
   },
   {
     slug: 'misa-accion-de-gracias',
     component: 'MisaAccionDeGracias',
-    section: 'actualidad',
+    section: 'religion',
     kicker: 'Religión y Comunidad',
     title: 'Inicia Semana Aniversaria Colegio Aplicación con Misa de Acción de Gracias',
     author: 'Por Carlos Arellano',
@@ -102,7 +291,7 @@ export const articles: Article[] = [
     ],
     caption:
       'El Padre Yeico durante la ceremonia litúrgica central realizada en la cancha techada de la institución como apertura espiritual de los festejos aniversarios. Credit: Prensa Alcamunero',
-    order: 2,
+    order: 11,
   },
   {
     slug: 'cumpleanos-institucional',
@@ -120,7 +309,7 @@ export const articles: Article[] = [
     ],
     caption:
       'El personal docente, administrativo y obrero congregado alrededor del pastel para celebrar el 56.º aniversario junto a educadores de larga trayectoria.',
-    order: 3,
+    order: 12,
   },
   {
     slug: 'talent-show-gala-cultural',
@@ -142,8 +331,7 @@ export const articles: Article[] = [
     ],
     caption:
       'Estudiantes demostrando su talento artístico y muestras folclóricas durante las actividades centrales de la Semana Aniversaria. Credit: Prensa Alcamunero',
-    highlight: true,
-    order: 4,
+    order: 13,
   },
   {
     slug: 'coronacion-soberanas',
@@ -165,8 +353,7 @@ export const articles: Article[] = [
     ],
     caption:
       'Momento de la coronación oficial de las soberanas con la conducción del subdirector Douglas Medina y la profesora Jenifer Velandia. Credit: Prensa Alcamunero',
-    highlight: true,
-    order: 5,
+    order: 14,
   },
   {
     slug: 'jornada-deportiva',
@@ -185,8 +372,7 @@ export const articles: Article[] = [
     ],
     caption:
       'Padres, representantes y estudiantes compartiendo en los torneos relámpago de futbolit y voleibol durante la jornada especial. Credit: Prensa Alcamunero',
-    highlight: true,
-    order: 6,
+    order: 15,
   },
   {
     slug: 'educando-para-servir',
@@ -203,7 +389,7 @@ export const articles: Article[] = [
     ],
     caption:
       'Fachada e instalaciones principales de la Unidad Educativa Fundación Colegio Aplicación en Cárdenas. Credit: Archivo Fotográfico Alcamunero',
-    order: 7,
+    order: 16,
   },
   {
     slug: 'editorial-legado',
@@ -218,7 +404,7 @@ export const articles: Article[] = [
     slides: [{ src: '/equipo.webp', alt: 'Fotografía: Cuerpo Directivo y Docente' }],
     caption:
       'El equipo directivo liderado por el Dr. Lidimo Chacón junto al cuerpo docente que impulsa la excelencia educativa en la institución. Credit: Prensa Alcamunero',
-    order: 8,
+    order: 17,
   },
   {
     slug: 'voces-aplicatenses',
@@ -236,7 +422,7 @@ export const articles: Article[] = [
     ],
     caption:
       'Padres, representantes y miembros del comité organizador compartiendo impresiones durante las festividades. Credit: Prensa Alcamunero',
-    order: 9,
+    order: 18,
   },
   {
     slug: 'nuevo-formato-digital',
@@ -251,7 +437,7 @@ export const articles: Article[] = [
     slides: [{ src: '/tec.webp', alt: 'Interfaz del nuevo periódico digital Alcamunero' }],
     caption:
       'Visualización de la plataforma web moderna desarrollada para la cobertura interactiva del 56 aniversario. Credit: Prensa Alcamunero',
-    order: 10,
+    order: 19,
   },
   {
     slug: 'semblanza-josefa-molina',
@@ -260,7 +446,7 @@ export const articles: Article[] = [
     kicker: 'Semblanza',
     title: 'La vocación de transformar: La Profesora Josefa Molina y el arte de enseñar a editar la vida',
     author: 'Por Niria Colina',
-    date: 'Junio, 2026',
+    date: 'Octubre, 2026',
     excerpt:
       'Para la Profesora Josefa Molina, educar es un compromiso social con propósito y sensibilidad humana, capaz de moldear realidades y reconstruir el tejido comunitario.',
     slides: [
@@ -270,7 +456,7 @@ export const articles: Article[] = [
       { src: '/semblanza4.webp', alt: 'Docente con globos de cumpleaños en un salón de clases' },
     ],
     caption: 'Momentos de la labor docente de la Profesora Josefa Molina.',
-    order: 11,
+    order: 20,
   },
 ];
 

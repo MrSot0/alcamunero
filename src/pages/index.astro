@@ -14,7 +14,10 @@ const shown = new Set([lead.slug, ...highlights.map((a) => a.slug)]);
 
 // Opinión va en la columna lateral; el resto en "Últimas noticias"
 const opinion = sortedArticles.filter((a) => a.section === 'opinion');
-const latest = sortedArticles.filter((a) => !shown.has(a.slug) && a.section !== 'opinion');
+// Solo las 8 más recientes; el resto se explora por sección o con el buscador
+const latest = sortedArticles
+  .filter((a) => !shown.has(a.slug) && a.section !== 'opinion')
+  .slice(0, 8);
 
 const sectionList = (Object.keys(sections) as SectionId[]).map((id) => ({
   id,
@@ -25,7 +28,7 @@ const sectionList = (Object.keys(sections) as SectionId[]).map((id) => ({
 
 <Layout
   title="Alcamunero | Periódico Digital - Colegio Aplicación"
-  description="Alcamunero - Periódico digital del Colegio Aplicación. Cobertura de la Semana Aniversaria, cultura, deportes, opinión y reportajes."
+  description="Alcamunero - Periódico digital del Colegio Aplicación. Noticias, eventos, cultura, religión, comunidad, opinión y reportajes."
   active="inicio"
   image={lead.slides[0].src}
 >
@@ -33,8 +36,8 @@ const sectionList = (Object.keys(sections) as SectionId[]).map((id) => ({
 
     <!-- Cintillo de edición -->
     <div class="mb-6 border-b-2 border-gray-900 pb-2 flex justify-between items-center text-xs text-gray-600 font-sans">
-      <span>Portada / Edición Especial Aniversario</span>
-      <span>Redacción Alcamunero • Junio, 2026</span>
+      <span>Portada / Edición Digital</span>
+      <span>Redacción Alcamunero • <span id="edition-date">2026</span></span>
     </div>
 
     <!-- Buscador -->
@@ -117,3 +120,12 @@ const sectionList = (Object.keys(sections) as SectionId[]).map((id) => ({
     </div>
   </div>
 </Layout>
+
+<script>
+  // Fecha de la edición: mes y año actuales (el sitio es estático, por eso se calcula en el navegador)
+  const editionDate = document.getElementById('edition-date');
+  if (editionDate) {
+    const f = new Date().toLocaleDateString('es-VE', { month: 'long', year: 'numeric' });
+    editionDate.textContent = f.charAt(0).toUpperCase() + f.slice(1);
+  }
+</script>
