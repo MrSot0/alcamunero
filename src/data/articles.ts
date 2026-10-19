@@ -22,7 +22,8 @@ export type SectionId =
   | 'ciencia'
   | 'efemerides'
   | 'opinion'
-  | 'reportajes';
+  | 'reportajes'
+  | 'editorial';
 
 export interface Article {
   /** URL: /articulo/<slug> */
@@ -90,6 +91,10 @@ export const sections: Record<SectionId, { label: string; description: string }>
   reportajes: {
     label: 'Reportajes',
     description: 'Historia, trayectoria e innovación institucional.',
+  },
+  editorial: {
+    label: 'Editorial',
+    description: 'Opinión y reflexiones del equipo directivo.',
   },
 };
 
@@ -394,7 +399,7 @@ export const articles: Article[] = [
   {
     slug: 'editorial-legado',
     component: 'EditorialLegado',
-    section: 'opinion',
+    section: 'editorial',
     kicker: 'Editorial',
     title: 'Más de cinco décadas de legado y formación integral',
     author: 'Por la Dirección',
@@ -461,7 +466,7 @@ export const articles: Article[] = [
 {
     slug: 'el-liderazgo-transformacional-educativo',
     component: 'EditorialLiderazgo',
-    section: 'reportajes',
+    section: 'editorial',
     kicker: 'Editorial',
     title: 'El liderazgo transformacional en la U.E. Colegio Aplicación',
     author: 'Dr. Lidimo A. Chacón, Director',
