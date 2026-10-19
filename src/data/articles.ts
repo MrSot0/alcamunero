@@ -113,7 +113,7 @@ export const articles: Article[] = [
     ],
     caption: 'Estudiantes y personal del colegio durante la jornada de bienvenida al nuevo año escolar.',
     featured: true,
-    order: 1,
+    order: 2,
   },
   {
     slug: 'efemerides-septiembre',
@@ -131,7 +131,7 @@ export const articles: Article[] = [
       { src: '/efemerides3.webp', alt: 'Retrato ilustrado de Miguel de Cervantes escribiendo' },
     ],
     caption: 'Ilustraciones de las efemérides de septiembre.',
-    order: 2,
+    order: 21,
   },
   {
     slug: 'formacion-pedagogica-docentes',
@@ -457,6 +457,24 @@ export const articles: Article[] = [
     ],
     caption: 'Momentos de la labor docente de la Profesora Josefa Molina.',
     order: 20,
+  },
+{
+    slug: 'el-liderazgo-transformacional-educativo',
+    component: 'EditorialLiderazgo',
+    section: 'reportajes',
+    kicker: 'Editorial',
+    title: 'El liderazgo transformacional en la U.E. Colegio Aplicación',
+    author: 'Dr. Lidimo A. Chacón, Director',
+    date: '15 de Octubre, 2026',
+    excerpt:
+      'El liderazgo transformacional se erige como una competencia fundamental para enfrentar los retos del futuro y transformar la realidad escolar.',
+    slides: [
+      { src: '/liderazgo1.webp', alt: 'Estudiantes y docentes en la U.E. Colegio Aplicación' },
+    ],
+    caption: 'La transformación educativa y el liderazgo institucional en el Colegio Aplicación.',
+    featured: true,
+    order: 1,
+
   },
 ];
 
