@@ -149,7 +149,6 @@ export const articles: Article[] = [
     excerpt:
       'Un ciclo de capacitación con las ponencias “Teorías del Aprendizaje” y “Planificación y Evaluación”, y un taller de control de emociones.',
     slides: [
-      { src: '/formacion1.webp', alt: 'Docentes atendiendo una ponencia en el salón' },
       { src: '/formacion2.webp', alt: 'Docentes en una sesión de formación con computadoras' },
       { src: '/formacion3.webp', alt: 'Ponente y docentes durante la jornada de capacitación' },
     ],
