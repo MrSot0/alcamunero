@@ -309,7 +309,6 @@ export const articles: Article[] = [
       'El personal docente, administrativo y obrero se reunió alrededor del pastel para celebrar el 56.º aniversario junto a educadores de larga trayectoria.',
     slides: [
       { src: '/cumple.webp', alt: 'Fotografía: Canto de Cumpleaños y Pasteles Aniversarios' },
-      { src: '/img2.webp', alt: 'Otra toma del mismo evento (foto pendiente)' },
     ],
     caption:
       'El personal docente, administrativo y obrero congregado alrededor del pastel para celebrar el 56.º aniversario junto a educadores de larga trayectoria.',
