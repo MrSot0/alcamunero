@@ -29,7 +29,8 @@ const destacados = sortedArticles.filter((a) => a.featured || a.highlight);
       <div class="space-y-3">
         <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400">Secciones</h3>
         <ul class="space-y-2 text-xs text-blue-200">
-          <li><a href="/" class="hover:text-cyan-300 transition-colors">Portada</a></li>
+          <li><a href="/periodico" class="hover:text-cyan-300 transition-colors">Portada</a></li>
+          <li><a href="/" class="hover:text-cyan-300 transition-colors">Sitio del colegio</a></li>
           {Object.entries(sections).map(([id, s]) => (
             <li><a href={`/seccion/${id}`} class="hover:text-cyan-300 transition-colors">{s.label}</a></li>
           ))}
