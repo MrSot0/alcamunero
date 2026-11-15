@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="node_modules/@fontsource/cormorant-garamond/500.css">
+<link rel="stylesheet" href="node_modules/@fontsource/cormorant-garamond/600.css">
+<link rel="stylesheet" href="node_modules/@fontsource/cormorant-garamond/600-italic.css">
+<link rel="stylesheet" href="node_modules/@fontsource/manrope/400.css">
+<link rel="stylesheet" href="node_modules/@fontsource/manrope/600.css">
+<link rel="stylesheet" href="node_modules/@fontsource/manrope/800.css">
+<link rel="stylesheet" href="out.css">
+<style>
+  :root{--navy:#172554;--deep:#0b1736;--brand:#2B54A8;--cyan:#22d3ee;--ivory:#f6f2ea}
+  body{background:var(--ivory);color:#14213d;font-family:Manrope,system-ui,sans-serif}
+  .disp{font-family:"Cormorant Garamond",serif}
+  .sc{font-size:11px;letter-spacing:.26em;text-transform:uppercase;font-weight:800}
+  /* Animaciones */
+  .line{display:block;overflow:hidden}
+  .line>span{display:block;transform:translateY(110%);animation:up 1.1s cubic-bezier(.22,1,.36,1) forwards}
+  .line:nth-child(2)>span{animation-delay:.15s}
+  @keyframes up{to{transform:none}}
+  .fade-in{opacity:0;animation:fade 1s .6s forwards}@keyframes fade{to{opacity:1}}
+  .rise{opacity:0;transform:translateY(60px);animation:rise 1s cubic-bezier(.22,1,.36,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .reveal{opacity:0;transform:translateY(32px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+  .reveal.in{opacity:1;transform:none}
+  .spin{animation:spin 40s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+  .scroll-cue{animation:bob 2s ease-in-out infinite}@keyframes bob{50%{transform:translateY(6px)}}
+  .pulse::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 0 rgb(37 211 102/.6);animation:pulse 2.4s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 18px rgb(37 211 102/0)}100%{box-shadow:0 0 0 0 rgb(37 211 102/0)}}
+  .card-img img{transition:transform .8s cubic-bezier(.22,1,.36,1)}.card-img:hover img{transform:scale(1.07)}
+  .marquee{animation:marq 40s linear infinite}@keyframes marq{to{transform:translateX(-50%)}}
+  .mesh{background:radial-gradient(60% 80% at 85% 10%,rgb(34 211 238/.28),transparent 60%),radial-gradient(50% 70% at 10% 100%,rgb(43 84 168/.7),transparent 60%),var(--deep)}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.line>span,.rise,.reveal,.fade-in{opacity:1;transform:none}}
+</style><title>Propuesta D</title></head>
+<body>
+
+<!-- ============ HERO VIDEO ============ -->
+<section class="relative h-[100svh] min-h-[620px] text-white overflow-hidden bg-[var(--deep)]">
+  <video autoplay muted loop playsinline poster="img/bienvenida1.webp" class="absolute inset-0 w-full h-full object-cover"><source src="hero.webm" type="video/webm"><source src="hero.mp4" type="video/mp4"></video>
+  <div class="absolute inset-0 bg-gradient-to-b from-[#0b1736]/70 via-[#0b1736]/10 to-[#0b1736]/85"></div>
+  <header class="relative z-10 max-w-[1400px] mx-auto px-5 lg:px-10 pt-5 flex items-start justify-between">
+    <a class="flex items-center gap-3 fade-in">
+      <span class="w-16 h-16 lg:w-24 lg:h-24 rounded-full bg-[var(--ivory)] grid place-items-center ring-4 ring-white/20"><img src="img/logo.png" class="w-[70%]"></span>
+      <span class="hidden md:block leading-tight"><span class="disp text-2xl font-semibold block">Colegio Aplicación</span><span class="sc text-[var(--cyan)]">Desde 1970</span></span>
+    </a>
+    <nav class="flex items-center gap-6 lg:gap-8 fade-in">
+      <div class="hidden lg:flex gap-7 text-[17px] font-semibold"><a>Admisiones ↗</a><a>Estudiantes ↗</a><a>Periódico ↗</a><a>Contacto ↗</a></div>
+      <button class="w-14 h-14 lg:w-[72px] lg:h-[72px] rounded-full bg-[var(--cyan)] text-[var(--deep)] grid place-items-center shadow-[0_10px_30px_-8px_rgb(34_211_238/.7)]"><svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </nav>
+  </header>
+  <div class="absolute inset-x-0 bottom-[150px] lg:bottom-[190px] text-center px-4">
+    <p class="sc text-[var(--cyan)] fade-in">Kinder · Primaria · Bachillerato</p>
+    <h1 class="disp uppercase mt-3 leading-[.92]">
+      <span class="line text-[2.1rem] lg:text-[min(4.2rem,7vh)] tracking-[.04em] font-medium"><span>Colegio Aplicación</span></span>
+      <span class="line text-[3.2rem] lg:text-[min(7.5rem,7vw,12vh)] lg:whitespace-nowrap font-semibold"><span>Educando <em class="normal-case italic text-[var(--cyan)]">para</em> servir</span></span>
+    </h1>
+  </div>
+  <p class="absolute left-5 lg:left-10 bottom-[120px] lg:bottom-[150px] sc text-white/80 hidden sm:flex items-center gap-2 scroll-cue">↙ Desliza para explorar</p>
+</section>
+
+<!-- ============ NIVELES sobre banda de color (montadas sobre el hero) ============ -->
+<section class="relative bg-[var(--brand)] pb-14 lg:pb-20">
+  <div class="absolute inset-0 opacity-20" style="background-image:radial-gradient(circle at 1px 1px,#fff 1px,transparent 0);background-size:20px 20px"></div>
+  <div class="relative max-w-[1200px] mx-auto px-5 grid grid-cols-3 gap-3 lg:gap-6 -mt-[110px] lg:-mt-[140px]">
+    <a class="rise card-img relative block overflow-hidden border-t-4 border-[var(--cyan)] aspect-[3/4] lg:aspect-[4/3] shadow-2xl" style="animation-delay:.5s"><img src="img/bienvenida2.webp" class="absolute inset-0 w-full h-full object-cover"><span class="absolute inset-0 bg-gradient-to-t from-[#0e7490]/90 via-transparent"></span><span class="absolute bottom-3 lg:bottom-5 inset-x-0 text-center text-white"><span class="disp text-xl lg:text-4xl font-semibold block">Kinder</span><span class="hidden lg:block text-xs mt-1">3 a 5 años</span></span></a>
+    <a class="rise card-img relative block overflow-hidden border-t-4 border-[var(--cyan)] aspect-[3/4] lg:aspect-[4/3] shadow-2xl" style="animation-delay:.65s"><img src="img/prosecucion4.webp" class="absolute inset-0 w-full h-full object-cover"><span class="absolute inset-0 bg-gradient-to-t from-[var(--brand)] via-transparent"></span><span class="absolute bottom-3 lg:bottom-5 inset-x-0 text-center text-white"><span class="disp text-xl lg:text-4xl font-semibold block">Primaria</span><span class="hidden lg:block text-xs mt-1">1.º a 6.º grado</span></span></a>
+    <a class="rise card-img relative block overflow-hidden border-t-4 border-[var(--cyan)] aspect-[3/4] lg:aspect-[4/3] shadow-2xl" style="animation-delay:.8s"><img src="img/graduacion1.webp" class="absolute inset-0 w-full h-full object-cover"><span class="absolute inset-0 bg-gradient-to-t from-[var(--deep)] via-transparent"></span><span class="absolute bottom-3 lg:bottom-5 inset-x-0 text-center text-white"><span class="disp text-xl lg:text-4xl font-semibold block">Bachillerato</span><span class="hidden lg:block text-xs mt-1">1.º a 5.º año</span></span></a>
+  </div>
+</section>
+
+<!-- ============ INTRO + VIDEO + CIFRAS ============ -->
+<section class="bg-white py-20 lg:py-28">
+  <div class="max-w-[1100px] mx-auto px-5 text-center">
+    <h2 class="disp font-semibold text-4xl lg:text-6xl leading-[1.05] reveal"><span class="text-[var(--navy)]">Formamos personas</span><br><em class="text-[var(--brand)]">que transforman su entorno</em></h2>
+    <p class="mt-5 text-gray-600 max-w-2xl mx-auto reveal">Una comunidad católica en Palo Gordo donde cada estudiante es conocido por su nombre, acompañado en su fe y retado a dar lo mejor de sí.</p>
+    <div class="mt-12 relative aspect-video overflow-hidden reveal group">
+      <img src="img/equipo.webp" class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0 bg-[var(--navy)]/35"></div>
+      <span class="absolute inset-0 grid place-items-center"><span class="relative w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-white/95 grid place-items-center pulse" style="--tw:0"><svg class="w-8 h-8 text-[var(--brand)] ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span></span>
+      <span class="absolute left-5 bottom-4 text-left text-white"><span class="sc text-[var(--cyan)]">Video</span><span class="disp text-2xl block">Recorrido por el colegio</span></span>
+    </div>
+    <div class="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-y-10">
+      <div class="reveal"><span class="mx-auto w-14 h-14 rounded-full bg-[var(--cyan)]/15 text-[#0e7490] grid place-items-center"><svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></span><p class="disp text-6xl text-[var(--brand)] mt-3" data-count="56">0</p><p class="text-sm font-semibold mt-1">años de historia</p></div>
+      <div class="reveal" style="transition-delay:.1s"><span class="mx-auto w-14 h-14 rounded-full bg-[var(--cyan)]/15 text-[#0e7490] grid place-items-center"><svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5zm0 0v6m-6-9v5c0 1 3 3 6 3s6-2 6-3v-5"/></svg></span><p class="disp text-6xl text-[var(--brand)] mt-3" data-count="44">0</p><p class="text-sm font-semibold mt-1">promociones</p></div>
+      <div class="reveal" style="transition-delay:.2s"><span class="mx-auto w-14 h-14 rounded-full bg-[var(--cyan)]/15 text-[#0e7490] grid place-items-center"><svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 6.25v13m0-13C10.8 5.5 9.2 5 7.5 5S4.2 5.5 3 6.25v13C4.2 18.5 5.8 18 7.5 18s3.3.5 4.5 1.25m0-13C13.2 5.5 14.8 5 16.5 5s3.3.5 4.5 1.25v13"/></svg></span><p class="disp text-6xl text-[var(--brand)] mt-3" data-count="3">0</p><p class="text-sm font-semibold mt-1">niveles educativos</p></div>
+      <div class="reveal" style="transition-delay:.3s"><span class="mx-auto w-14 h-14 rounded-full bg-[var(--cyan)]/15 text-[#0e7490] grid place-items-center"><svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 3v18M7 8h10"/></svg></span><p class="disp text-6xl text-[var(--brand)] mt-3">AVEC</p><p class="text-sm font-semibold mt-1">educación católica</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMUNIDAD: retratos escalonados ============ -->
+<section class="relative overflow-hidden bg-[var(--ivory)] py-20 lg:py-28">
+  <div class="max-w-[1300px] mx-auto px-5 grid lg:grid-cols-12 gap-10 items-center">
+    <div class="lg:col-span-4 reveal">
+      <svg viewBox="0 0 200 200" class="w-28 lg:w-36 text-[var(--brand)] spin"><defs><path id="c" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><circle cx="100" cy="100" r="96" fill="none" stroke="currentColor"/><text font-family="Manrope" font-size="12" font-weight="800" letter-spacing="4.2" fill="currentColor"><textPath href="#c">COLEGIO APLICACIÓN · EDUCANDO PARA SERVIR · </textPath></text><text x="100" y="112" text-anchor="middle" font-family="Cormorant Garamond" font-size="40" font-weight="600" fill="#172554">1970</text></svg>
+      <h2 class="disp font-semibold text-4xl lg:text-[3.4rem] leading-[1.02] mt-6"><span class="text-[var(--navy)]">Una comunidad</span><br><em class="text-[var(--brand)]">que reta e inspira</em></h2>
+      <p class="mt-5 text-gray-700 leading-relaxed">Docentes con mística, familias presentes y estudiantes que lideran: así se vive la identidad aplicatense desde hace más de cinco décadas.</p>
+      <a class="inline-flex mt-7 h-12 px-6 items-center bg-[var(--navy)] text-white text-sm font-bold">Conoce nuestra historia →</a>
+    </div>
+    <div class="lg:col-span-8 grid grid-cols-3 gap-3 lg:gap-5 items-start">
+      <figure class="reveal border-t-4 border-[var(--cyan)] overflow-hidden" data-speed="-0.05"><img src="img/profe2.webp" class="w-full aspect-[3/5] object-cover"></figure>
+      <figure class="reveal border-t-4 border-[var(--brand)] overflow-hidden mt-12" data-speed="0.06" style="transition-delay:.12s"><img src="img/reinas0.webp" class="w-full aspect-[3/5] object-cover"></figure>
+      <figure class="reveal border-t-4 border-[var(--navy)] overflow-hidden mt-4" data-speed="-0.02" style="transition-delay:.24s"><img src="img/comite.webp" class="w-full aspect-[3/5] object-cover"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METODOLOGÍA: mosaico de color ============ -->
+<section class="mesh text-white py-20 lg:py-28">
+  <div class="max-w-[1300px] mx-auto px-5">
+    <div class="flex flex-wrap items-end justify-between gap-4 reveal"><div><p class="sc text-[var(--cyan)]">Metodología</p><h2 class="disp font-semibold text-4xl lg:text-6xl mt-3">Cómo aprendemos</h2></div><a class="text-sm font-bold text-[var(--cyan)]">Programa completo →</a></div>
+    <div class="mt-10 grid grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-4">
+      <div class="col-span-2 lg:row-span-2 relative overflow-hidden min-h-[280px] reveal card-img"><img src="img/semblanza2.webp" class="absolute inset-0 w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-t from-[var(--deep)] via-[var(--deep)]/30"></div><div class="absolute bottom-0 p-6"><span class="sc text-[var(--cyan)]">01</span><h3 class="disp text-3xl font-semibold mt-1">Aprendizaje basado en proyectos</h3></div></div>
+      <div class="bg-[var(--cyan)] text-[var(--deep)] p-6 reveal"><span class="sc">02</span><h3 class="disp text-2xl lg:text-3xl font-semibold mt-2 leading-tight hyphens-auto break-words" lang="es">Pensamiento crítico</h3></div>
+      <div class="bg-white text-[var(--navy)] p-6 reveal"><span class="sc text-[var(--brand)]">03</span><h3 class="disp text-2xl lg:text-3xl font-semibold mt-2 leading-tight hyphens-auto break-words" lang="es">Liderazgo transformacional</h3></div>
+      <div class="bg-[var(--brand)] p-6 reveal"><span class="sc text-[var(--cyan)]">04</span><h3 class="disp text-2xl lg:text-3xl font-semibold mt-2 leading-tight hyphens-auto break-words" lang="es">Tecnología con propósito</h3></div>
+      <div class="border border-white/30 p-6 reveal"><span class="sc text-[var(--cyan)]">05</span><h3 class="disp text-2xl lg:text-3xl font-semibold mt-2 leading-tight hyphens-auto break-words" lang="es">Escuela, familia y comunidad</h3></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HISTORIA: línea de tiempo con cinta ============ -->
+<section class="bg-[var(--ivory)] py-20 lg:py-28 overflow-hidden">
+  <div class="max-w-[1300px] mx-auto px-5 flex items-end justify-between reveal"><h2 class="disp font-semibold text-4xl lg:text-6xl"><span class="text-[var(--navy)]">Nuestra</span> <em class="text-[var(--brand)]">historia</em></h2><p class="sc text-[var(--brand)] hidden sm:block">1970 — hoy</p></div>
+  <div class="mt-12 flex w-max marquee gap-6 pl-5">
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/colegio.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">1970</p><p class="text-sm">Monseñor Alejandro Fernández Feo funda el plantel.</p></figure>
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/semblanza1.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">Raíces</p><p class="text-sm">Referente formativo de Palo Gordo y la región andina.</p></figure>
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/graduacion3.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">Promo 44</p><p class="text-sm">Bachilleres que hoy sobresalen dentro y fuera del país.</p></figure>
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/cumple.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">2026</p><p class="text-sm">56 aniversario y nace Alcamunero digital.</p></figure>
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/colegio.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">1970</p><p class="text-sm">Monseñor Alejandro Fernández Feo funda el plantel.</p></figure>
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/semblanza1.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">Raíces</p><p class="text-sm">Referente formativo de Palo Gordo y la región andina.</p></figure>
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/graduacion3.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">Promo 44</p><p class="text-sm">Bachilleres que hoy sobresalen dentro y fuera del país.</p></figure>
+    <figure class="w-[300px] lg:w-[380px]"><img src="img/cumple.webp" class="w-full aspect-[4/3] object-cover"><p class="disp text-5xl text-[var(--brand)] mt-3">2026</p><p class="text-sm">56 aniversario y nace Alcamunero digital.</p></figure>
+  </div>
+</section>
+
+<!-- ============ VIDA EN EL COLEGIO: noticias + eventos ============ -->
+<section class="bg-white py-20 lg:py-28">
+  <div class="max-w-[1200px] mx-auto px-5">
+    <h2 class="disp font-semibold text-4xl lg:text-6xl text-center reveal"><span class="text-[var(--navy)]">La vida en</span> <em class="text-[var(--brand)]">el colegio</em></h2>
+    <div class="mt-12 grid lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-7 reveal">
+        <p class="sc text-[var(--navy)] border-b-2 border-[var(--navy)] pb-2">Desde Alcamunero</p>
+        <a class="mt-5 block relative overflow-hidden card-img"><img src="img/prosecucion1.webp" class="w-full aspect-[16/9] object-cover"><span class="absolute inset-0 bg-gradient-to-t from-[var(--deep)]/90 via-transparent"></span><span class="absolute left-5 bottom-4 text-white"><span class="inline-block bg-[var(--cyan)] text-[var(--deep)] text-[11px] font-extrabold px-2 py-0.5">EVENTOS</span><span class="disp text-2xl lg:text-3xl block mt-2 leading-tight">Actos de prosecución de Inicial y Primaria</span></span></a>
+        <div class="grid grid-cols-2 gap-4 mt-4">
+          <a class="relative overflow-hidden card-img"><img src="img/frank1.webp" class="w-full aspect-[4/3] object-cover"><span class="absolute inset-0 bg-[var(--brand)]/60"></span><span class="absolute inset-0 grid place-items-center text-white disp text-xl text-center px-3">Orgullo aplicatense</span></a>
+          <a class="relative overflow-hidden card-img"><img src="img/deporte3.webp" class="w-full aspect-[4/3] object-cover"><span class="absolute inset-0 bg-[var(--navy)]/60"></span><span class="absolute inset-0 grid place-items-center text-white disp text-xl text-center px-3">Jornada deportiva</span></a>
+        </div>
+      </div>
+      <div class="lg:col-span-5 reveal">
+        <p class="sc text-[var(--navy)] border-b-2 border-[var(--navy)] pb-2">Próximos eventos</p>
+        <ol class="mt-2 divide-y divide-gray-200">
+          <li class="py-4 flex gap-4 items-center"><span class="w-16 h-16 shrink-0 rounded-full border-2 border-[var(--cyan)] grid place-items-center text-center leading-none"><span><b class="disp text-2xl block text-[var(--navy)]">5</b><span class="text-[10px] font-extrabold text-[#0e7490]">NOV</span></span></span><div><p class="font-bold text-[var(--brand)]">Aniversario de fundación</p><p class="text-xs text-gray-500">Misa de acción de gracias · Cancha techada</p></div></li>
+          <li class="py-4 flex gap-4 items-center"><span class="w-16 h-16 shrink-0 rounded-full border-2 border-[var(--cyan)] grid place-items-center text-center leading-none"><span><b class="disp text-2xl block text-[var(--navy)]">12</b><span class="text-[10px] font-extrabold text-[#0e7490]">DIC</span></span></span><div><p class="font-bold text-[var(--brand)]">Cierre del primer lapso</p><p class="text-xs text-gray-500">Entrega de boletines</p></div></li>
+          <li class="py-4 flex gap-4 items-center"><span class="w-16 h-16 shrink-0 rounded-full border-2 border-[var(--cyan)] grid place-items-center text-center leading-none"><span><b class="disp text-2xl block text-[var(--navy)]">15</b><span class="text-[10px] font-extrabold text-[#0e7490]">JUN</span></span></span><div><p class="font-bold text-[var(--brand)]">Semana Aniversaria</p><p class="text-xs text-gray-500">Talent Show · Gala Cultural · Deportes</p></div></li>
+        </ol>
+        <a class="mt-4 inline-flex h-11 px-5 items-center bg-[var(--brand)] text-white text-sm font-bold">Ver calendario</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA VISITA ============ -->
+<section class="relative py-24 lg:py-32 text-white text-center overflow-hidden">
+  <img src="img/equipo2.webp" class="absolute inset-0 w-full h-full object-cover">
+  <div class="absolute inset-0 bg-gradient-to-r from-[var(--deep)]/95 via-[var(--brand)]/80 to-[var(--deep)]/95"></div>
+  <div class="relative max-w-3xl mx-auto px-5 reveal">
+    <p class="sc text-[var(--cyan)]">Admisiones abiertas</p>
+    <h2 class="disp font-semibold text-5xl lg:text-7xl mt-4 leading-[.95]">Agenda tu visita</h2>
+    <p class="mt-5 text-white/85">Conoce las aulas, la cancha y a nuestro equipo. Te acompañamos en todo el proceso de inscripción.</p>
+    <div class="mt-8 flex flex-wrap justify-center gap-3"><a class="h-12 px-7 inline-flex items-center bg-[var(--cyan)] text-[var(--deep)] font-extrabold text-sm">Solicitar cupo</a><a class="h-12 px-7 inline-flex items-center border border-white/70 font-bold text-sm">Requisitos</a></div>
+  </div>
+</section>
+
+<!-- ============ FOOTER centrado ============ -->
+<footer class="bg-[var(--deep)] text-white/80 py-14 text-center text-sm">
+  <span class="mx-auto w-20 h-20 rounded-full bg-[var(--ivory)] grid place-items-center"><img src="img/logo.png" class="w-[70%]"></span>
+  <p class="disp text-2xl text-white mt-4">Colegio Aplicación</p>
+  <p class="mt-1">Palo Gordo, municipio Cárdenas, Táchira</p>
+  <div class="mt-6 flex flex-wrap justify-center gap-6 text-xs"><a>Nosotros</a><a>Programa</a><a>Admisiones</a><a>Estudiantes</a><a>Periódico</a><a>Contacto</a></div>
+  <img src="img/avec.png" class="h-10 mx-auto mt-8 opacity-80">
+</footer>
+
+<!-- Riel lateral de acciones (escritorio) + WhatsApp -->
+<div class="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 flex-col bg-[var(--brand)] text-white text-[11px] font-bold">
+  <a class="w-20 py-3 flex flex-col items-center gap-1 border-b border-white/20"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.6L19 9.4V19a2 2 0 01-2 2z"/></svg>Inscríbete</a>
+  <a class="w-20 py-3 flex flex-col items-center gap-1 border-b border-white/20"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.7 16.7L13.4 21a2 2 0 01-2.8 0l-4.3-4.3a8 8 0 1111.4 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>Visítanos</a>
+  <a class="w-20 py-3 flex flex-col items-center gap-1"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>Calendario</a>
+</div>
+<a class="fixed right-5 bottom-5 lg:right-7 lg:bottom-7 z-50 w-16 h-16 rounded-full bg-[#25D366] text-white grid place-items-center shadow-2xl relative pulse" style="position:fixed"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.2 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.4-.7-2.8-1.1-4.6-4-4.8-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+
+<script>
+  // Aparición al hacer scroll
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+  // Contadores
+  const co = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return; co.unobserve(e.target);
+    const end = +e.target.dataset.count, t0 = performance.now();
+    const step = (t) => { const p = Math.min((t - t0) / 1600, 1); e.target.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }), { threshold: 0.6 });
+  document.querySelectorAll('[data-count]').forEach((el) => co.observe(el));
+  // Parallax suave en retratos
+  const par = [...document.querySelectorAll('[data-speed]')];
+  addEventListener('scroll', () => par.forEach((el) => { const r = el.getBoundingClientRect(); el.style.translate = `0 ${(r.top - innerHeight / 2) * +el.dataset.speed}px`; }), { passive: true });
+  // Modo captura: mostrar todo de inmediato
+  if (location.hash === '#static') { document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in')); document.querySelectorAll('[data-count]').forEach((el) => el.textContent = el.dataset.count); }
+</script>
+</body></html>
