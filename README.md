@@ -2,18 +2,29 @@
 
 Sitio institucional de la U.E. Colegio Aplicación (Palo Gordo, Táchira) y su periódico digital **Alcamunero**, hecho con [Astro](https://astro.build) y Tailwind CSS v4.
 
-## Páginas
+## Estado actual: solo el periódico está publicado
 
-| Ruta | Contenido |
+El sitio institucional está **oculto al público**: solo existe como vista previa interna en
+`/colegio-preview/` (páginas en `src/pages/colegio-preview/`). El periódico no enlaza hacia ella,
+las páginas llevan `noindex` y no aparecen en el sitemap.
+
+| Ruta publicada | Contenido |
 |---|---|
-| `/` | Inicio: resumen de todas las secciones |
-| `/nosotros` | Misión, visión, valores, historia, staff, instalaciones |
-| `/programa`, `/programa/[kinder\|primaria\|bachillerato\|metodologia\|curriculum]` | Programa académico |
-| `/admisiones` | Pasos, requisitos, preguntas frecuentes, solicitud por WhatsApp |
-| `/estudiantes` | Portal de estudiantes con estética de app |
-| `/contacto` | Mapa, datos de contacto y formulario por WhatsApp |
-| `/periodico`, `/articulo/*`, `/seccion/*`, `/directorio` | Periódico Alcamunero |
+| `/` | Portada del periódico Alcamunero (`/periodico` redirige aquí) |
+| `/articulo/*`, `/seccion/*`, `/directorio` | Periódico |
 | `/admin` | Administrador de contenidos del periódico |
+
+### Volver a publicar el sitio institucional
+
+1. Mueve la portada del periódico: `git mv src/pages/index.astro src/pages/periodico.astro`.
+2. Mueve las páginas a la raíz: `git mv src/pages/colegio-preview/* src/pages/` y quita el prefijo
+   `/colegio-preview` de los enlaces (en esas páginas, `src/layouts/SiteLayout.astro`,
+   `src/components/site/` y `src/data/site.ts`). Ajusta las importaciones relativas (un `../` menos).
+3. Quita la etiqueta `noindex` de `SiteLayout.astro`, la redirección `/periodico` y el filtro del
+   sitemap en `astro.config.mjs`, y vuelve a enlazar el colegio desde `Navbar.astro` y `Footer.astro`.
+
+Páginas institucionales (ocultas): inicio, `/nosotros`, `/programa` (+ kinder, primaria,
+bachillerato, metodologia, curriculum), `/admisiones`, `/estudiantes`, `/contacto`.
 
 ## Datos que se editan a mano
 

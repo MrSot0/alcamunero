@@ -1,9 +1,9 @@
 ---
 // src/pages/contacto.astro
-import SiteLayout from '../layouts/SiteLayout.astro';
-import PageHeader from '../components/site/PageHeader.astro';
-import Icon from '../components/site/Icon.astro';
-import { contact, mapEmbed, mapLink, whatsappLink } from '../data/site';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import Icon from '../../components/site/Icon.astro';
+import { contact, mapEmbed, mapLink, whatsappLink } from '../../data/site';
 
 const cards = [
   { icon: 'whatsapp', brand: true, title: 'WhatsApp', text: contact.phone, href: whatsappLink(), tint: 'bg-whatsapp text-white', ext: true },

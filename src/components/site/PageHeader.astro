@@ -26,11 +26,11 @@ const { eyebrow, icon, title, highlight, intro, image, imageAlt, crumbs = [] } =
     <div class="absolute inset-0 bg-gradient-to-t from-deep via-deep/55 to-deep/10"></div>
     <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-brand/40 blur-3xl"></div>
     <!-- Móvil: logo (no hay barra superior) -->
-    <a href="/" aria-label="Inicio" class="lg:hidden absolute left-5 top-[calc(1rem+env(safe-area-inset-top))] z-10 w-12 h-12 rounded-full bg-ivory grid place-items-center ring-4 ring-white/20 fade-in"><img src="/logo.png" alt="Logo del Colegio Aplicación" class="w-8 h-8 object-contain" /></a>
+    <a href="/colegio-preview/" aria-label="Inicio" class="lg:hidden absolute left-5 top-[calc(1rem+env(safe-area-inset-top))] z-10 w-12 h-12 rounded-full bg-ivory grid place-items-center ring-4 ring-white/20 fade-in"><img src="/logo.png" alt="Logo del Colegio Aplicación" class="w-8 h-8 object-contain" /></a>
     <div class="relative w-full container-site !px-6 lg:!px-14 pb-10 lg:pb-14 pt-24 text-center lg:text-left">
       {crumbs.length > 0 && (
         <nav aria-label="Ruta" class="hidden lg:flex fade-in mb-4 flex-wrap items-center gap-1.5 text-xs font-semibold text-blue-100/80">
-          <a href="/" class="hover:text-aqua">Inicio</a>
+          <a href="/colegio-preview/" class="hover:text-aqua">Inicio</a>
           {crumbs.map((c) => (
             <>
               <Icon name="chevron-right" class="w-3.5 h-3.5" />
