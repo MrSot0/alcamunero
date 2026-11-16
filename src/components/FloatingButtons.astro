@@ -4,7 +4,7 @@ import Icon from './site/Icon.astro';
 import { whatsappLink } from '../data/site';
 ---
 
-<div class="fixed bottom-24 lg:bottom-6 right-4 lg:right-6 z-40 flex flex-col gap-3">
+<div data-floating class="fixed bottom-24 lg:bottom-6 right-3 lg:right-6 z-40 flex flex-col gap-3 transition-[transform,opacity] duration-300">
   
  {/* Botón para subir arriba (Scroll to Top) - Oculto por defecto hasta hacer scroll */}
 <button 
@@ -48,6 +48,26 @@ import { whatsappLink } from '../data/site';
       scrollTopBtn?.classList.remove('opacity-100', 'translate-y-0');
     }
   });
+
+  // En móvil, los botones se apartan mientras se baja para no tapar el texto
+  const floatWrap = document.querySelector<HTMLElement>('[data-floating]');
+  let lastY = window.scrollY;
+  let idle: number | undefined;
+  const showFloat = (on: boolean) => {
+    if (!floatWrap) return;
+    floatWrap.style.transform = on ? '' : 'translateX(calc(100% + 1rem))';
+    floatWrap.style.opacity = on ? '' : '0';
+    floatWrap.style.pointerEvents = on ? '' : 'none';
+  };
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth >= 1024) return showFloat(true);
+    const y = window.scrollY;
+    if (y > lastY + 4) showFloat(false);
+    else if (y < lastY - 4) showFloat(true);
+    lastY = y;
+    clearTimeout(idle);
+    idle = window.setTimeout(() => showFloat(true), 900);
+  }, { passive: true });
 
   scrollTopBtn?.addEventListener('click', () => {
     window.scrollTo({
