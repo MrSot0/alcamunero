@@ -1,0 +1,125 @@
+---
+// src/pages/programa/[slug].astro — Kinder, Primaria, Bachillerato, Metodología, Currículum
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import Icon from '../../components/site/Icon.astro';
+import { programs, levels, whatsappLink } from '../../data/site';
+import type { Program } from '../../data/site';
+
+export function getStaticPaths() {
+  return programs.map((p) => ({ params: { slug: p.slug }, props: { program: p } }));
+}
+
+interface Props { program: Program }
+const { program: p } = Astro.props;
+
+// Íconos para los aspectos destacados de cada nivel (en orden)
+const highlightIcons: Record<string, string[]> = {
+  kinder: ['toy-brick', 'smile', 'pencil-line', 'house-heart'],
+  primaria: ['book-open-text', 'calculator', 'languages', 'microscope'],
+  bachillerato: ['flask-conical', 'compass', 'palette', 'award'],
+  curriculum: ['scroll-text', 'church', 'music', 'trophy'],
+};
+const iconFor = (i: number, own?: string) => own ?? highlightIcons[p.slug]?.[i] ?? 'sparkles';
+const isLevel = p.kind === 'nivel';
+const breadcrumb = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Programa', item: '/programa' },
+    { '@type': 'ListItem', position: 2, name: p.label },
+  ],
+};
+---
+
+<SiteLayout
+  title={`${p.title}${isLevel ? ` (${p.label})` : ''} · Colegio Aplicación`}
+  description={`${p.title} en el Colegio Aplicación, Palo Gordo. ${p.tagline} ${p.intro.slice(0, 90)}…`}
+  active="programa"
+  schema={[breadcrumb]}
+>
+  <PageHeader
+    eyebrow={isLevel ? p.title : 'Programa académico'}
+    icon={p.icon}
+    title={p.label}
+    highlight={p.tagline}
+    image={p.image}
+    imageAlt={p.imageAlt}
+    crumbs={[{ label: 'Programa', href: '/programa' }, { label: p.label }]}
+  >
+    {isLevel && (
+      <div class="fade-in mt-5 flex flex-wrap gap-2">
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur px-3 py-1.5 text-sm font-semibold"><Icon name="cake" class="w-4 h-4" />{p.ages}</span>
+        <span class="inline-flex items-center gap-1.5 rounded-full bg-white/15 backdrop-blur px-3 py-1.5 text-sm font-semibold"><Icon name="layers" class="w-4 h-4" />{p.grades}</span>
+      </div>
+    )}
+  </PageHeader>
+
+  <!-- Navegación entre programas (chips estilo app) -->
+  <nav aria-label="Otros programas" class="container-site mt-4">
+    <ul class="flex gap-2 overflow-x-auto py-2 [scrollbar-width:none]">
+      {programs.map((o) => (
+        <li><a href={`/programa/${o.slug}`} aria-current={o.slug === p.slug ? 'page' : undefined} class:list={['press inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-colors', o.slug === p.slug ? 'bg-navy text-white' : 'bg-white text-navy shadow-sm hover:bg-navy hover:text-white']}><Icon name={o.icon} class="w-4 h-4" />{o.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+
+  <section class="container-site py-10 lg:py-16 grid lg:grid-cols-12 gap-8 lg:gap-12">
+    <div class="lg:col-span-5">
+      <p class="eyebrow text-brand reveal"><Icon name="info" class="w-4 h-4" />Sobre {isLevel ? 'el nivel' : 'nuestro enfoque'}</p>
+      <p class="mt-4 text-xl lg:text-2xl font-semibold text-navy leading-snug reveal">{p.intro}</p>
+      {isLevel && (
+        <a href={whatsappLink(`Hola, quisiera información sobre ${p.label} (${p.title}).`)} target="_blank" rel="noopener" class="btn-primary mt-6 reveal"><Icon brand name="whatsapp" class="w-5 h-5" />Pedir información</a>
+      )}
+    </div>
+    <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4" data-stagger>
+      {p.highlights.map((h, i) => (
+        <article class:list={['group rounded-[24px] p-5 lg:p-6', i === 0 ? 'bg-navy text-white' : 'card']}>
+          <span class:list={['icon-pop chip-icon w-12 h-12 rounded-2xl', i === 0 ? 'bg-aqua text-deep' : 'bg-brand/10 text-brand']}><Icon name={iconFor(i, h.icon)} class="w-6 h-6" /></span>
+          <h2 class:list={['mt-4 text-lg font-extrabold', i !== 0 && 'text-navy']}>{h.title}</h2>
+          <p class:list={['mt-1 text-sm leading-relaxed', i === 0 ? 'text-blue-100' : 'text-gray-600']}>{h.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  {p.areas && (
+    <section class="px-3 lg:px-6">
+      <div class="max-w-[1300px] mx-auto rounded-[32px] lg:rounded-[56px] bg-white px-6 lg:px-14 py-10 lg:py-16">
+        <p class="eyebrow text-brand reveal"><Icon name="notebook-pen" class="w-4 h-4" />Áreas de formación</p>
+        <h2 class="h-section mt-3 text-navy reveal">Lo que <span class="text-brand">aprenderán</span></h2>
+        <ul class="mt-8 flex flex-wrap gap-2.5" data-stagger>
+          {p.areas.map((a) => (
+            <li class="inline-flex items-center gap-2 rounded-full bg-ivory px-4 py-2.5 text-sm font-semibold text-navy"><Icon name="circle-check" class="w-4 h-4 text-brand" />{a}</li>
+          ))}
+        </ul>
+        <p class="mt-6 text-xs text-gray-500">Según el currículo nacional del Ministerio del Poder Popular para la Educación (MPPE), complementado con la propuesta institucional.</p>
+      </div>
+    </section>
+  )}
+
+  {p.slug === 'curriculum' && (
+    <section class="container-site">
+      <h2 class="h-section text-navy reveal">Plan por <span class="text-brand">nivel</span></h2>
+      <div class="snap-row lg:grid-cols-3 lg:gap-5 mt-8" data-stagger>
+        {levels.map((l) => (
+          <a href={`/programa/${l.slug}`} class="w-[80%] sm:w-[46%] card p-6 press">
+            <span class="chip-icon w-12 h-12 rounded-2xl bg-brand/10 text-brand"><Icon name={l.icon} class="w-6 h-6" /></span>
+            <h3 class="mt-4 text-xl font-extrabold text-navy">{l.label}</h3>
+            <ul class="mt-3 space-y-1.5 text-sm text-gray-600">{l.areas!.slice(0, 6).map((a) => <li class="flex gap-2"><Icon name="dot" class="w-4 h-4 text-brand" />{a}</li>)}</ul>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Siguiente paso -->
+  <section class="container-site pt-12 lg:pt-20">
+    <div class="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-brand to-deep text-white p-7 lg:p-12 flex flex-col lg:flex-row lg:items-center gap-6">
+      <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-aqua/25 blur-3xl"></div>
+      <span class="relative chip-icon w-16 h-16 rounded-2xl bg-aqua text-deep"><Icon name="file-check" class="w-8 h-8" /></span>
+      <div class="relative flex-1"><h2 class="text-2xl lg:text-3xl font-extrabold">¿Listo para dar el siguiente paso?</h2><p class="text-blue-100 mt-1">Conoce los requisitos y agenda una visita guiada.</p></div>
+      <a href="/admisiones" class="relative btn-aqua"><Icon name="list-checks" class="w-5 h-5" />Ir a admisiones</a>
+    </div>
+  </section>
+</SiteLayout>

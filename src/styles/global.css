@@ -20,4 +20,12 @@
   .article-body > * + * {
     @apply mt-4;
   }
+
+  /* Elementos que genera el Markdown de los artículos */
+  .article-body h2, .article-body h3 { @apply font-serif text-xl font-bold text-gray-900 pt-2; }
+  .article-body blockquote { @apply border-l-4 border-gray-900 pl-4 italic text-gray-800 bg-gray-50 py-3 space-y-3; }
+  .article-body ul { @apply list-disc pl-6 space-y-1; }
+  .article-body ol { @apply list-decimal pl-6 space-y-1; }
+  .article-body a { @apply text-blue-800 underline underline-offset-2; }
+  .article-body img { @apply w-full h-auto my-2; }
 }

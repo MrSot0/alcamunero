@@ -1,0 +1,150 @@
+/* src/styles/site.css
+   Estilos del sitio institucional (todo menos el periódico, que usa global.css).
+   Tokens y reglas en DESIGN.md. */
+@import "tailwindcss";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --color-navy: #172554;
+  --color-deep: #0b1736;
+  --color-brand: #2b54a8;
+  --color-brand-hover: #3b65ba;
+  --color-aqua: #22d3ee;
+  --color-aqua-ink: #0e7490;
+  --color-ivory: #f6f2ea;
+  --color-whatsapp: #25d366;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-ivory text-[#14213d] font-sans antialiased; overflow-x: clip; }
+  h1, h2, h3 { letter-spacing: -0.025em; }
+  :focus-visible { outline: 3px solid var(--color-aqua); outline-offset: 3px; border-radius: 8px; }
+}
+
+/* Utilidades propias (Tailwind v4: @utility se puede usar con @apply) */
+@utility container-site { @apply max-w-[1300px] mx-auto px-5 lg:px-10; }
+@utility eyebrow { @apply inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.06em]; }
+@utility h-section { @apply font-extrabold text-[1.9rem] leading-[1.08] lg:text-5xl; }
+@utility btn { @apply inline-flex items-center justify-center gap-2 h-12 px-6 rounded-full text-sm font-bold transition-[transform,background-color] duration-200 active:scale-[0.96]; }
+@utility btn-primary { @apply btn bg-navy text-white hover:bg-brand; }
+@utility btn-light { @apply btn bg-white text-navy hover:bg-ivory; }
+@utility btn-aqua { @apply btn bg-aqua text-deep hover:bg-white; }
+@utility btn-ghost { @apply btn border border-white/50 bg-white/10 text-white backdrop-blur hover:bg-white/20; }
+@utility card { @apply bg-white rounded-[28px] shadow-[0_1px_2px_rgb(15_23_42/0.05),0_12px_32px_-18px_rgb(15_23_42/0.25)]; }
+@utility chip-icon { @apply grid place-items-center shrink-0 rounded-xl; }
+@utility press { @apply transition-transform duration-200 active:scale-[0.96]; }
+
+/* Carrusel deslizable en móvil → cuadrícula en escritorio (añadir lg:grid-cols-N) */
+.snap-row {
+  display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  padding-inline: 20px; margin-inline: -20px; padding-bottom: 6px;
+}
+.snap-row::-webkit-scrollbar { display: none; }
+.snap-row > * { scroll-snap-align: start; flex-shrink: 0; }
+
+/* Fuera de capa para ganar a los anchos de móvil (w-[78%]) en escritorio */
+@media (min-width: 1024px) {
+  .snap-row { display: grid; overflow: visible; padding: 0; margin: 0; }
+  .snap-row > * { width: auto; }
+}
+
+/* ───────── Animaciones ───────── */
+
+/* Título del hero: líneas que suben */
+.line { display: block; overflow: hidden; }
+.line > span { display: block; transform: translateY(110%); animation: line-up 1.1s var(--ease-out-soft) forwards; }
+.line:nth-child(2) > span { animation-delay: 0.12s; }
+@keyframes line-up { to { transform: none; } }
+.fade-in { opacity: 0; animation: fade-in 1s 0.45s forwards; }
+@keyframes fade-in { to { opacity: 1; } }
+
+/* Aparición al hacer scroll */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s var(--ease-out-soft), transform 0.9s var(--ease-out-soft); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* Tarjetas en cascada: el script asigna el retraso de cada hijo */
+[data-stagger] > * { opacity: 0; transform: translateY(40px) scale(0.97); transition: opacity 0.9s var(--ease-out-soft), transform 0.9s var(--ease-out-soft); }
+[data-stagger].in > * { opacity: 1; transform: none; }
+
+/* Carga de fotos: skeleton con brillo → barrido de color → foto con zoom */
+.ld {
+  overflow: hidden; isolation: isolate;
+  background: linear-gradient(100deg, #e6e0d2 30%, #f4f0e7 50%, #e6e0d2 70%);
+  background-size: 220% 100%; animation: shimmer 1.3s linear infinite;
+}
+.ld.ld-dark { background: linear-gradient(100deg, #13224a 30%, #1d3263 50%, #13224a 70%); background-size: 220% 100%; }
+@keyframes shimmer { to { background-position: -120% 0; } }
+.ld:not(.absolute) { position: relative; }
+.ld > img, .ld > video { opacity: 0; transform: scale(1.14); transition: opacity 0.6s 0.35s, transform 1.6s 0.35s var(--ease-out-soft); }
+.ld::after { content: ""; position: absolute; inset: 0; z-index: 5; background: var(--sweep, var(--color-aqua)); transform: scaleX(0); pointer-events: none; }
+.ld.loaded { animation: none; }
+.ld.loaded::after { animation: sweep 1s var(--ease-out-soft) forwards; }
+.ld.loaded > img, .ld.loaded > video { opacity: 1; transform: none; }
+@keyframes sweep {
+  0% { transform: scaleX(0); transform-origin: left; }
+  45% { transform: scaleX(1); transform-origin: left; }
+  55% { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+.zoom img { transition: transform 1s var(--ease-out-soft), opacity 0.6s 0.35s; }
+.zoom:hover img { transform: scale(1.06); }
+.icon-pop { transition: transform 0.5s var(--ease-out-soft); }
+.group:hover .icon-pop { transform: rotate(-8deg) scale(1.1); }
+.float { animation: float 6s ease-in-out infinite; }
+.float-2 { animation-delay: -2s; }
+.float-3 { animation-delay: -4s; }
+@keyframes float { 50% { transform: translateY(-12px); } }
+.pulse { position: relative; }
+.pulse::after { content: ""; position: absolute; inset: 0; border-radius: inherit; animation: pulse 2.4s infinite; pointer-events: none; }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55); } 70%, 100% { box-shadow: 0 0 0 16px rgb(37 211 102 / 0); } }
+
+/* Línea de tiempo y camino de admisiones que se dibujan */
+.grow-x { transform-origin: left; transform: scaleX(0); transition: transform 2s var(--ease-out-soft); }
+.in .grow-x { transform: scaleX(1); }
+.path-draw { stroke-dasharray: 1400; stroke-dashoffset: 1400; transition: stroke-dashoffset 2.4s var(--ease-out-soft); }
+.in .path-draw { stroke-dashoffset: 0; }
+.node { transform: translate(-50%, -50%) scale(0); transition: transform 0.7s var(--ease-out-soft); }
+.in .node { transform: translate(-50%, -50%) scale(1); }
+
+/* Metodología (escritorio): paneles que se expanden y rotan solos */
+.accordion { display: flex; gap: 12px; height: 440px; }
+.accordion > .acc-item { flex: 1; position: relative; overflow: hidden; border-radius: 32px; transition: flex 1s var(--ease-out-soft); cursor: pointer; }
+.accordion > .acc-item.on { flex: 3.4; }
+.accordion .acc-item > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.accordion .acc-txt { opacity: 0; transform: translateY(16px); transition: all 0.7s 0.25s var(--ease-out-soft); }
+.accordion .acc-item.on .acc-txt { opacity: 1; transform: none; }
+.accordion .acc-label { transition: opacity 0.4s; }
+.accordion .acc-item.on .acc-label { opacity: 0; }
+.accordion .acc-bar { transform-origin: left; transform: scaleX(0); }
+.accordion .acc-item.on .acc-bar { animation: acc-bar 4s linear forwards; }
+@keyframes acc-bar { to { transform: scaleX(1); } }
+
+/* Hoja inferior "Más" (móvil) */
+.sheet { visibility: hidden; pointer-events: none; transition: visibility 0s linear 0.35s; }
+.sheet[data-open="true"] { visibility: visible; pointer-events: auto; transition-delay: 0s; }
+.sheet .sheet-backdrop { opacity: 0; transition: opacity 0.25s; }
+.sheet[data-open="true"] .sheet-backdrop { opacity: 1; }
+.sheet .sheet-panel { transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1); }
+.sheet[data-open="true"] .sheet-panel { transform: none; }
+
+/* Pestañas de la app de estudiantes */
+.app-panel { display: none; }
+.app-panel.active { display: block; animation: panel-in 0.45s var(--ease-out-soft); }
+@keyframes panel-in { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 1023px) {
+  body.has-tabbar { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .line > span, .fade-in, .reveal, [data-stagger] > *, .ld > img, .ld > video { opacity: 1; transform: none; }
+  .ld::after { display: none; }
+  .path-draw { stroke-dashoffset: 0; }
+  .grow-x { transform: none; }
+  .node { transform: translate(-50%, -50%); }
+}

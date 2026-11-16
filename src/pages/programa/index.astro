@@ -1,0 +1,70 @@
+---
+// src/pages/programa/index.astro
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import Icon from '../../components/site/Icon.astro';
+import { levels, approaches } from '../../data/site';
+
+const tone = [
+  { chip: 'bg-aqua/20 text-aqua-ink', sweep: '#22d3ee' },
+  { chip: 'bg-brand/10 text-brand', sweep: '#2b54a8' },
+  { chip: 'bg-navy text-aqua', sweep: '#172554' },
+];
+---
+
+<SiteLayout
+  title="Programa académico · Kinder, Primaria y Bachillerato · Colegio Aplicación"
+  description="Educación Inicial, Primaria y Media General con metodología activa, currículo del MPPE y formación en valores cristianos."
+  active="programa"
+>
+  <PageHeader
+    eyebrow="Programa académico"
+    icon="graduation-cap"
+    title="Un mismo camino,"
+    highlight="de los 3 a los 17 años"
+    intro="Cada etapa construye sobre la anterior: el juego en Kinder, los hábitos en Primaria y el liderazgo en Bachillerato."
+    image="/graduacion3.webp"
+    imageAlt="Graduandos de Media General en el Teatro de la UNET"
+    crumbs={[{ label: 'Programa' }]}
+  />
+
+  <section class="container-site py-12 lg:py-20">
+    <div class="space-y-5 lg:space-y-8">
+      {levels.map((l, i) => (
+        <a href={`/programa/${l.slug}`} class="group card p-3 grid lg:grid-cols-12 gap-4 lg:gap-8 items-center reveal">
+          <div class:list={['ld zoom rounded-[22px] aspect-[16/10] lg:col-span-5', i % 2 === 1 && 'lg:order-2']} style={`--sweep:${tone[i].sweep}`}>
+            <img src={l.image} alt={l.imageAlt} class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="lg:col-span-7 p-3 lg:p-6">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class:list={['icon-pop chip-icon w-12 h-12 rounded-2xl', tone[i].chip]}><Icon name={l.icon} class="w-6 h-6" /></span>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-ivory px-3 py-1.5 text-xs font-bold text-navy"><Icon name="cake" class="w-3.5 h-3.5" />{l.ages}</span>
+              <span class="inline-flex items-center gap-1.5 rounded-full bg-ivory px-3 py-1.5 text-xs font-bold text-navy"><Icon name="layers" class="w-3.5 h-3.5" />{l.grades}</span>
+            </div>
+            <h2 class="mt-4 text-3xl lg:text-4xl font-extrabold text-navy">{l.label} <span class="text-brand text-xl lg:text-2xl font-bold block lg:inline">· {l.title}</span></h2>
+            <p class="mt-3 text-gray-600 leading-relaxed">{l.intro}</p>
+            <span class="mt-5 inline-flex items-center gap-2 font-bold text-brand group-hover:gap-3 transition-all">Ver el nivel <Icon name="arrow-right" /></span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="container-site pb-6">
+    <p class="eyebrow text-brand reveal"><Icon name="lightbulb" class="w-4 h-4" />Cómo enseñamos</p>
+    <h2 class="h-section mt-3 text-navy reveal">Enfoque <span class="text-brand">pedagógico</span></h2>
+    <div class="mt-8 grid lg:grid-cols-2 gap-5" data-stagger>
+      {approaches.map((a, i) => (
+        <a href={`/programa/${a.slug}`} class:list={['group relative overflow-hidden rounded-[28px] min-h-[300px] lg:min-h-[360px] text-white press']}>
+          <div class="ld ld-dark absolute inset-0"><img src={a.image} alt={a.imageAlt} class="w-full h-full object-cover" loading="lazy" /></div>
+          <span class:list={['absolute inset-0 bg-gradient-to-t to-transparent z-[6]', i === 0 ? 'from-deep via-deep/60' : 'from-brand via-brand/60']}></span>
+          <div class="absolute inset-x-0 bottom-0 p-6 lg:p-8 z-[7]">
+            <span class="icon-pop chip-icon w-12 h-12 rounded-2xl bg-aqua text-deep"><Icon name={a.icon} class="w-6 h-6" /></span>
+            <h3 class="mt-4 text-2xl lg:text-3xl font-extrabold">{a.title}</h3>
+            <p class="mt-1 text-blue-100">{a.tagline}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</SiteLayout>

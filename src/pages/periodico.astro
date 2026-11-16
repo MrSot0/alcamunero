@@ -1,0 +1,131 @@
+---
+// src/pages/index.astro
+// Portada estilo periódico web: nota principal + destacados, últimas noticias y opinión.
+import Layout from '../layouts/Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import SearchBar from '../components/SearchBar.astro';
+import { sections, sortedArticles, getArticlesBySection } from '../data/articles';
+import type { SectionId } from '../data/articles';
+
+const lead = sortedArticles.find((a) => a.featured) ?? sortedArticles[0];
+const highlights = sortedArticles.filter((a) => a.highlight && a.slug !== lead.slug).slice(0, 3);
+
+const shown = new Set([lead.slug, ...highlights.map((a) => a.slug)]);
+
+// Opinión va en la columna lateral; el resto en "Últimas noticias"
+const opinion = sortedArticles.filter((a) => a.section === 'opinion');
+// Solo las 8 más recientes; el resto se explora por sección o con el buscador
+const latest = sortedArticles
+  .filter((a) => !shown.has(a.slug) && a.section !== 'opinion')
+  .slice(0, 8);
+
+const sectionList = (Object.keys(sections) as SectionId[]).map((id) => ({
+  id,
+  label: sections[id].label,
+  count: getArticlesBySection(id).length,
+}));
+---
+
+<Layout
+  title="Alcamunero | Periódico Digital - Colegio Aplicación"
+  description="Alcamunero - Periódico digital del Colegio Aplicación. Noticias, eventos, cultura, religión, comunidad, opinión y reportajes."
+  active="inicio"
+  image={lead.slides[0].src}
+>
+  <div class="max-w-7xl mx-auto px-4 py-8">
+
+    <!-- Cintillo de edición -->
+    <div class="mb-6 border-b-2 border-gray-900 pb-2 flex justify-between items-center text-xs text-gray-600 font-sans">
+      <span>Portada / Edición Digital</span>
+      <span>Redacción Alcamunero • <span id="edition-date">2026</span></span>
+    </div>
+
+    <!-- Buscador -->
+    <div class="mb-8">
+      <SearchBar />
+    </div>
+
+    <!-- Portada: nota principal + destacados -->
+    <section aria-label="Portada" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+      <div class="lg:col-span-8">
+        <ArticleCard article={lead} variant="lead" />
+      </div>
+
+      <aside class="lg:col-span-4 lg:border-l lg:border-gray-300 lg:pl-8" aria-labelledby="destacados">
+        <h2 id="destacados" class="border-t-4 border-blue-950 pt-2 mb-4 font-serif text-xl font-bold text-gray-900">
+          Destacados
+        </h2>
+        <div class="divide-y divide-gray-300">
+          {highlights.map((a) => <ArticleCard article={a} variant="side" />)}
+        </div>
+      </aside>
+    </section>
+
+    <!-- Últimas noticias + columna lateral -->
+    <div class="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
+
+      <section class="lg:col-span-8" aria-labelledby="ultimas">
+        <h2 id="ultimas" class="border-t-4 border-blue-950 pt-2 mb-6 font-serif text-xl font-bold text-gray-900">
+          Últimas noticias
+        </h2>
+        <div class="divide-y divide-gray-300">
+          {latest.map((a) => <ArticleCard article={a} variant="list" />)}
+        </div>
+      </section>
+
+      <aside class="lg:col-span-4 lg:border-l lg:border-gray-300 lg:pl-8 space-y-10">
+
+        <!-- Opinión -->
+        <section aria-labelledby="opinion">
+          <h2 id="opinion" class="border-t-4 border-blue-950 pt-2 mb-4 font-serif text-xl font-bold text-gray-900">
+            Opinión
+          </h2>
+          <div class="divide-y divide-gray-300">
+            {opinion.map((a) => <ArticleCard article={a} variant="text" />)}
+          </div>
+        </section>
+
+        <!-- Secciones -->
+        <section aria-labelledby="secciones">
+          <h2 id="secciones" class="border-t-4 border-blue-950 pt-2 mb-4 font-serif text-xl font-bold text-gray-900">
+            Secciones
+          </h2>
+          <ul class="divide-y divide-gray-300 font-sans text-sm">
+            {sectionList.map((s) => (
+              <li>
+                <a
+                  href={`/seccion/${s.id}`}
+                  class="flex items-center justify-between py-2.5 text-gray-800 hover:text-blue-800 transition-colors"
+                >
+                  <span class="font-semibold">{s.label}</span>
+                  <span class="text-xs text-gray-500">{s.count}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <!-- Directorio -->
+        <section class="bg-blue-950 text-white p-5 space-y-2">
+          <h2 class="font-serif text-lg font-bold">Conoce al equipo</h2>
+          <p class="text-xs text-blue-200 leading-relaxed">
+            Las personas que hacen posible cada edición de Alcamunero.
+          </p>
+          <a href="/directorio" class="inline-block pt-1 text-xs font-bold uppercase tracking-wider text-cyan-300 hover:text-white transition-colors">
+            Ver directorio →
+          </a>
+        </section>
+
+      </aside>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  // Fecha de la edición: mes y año actuales (el sitio es estático, por eso se calcula en el navegador)
+  const editionDate = document.getElementById('edition-date');
+  if (editionDate) {
+    const f = new Date().toLocaleDateString('es-VE', { month: 'long', year: 'numeric' });
+    editionDate.textContent = f.charAt(0).toUpperCase() + f.slice(1);
+  }
+</script>

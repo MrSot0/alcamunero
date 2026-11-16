@@ -1,0 +1,155 @@
+---
+// src/pages/admisiones.astro
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/site/PageHeader.astro';
+import Icon from '../components/site/Icon.astro';
+import { admissionSteps, requirements, faqs, levels, contact, whatsappLink } from '../data/site';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<SiteLayout
+  title="Admisiones e inscripciones · Colegio Aplicación"
+  description="Pasos, requisitos y preguntas frecuentes para inscribir a tu hijo en Kinder, Primaria o Bachillerato. Agenda una visita por WhatsApp."
+  active="admisiones"
+  schema={[faqSchema]}
+>
+  <PageHeader
+    eyebrow="Admisiones"
+    icon="file-check"
+    title="Únete a la"
+    highlight="familia aplicatense"
+    intro="Te acompañamos en cada paso: desde la primera conversación hasta el primer día de clases."
+    image="/bienvenida1.webp"
+    imageAlt="Estudiantes con un cartel de bienvenida el primer día de clases"
+    crumbs={[{ label: 'Admisiones' }]}
+  >
+    <div class="fade-in mt-6 flex flex-wrap gap-3">
+      <a href="#solicitud" class="btn-aqua"><Icon name="send" class="w-5 h-5" />Solicitar cupo</a>
+      <a href="#requisitos" class="btn-ghost"><Icon name="list-checks" class="w-5 h-5" />Ver requisitos</a>
+    </div>
+  </PageHeader>
+
+  <!-- Pasos -->
+  <section class="container-site py-12 lg:py-20">
+    <p class="eyebrow text-brand reveal"><Icon name="route" class="w-4 h-4" />Proceso</p>
+    <h2 class="h-section mt-3 text-navy reveal">Cinco pasos <span class="text-brand">sencillos</span></h2>
+    <ol class="mt-8 grid lg:grid-cols-5 gap-3 lg:gap-4 relative" data-stagger>
+      {admissionSteps.map((s, i) => (
+        <li class:list={['group relative rounded-[24px] p-5 flex lg:flex-col gap-4 lg:gap-0', i === admissionSteps.length - 1 ? 'bg-navy text-white' : 'card']}>
+          <span class:list={['icon-pop chip-icon w-12 h-12 rounded-2xl', i === admissionSteps.length - 1 ? 'bg-aqua text-deep' : 'bg-brand/10 text-brand']}><Icon name={s.icon} class="w-6 h-6" /></span>
+          <div class="lg:mt-5">
+            <p class:list={['text-[11px] font-bold', i === admissionSteps.length - 1 ? 'text-aqua' : 'text-gray-400']}>PASO {i + 1}</p>
+            <h3 class="font-extrabold text-lg leading-tight">{s.title}</h3>
+            <p class:list={['mt-1 text-sm leading-relaxed', i === admissionSteps.length - 1 ? 'text-blue-100' : 'text-gray-600']}>{s.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- Requisitos (checklist marcable, se recuerda en este dispositivo) -->
+  <section id="requisitos" class="px-3 lg:px-6 scroll-mt-24">
+    <div class="max-w-[1300px] mx-auto rounded-[32px] lg:rounded-[56px] bg-white px-6 lg:px-14 py-10 lg:py-16 grid lg:grid-cols-12 gap-8">
+      <div class="lg:col-span-5">
+        <p class="eyebrow text-brand reveal"><Icon name="folder-check" class="w-4 h-4" />Requisitos</p>
+        <h2 class="h-section mt-3 text-navy reveal">Prepara tus <span class="text-brand">recaudos</span></h2>
+        <p class="mt-4 text-gray-600 reveal">Marca cada documento a medida que lo tengas listo. Los requisitos pueden variar según el nivel; confírmalos con Control de Estudios.</p>
+        <div class="mt-6 rounded-2xl bg-ivory p-4 reveal">
+          <div class="flex items-center justify-between text-sm font-bold text-navy"><span>Tu progreso</span><span id="req-count">0/{requirements.length}</span></div>
+          <div class="mt-2 h-2.5 rounded-full bg-white overflow-hidden"><div id="req-bar" class="h-full w-0 rounded-full bg-gradient-to-r from-aqua to-brand transition-[width] duration-500"></div></div>
+        </div>
+      </div>
+      <ul class="lg:col-span-7 space-y-2.5" id="req-list" data-stagger>
+        {requirements.map((r, i) => (
+          <li>
+            <label class="group flex items-center gap-3 rounded-2xl bg-ivory/60 hover:bg-ivory px-4 py-3.5 cursor-pointer press">
+              <input type="checkbox" class="peer sr-only" data-req={i} />
+              <span class="chip-icon w-7 h-7 rounded-lg border-2 border-brand/30 text-transparent peer-checked:bg-brand peer-checked:border-brand peer-checked:text-white transition-colors"><Icon name="check" class="w-4 h-4" strokeWidth={3} /></span>
+              <span class="text-sm font-semibold text-navy peer-checked:line-through peer-checked:text-gray-400">{r}</span>
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Solicitud por WhatsApp + FAQ -->
+  <section class="container-site py-12 lg:py-20 grid lg:grid-cols-12 gap-8 lg:gap-12">
+    <div id="solicitud" class="lg:col-span-5 scroll-mt-24">
+      <div class="rounded-[32px] bg-navy text-white p-6 lg:p-8 relative overflow-hidden">
+        <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-brand/60 blur-3xl"></div>
+        <p class="relative eyebrow text-aqua"><Icon name="send" class="w-4 h-4" />Solicitud</p>
+        <h2 class="relative mt-3 text-2xl lg:text-3xl font-extrabold">Pide información de cupos</h2>
+        <p class="relative mt-2 text-sm text-blue-100">Completa los datos y te contactaremos por WhatsApp.</p>
+        <form id="adm-form" class="relative mt-6 space-y-3">
+          <label class="block"><span class="text-xs font-bold text-blue-200">Nombre del representante</span>
+            <input name="rep" required autocomplete="name" class="mt-1 w-full h-12 rounded-xl bg-white/10 border border-white/15 px-4 text-white placeholder:text-blue-200/60 focus:outline-none focus:border-aqua" placeholder="Nombre y apellido" /></label>
+          <label class="block"><span class="text-xs font-bold text-blue-200">Nombre del estudiante</span>
+            <input name="est" required class="mt-1 w-full h-12 rounded-xl bg-white/10 border border-white/15 px-4 text-white placeholder:text-blue-200/60 focus:outline-none focus:border-aqua" placeholder="Nombre y apellido" /></label>
+          <fieldset>
+            <legend class="text-xs font-bold text-blue-200">Nivel de interés</legend>
+            <div class="mt-1 grid grid-cols-3 gap-2">
+              {levels.map((l, i) => (
+                <label class="cursor-pointer">
+                  <input type="radio" name="nivel" value={l.label} class="peer sr-only" checked={i === 0} />
+                  <span class="flex flex-col items-center gap-1 rounded-xl border border-white/15 py-3 text-xs font-bold peer-checked:bg-aqua peer-checked:text-deep peer-checked:border-aqua transition-colors"><Icon name={l.icon} class="w-5 h-5" />{l.label}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <label class="block"><span class="text-xs font-bold text-blue-200">Grado o año (opcional)</span>
+            <input name="grado" class="mt-1 w-full h-12 rounded-xl bg-white/10 border border-white/15 px-4 text-white placeholder:text-blue-200/60 focus:outline-none focus:border-aqua" placeholder="Ej.: 3.er grado" /></label>
+          <button type="submit" class="btn w-full !h-14 bg-whatsapp text-white mt-2"><Icon brand name="whatsapp" class="w-6 h-6" />Enviar por WhatsApp</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="lg:col-span-7">
+      <p class="eyebrow text-brand reveal"><Icon name="message-circle-question" class="w-4 h-4" />Preguntas frecuentes</p>
+      <h2 class="h-section mt-3 text-navy reveal">Resolvemos <span class="text-brand">tus dudas</span></h2>
+      <div class="mt-6 space-y-3" data-stagger>
+        {faqs.map((f, i) => (
+          <details class="group card !rounded-2xl" open={i === 0}>
+            <summary class="flex items-center gap-3 p-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+              <span class="chip-icon w-10 h-10 bg-brand/10 text-brand"><Icon name="circle-help" class="w-5 h-5" /></span>
+              <span class="flex-1 font-bold text-navy">{f.q}</span>
+              <span class="chip-icon w-8 h-8 rounded-full bg-ivory text-navy transition-transform group-open:rotate-45"><Icon name="plus" class="w-4 h-4" /></span>
+            </summary>
+            <p class="px-5 pb-5 -mt-1 pl-[4.25rem] text-gray-600 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ phone: contact.whatsapp }}>
+    // Checklist de requisitos (se guarda solo en este navegador)
+    const KEY = 'ca-requisitos';
+    const boxes = [...document.querySelectorAll('[data-req]')];
+    const countEl = document.getElementById('req-count');
+    const barEl = document.getElementById('req-bar');
+    let saved = [];
+    try { saved = JSON.parse(localStorage.getItem(KEY) || '[]'); } catch {}
+    const update = () => {
+      const done = boxes.filter((b) => b.checked).length;
+      countEl.textContent = `${done}/${boxes.length}`;
+      barEl.style.width = `${(done / boxes.length) * 100}%`;
+      try { localStorage.setItem(KEY, JSON.stringify(boxes.map((b) => b.checked))); } catch {}
+    };
+    boxes.forEach((b, i) => { b.checked = !!saved[i]; b.addEventListener('change', update); });
+    update();
+
+    // Solicitud → mensaje de WhatsApp prellenado
+    document.getElementById('adm-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = new FormData(e.currentTarget);
+      const msg = `Hola, soy ${d.get('rep')}. Quisiera información de cupos para ${d.get('est')} en ${d.get('nivel')}${d.get('grado') ? ` (${d.get('grado')})` : ''}.`;
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    });
+  </script>
+</SiteLayout>
