@@ -1,9 +1,9 @@
 ---
 // src/pages/estudiantes.astro — Portal de estudiantes con estética de app móvil.
-import SiteLayout from '../layouts/SiteLayout.astro';
-import Icon from '../components/site/Icon.astro';
-import { studentEvents, studentResources, studentLife } from '../data/site';
-import { sortedArticles, sections } from '../data/articles';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import Icon from '../../components/site/Icon.astro';
+import { studentEvents, studentResources, studentLife } from '../../data/site';
+import { sortedArticles, sections } from '../../data/articles';
 
 const feed = sortedArticles.slice(0, 6);
 const tabs = [

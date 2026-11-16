@@ -1,9 +1,9 @@
 ---
 // src/pages/programa/index.astro
-import SiteLayout from '../../layouts/SiteLayout.astro';
-import PageHeader from '../../components/site/PageHeader.astro';
-import Icon from '../../components/site/Icon.astro';
-import { levels, approaches } from '../../data/site';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import PageHeader from '../../../components/site/PageHeader.astro';
+import Icon from '../../../components/site/Icon.astro';
+import { levels, approaches } from '../../../data/site';
 
 const tone = [
   { chip: 'bg-aqua/20 text-aqua-ink', sweep: '#22d3ee' },
@@ -31,7 +31,7 @@ const tone = [
   <section class="container-site py-12 lg:py-20">
     <div class="space-y-5 lg:space-y-8">
       {levels.map((l, i) => (
-        <a href={`/programa/${l.slug}`} class="group card p-3 grid lg:grid-cols-12 gap-4 lg:gap-8 items-center reveal">
+        <a href={`/colegio-preview/programa/${l.slug}`} class="group card p-3 grid lg:grid-cols-12 gap-4 lg:gap-8 items-center reveal">
           <div class:list={['ld zoom rounded-[22px] aspect-[16/10] lg:col-span-5', i % 2 === 1 && 'lg:order-2']} style={`--sweep:${tone[i].sweep}`}>
             <img src={l.image} alt={l.imageAlt} class="w-full h-full object-cover" loading="lazy" />
           </div>
@@ -55,7 +55,7 @@ const tone = [
     <h2 class="h-section mt-3 text-navy reveal">Enfoque <span class="text-brand">pedagógico</span></h2>
     <div class="mt-8 grid lg:grid-cols-2 gap-5" data-stagger>
       {approaches.map((a, i) => (
-        <a href={`/programa/${a.slug}`} class:list={['group relative overflow-hidden rounded-[28px] min-h-[300px] lg:min-h-[360px] text-white press']}>
+        <a href={`/colegio-preview/programa/${a.slug}`} class:list={['group relative overflow-hidden rounded-[28px] min-h-[300px] lg:min-h-[360px] text-white press']}>
           <div class="ld ld-dark absolute inset-0"><img src={a.image} alt={a.imageAlt} class="w-full h-full object-cover" loading="lazy" /></div>
           <span class:list={['absolute inset-0 bg-gradient-to-t to-transparent z-[6]', i === 0 ? 'from-deep via-deep/60' : 'from-brand via-brand/60']}></span>
           <div class="absolute inset-x-0 bottom-0 p-6 lg:p-8 z-[7]">

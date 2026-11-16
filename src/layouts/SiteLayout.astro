@@ -62,6 +62,8 @@ const overlay = header === 'overlay';
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#172554" />
+    <!-- Vista previa interna: el sitio institucional no se indexa mientras esté oculto -->
+    <meta name="robots" content="noindex, nofollow" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_VE" />
     <meta property="og:site_name" content={site.name} />
@@ -94,7 +96,7 @@ const overlay = header === 'overlay';
       ]}
     >
       <div class="max-w-[1400px] mx-auto px-10 h-24 flex items-center gap-8">
-        <a href="/" class="flex items-center gap-3 shrink-0">
+        <a href="/colegio-preview/" class="flex items-center gap-3 shrink-0">
           <span class:list={['rounded-full bg-ivory grid place-items-center', overlay ? 'w-16 h-16 ring-4 ring-white/20' : 'w-14 h-14 shadow-sm']}>
             <img src="/logo.png" alt="Logo del Colegio Aplicación" class="w-[70%] object-contain" />
           </span>
@@ -140,7 +142,7 @@ const overlay = header === 'overlay';
             ))}
           </ul>
         </nav>
-        <a href="/admisiones" class={overlay ? 'btn-aqua' : 'btn-primary'}><Icon name="file-check" class="w-5 h-5" />Inscríbete</a>
+        <a href="/colegio-preview/admisiones" class={overlay ? 'btn-aqua' : 'btn-primary'}><Icon name="file-check" class="w-5 h-5" />Inscríbete</a>
       </div>
     </header>
 

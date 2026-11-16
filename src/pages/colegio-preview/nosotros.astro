@@ -1,9 +1,9 @@
 ---
 // src/pages/nosotros.astro
-import SiteLayout from '../layouts/SiteLayout.astro';
-import PageHeader from '../components/site/PageHeader.astro';
-import Icon from '../components/site/Icon.astro';
-import { site, identity, values, timeline, staff, facilities, yearsOfHistory, whatsappLink } from '../data/site';
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import PageHeader from '../../components/site/PageHeader.astro';
+import Icon from '../../components/site/Icon.astro';
+import { site, identity, values, timeline, staff, facilities, yearsOfHistory, whatsappLink } from '../../data/site';
 
 const years = yearsOfHistory();
 const groups = ['Dirección', 'Coordinación', 'Docentes'] as const;
@@ -153,7 +153,7 @@ const subnav = [
     <div class="card p-7 lg:p-12 flex flex-col lg:flex-row items-center gap-5 lg:gap-6 text-center lg:text-left">
       <span class="chip-icon w-16 h-16 rounded-2xl bg-aqua/20 text-aqua-ink"><Icon name="calendar-days" class="w-8 h-8" /></span>
       <div class="flex-1"><h2 class="text-2xl lg:text-3xl font-extrabold text-navy">Ven a conocernos</h2><p class="hidden lg:block text-gray-600 mt-1">Agenda una visita guiada y recorre el colegio con la Coordinación.</p></div>
-      <div class="flex flex-wrap justify-center gap-3"><a href={whatsappLink('Hola, quisiera agendar una visita al Colegio Aplicación.')} target="_blank" rel="noopener" class="btn-primary"><Icon brand name="whatsapp" class="w-5 h-5" />Agendar visita</a><a href="/admisiones" class="btn bg-ivory text-navy hover:bg-white"><Icon name="file-check" class="w-5 h-5" />Admisiones</a></div>
+      <div class="flex flex-wrap justify-center gap-3"><a href={whatsappLink('Hola, quisiera agendar una visita al Colegio Aplicación.')} target="_blank" rel="noopener" class="btn-primary"><Icon brand name="whatsapp" class="w-5 h-5" />Agendar visita</a><a href="/colegio-preview/admisiones" class="btn bg-ivory text-navy hover:bg-white"><Icon name="file-check" class="w-5 h-5" />Admisiones</a></div>
     </div>
   </section>
 </SiteLayout>

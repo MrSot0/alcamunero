@@ -56,37 +56,37 @@ export interface NavItem {
 }
 
 export const nav: NavItem[] = [
-  { id: 'inicio', label: 'Inicio', href: '/', icon: 'house' },
+  { id: 'inicio', label: 'Inicio', href: '/colegio-preview/', icon: 'house' },
   {
     id: 'nosotros',
     label: 'Nosotros',
-    href: '/nosotros',
+    href: '/colegio-preview/nosotros',
     icon: 'landmark',
     children: [
-      { label: 'Misión y visión', href: '/nosotros#mision', description: 'Lo que somos y hacia dónde vamos', icon: 'flag' },
-      { label: 'Historia', href: '/nosotros#historia', description: `Desde ${site.founded}, educando para servir`, icon: 'history' },
-      { label: 'Valores', href: '/nosotros#valores', description: 'Los principios que nos guían', icon: 'heart-handshake' },
-      { label: 'Staff', href: '/nosotros#staff', description: 'Directivos y docentes', icon: 'users-round' },
-      { label: 'Instalaciones', href: '/nosotros#instalaciones', description: 'Espacios para aprender', icon: 'school' },
+      { label: 'Misión y visión', href: '/colegio-preview/nosotros#mision', description: 'Lo que somos y hacia dónde vamos', icon: 'flag' },
+      { label: 'Historia', href: '/colegio-preview/nosotros#historia', description: `Desde ${site.founded}, educando para servir`, icon: 'history' },
+      { label: 'Valores', href: '/colegio-preview/nosotros#valores', description: 'Los principios que nos guían', icon: 'heart-handshake' },
+      { label: 'Staff', href: '/colegio-preview/nosotros#staff', description: 'Directivos y docentes', icon: 'users-round' },
+      { label: 'Instalaciones', href: '/colegio-preview/nosotros#instalaciones', description: 'Espacios para aprender', icon: 'school' },
     ],
   },
   {
     id: 'programa',
     label: 'Programa',
-    href: '/programa',
+    href: '/colegio-preview/programa',
     icon: 'graduation-cap',
     children: [
-      { label: 'Kinder', href: '/programa/kinder', description: 'Educación Inicial', icon: 'blocks' },
-      { label: 'Primaria', href: '/programa/primaria', description: '1.º a 6.º grado', icon: 'book-open' },
-      { label: 'Bachillerato', href: '/programa/bachillerato', description: 'Media General, 1.º a 5.º año', icon: 'graduation-cap' },
-      { label: 'Metodología', href: '/programa/metodologia', description: 'Cómo aprendemos', icon: 'lightbulb' },
-      { label: 'Currículum', href: '/programa/curriculum', description: 'Áreas de formación', icon: 'notebook-pen' },
+      { label: 'Kinder', href: '/colegio-preview/programa/kinder', description: 'Educación Inicial', icon: 'blocks' },
+      { label: 'Primaria', href: '/colegio-preview/programa/primaria', description: '1.º a 6.º grado', icon: 'book-open' },
+      { label: 'Bachillerato', href: '/colegio-preview/programa/bachillerato', description: 'Media General, 1.º a 5.º año', icon: 'graduation-cap' },
+      { label: 'Metodología', href: '/colegio-preview/programa/metodologia', description: 'Cómo aprendemos', icon: 'lightbulb' },
+      { label: 'Currículum', href: '/colegio-preview/programa/curriculum', description: 'Áreas de formación', icon: 'notebook-pen' },
     ],
   },
-  { id: 'admisiones', label: 'Admisiones', href: '/admisiones', icon: 'file-check' },
-  { id: 'estudiantes', label: 'Estudiantes', href: '/estudiantes', icon: 'backpack' },
+  { id: 'admisiones', label: 'Admisiones', href: '/colegio-preview/admisiones', icon: 'file-check' },
+  { id: 'estudiantes', label: 'Estudiantes', href: '/colegio-preview/estudiantes', icon: 'backpack' },
   { id: 'periodico', label: 'Periódico', href: '/periodico', icon: 'newspaper' },
-  { id: 'contacto', label: 'Contacto', href: '/contacto', icon: 'map-pin' },
+  { id: 'contacto', label: 'Contacto', href: '/colegio-preview/contacto', icon: 'map-pin' },
 ];
 
 // ───────── Nosotros ─────────

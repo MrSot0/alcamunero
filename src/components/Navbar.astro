@@ -13,14 +13,13 @@ interface Props {
 const { active = 'inicio' } = Astro.props;
 
 const items = [
-  { id: 'inicio', label: 'Inicio', href: '/periodico' },
+  { id: 'inicio', label: 'Inicio', href: '/' },
   ...Object.entries(sections).map(([id, s]) => ({
     id,
     label: s.label,
     href: `/seccion/${id}`,
   })),
   { id: 'directorio', label: 'Directorio', href: '/directorio' },
-  { id: 'colegio', label: 'Colegio', href: '/' },
 ];
 
 // Íconos (trazo outline, viewBox 24x24)
@@ -44,7 +43,7 @@ const icons: Record<string, string> = {
   ciencia:
     'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z',
   efemerides: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
-  colegio: 'M3 21h18M5 21V10l7-5 7 5v11M9 21v-5h6v5M10 11h4',
+  editorial: 'M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z',
   mas: 'M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z',
 };
 
@@ -62,16 +61,16 @@ const idleClass = 'text-blue-100 hover:bg-blue-800 hover:text-cyan-300';
 
   <!-- ===== MÓVIL: barra superior compacta (estilo app bar) ===== -->
   <div class="lg:hidden grid grid-cols-[3rem_1fr_3rem] items-center gap-2 px-3 h-14">
-    <a href="/" class="block" aria-label="Ir al sitio del colegio">
+    <a href="/" class="block" aria-label="Ir al inicio">
       <img src="/logo.png" alt="Logo Institucional" class="h-9 w-auto object-contain" />
     </a>
 
-    <a href="/periodico" class="block text-center leading-none">
+    <a href="/" class="block text-center leading-none">
       <span class="block text-lg font-serif font-extrabold tracking-tight text-white">ALCAMUNERO</span>
       <span class="block mt-1 text-[8px] uppercase tracking-[0.25em] text-cyan-400 font-semibold">Periódico Digital</span>
     </a>
 
-    <a href="/periodico" class="block justify-self-end" aria-label="Ir a la portada del periódico">
+    <a href="/" class="block justify-self-end" aria-label="Ir al inicio">
       <img src="/avec.png" alt="Logo AVEC" class="h-9 w-auto object-contain" />
     </a>
   </div>
@@ -79,7 +78,7 @@ const idleClass = 'text-blue-100 hover:bg-blue-800 hover:text-cyan-300';
   <!-- ===== ESCRITORIO: franja superior + logos + menú ===== -->
   <div class="hidden lg:block">
     <div class="max-w-7xl mx-auto px-3 py-1 text-xs border-b border-blue-900/60 flex justify-between items-center text-blue-200">
-      <a href="/" class="hover:text-cyan-300 transition-colors">&larr; U.E. Colegio Aplicación · Cárdenas, Táchira</a>
+      <span>Cárdenas, Táchira — Venezuela</span>
       <div class="flex items-center space-x-2">
         <span class="font-medium text-cyan-400">Edición Digital Interactiva</span>
         <span id="current-date" class="text-blue-300">Cargando fecha...</span>
@@ -94,7 +93,7 @@ const idleClass = 'text-blue-100 hover:bg-blue-800 hover:text-cyan-300';
       </div>
 
       <div class="text-center">
-        <a href="/periodico" class="inline-block group space-y-0.5 cursor-pointer">
+        <a href="/" class="inline-block group space-y-0.5 cursor-pointer">
           <span class="block text-3xl font-serif font-extrabold tracking-tight text-white group-hover:text-cyan-300 transition-colors leading-tight">
             ALCAMUNERO
           </span>
