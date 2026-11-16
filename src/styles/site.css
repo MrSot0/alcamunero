@@ -40,14 +40,15 @@
 /* Carrusel deslizable en móvil → cuadrícula en escritorio (añadir lg:grid-cols-N) */
 .snap-row {
   display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
-  padding: 8px 20px 20px; margin: -8px -20px -20px; scroll-padding-inline: 20px;
+  /* Sin margen superior: así respeta los mt-* de cada sección */
+  padding: 4px 20px 20px; margin-inline: -20px; margin-bottom: -20px; scroll-padding-inline: 20px;
 }
 .snap-row::-webkit-scrollbar { display: none; }
 .snap-row > * { scroll-snap-align: start; flex-shrink: 0; }
 
 /* Fuera de capa para ganar a los anchos de móvil (w-[78%]) en escritorio */
 @media (min-width: 1024px) {
-  .snap-row { display: grid; overflow: visible; padding: 0; margin: 0; }
+  .snap-row { display: grid; overflow: visible; padding: 0; margin-inline: 0; margin-bottom: 0; }
   .snap-row > * { width: auto; }
 }
 
