@@ -4,8 +4,14 @@ Sitio institucional + periódico Alcamunero. Una sola familia visual: el periód
 es la versión "editorial" y el sitio institucional la versión "abierta y cálida"
 del mismo sistema. La sección **Estudiantes** usa el mismo sistema con forma de app móvil.
 
-Dirección: **azul marino institucional, serif con autoridad, fotos reales de la comunidad,
-movimiento suave**. Sensación: confiable, cercano, orgulloso de su historia.
+Dirección final (aprobada): **video a pantalla completa en el hero, azul marino institucional,
+tipografía sans amigable (Plus Jakarta Sans), esquinas muy redondeadas y curvas (sin arcos),
+íconos de Lucide según cada texto, fotos reales con animaciones de carga, y en móvil un diseño
+de app** (barra superior, accesos rápidos, carruseles deslizables y barra de pestañas inferior).
+Sensación: confiable, cercano, orgulloso de su historia.
+
+> Las secciones de abajo conservan los tokens; donde difieran, manda esta dirección
+> y el código en `src/styles/site.css`.
 Nada de degradados morados, glassmorphism por todos lados ni texto con degradado.
 
 ---
@@ -35,9 +41,10 @@ navy a pantalla completa por cada dos secciones claras para mantener ritmo.
 
 ## 2. Tipografía
 
-- **Display**: Georgia (serif del periódico) → títulos, cifras, citas. Peso 700.
-- **Texto/UI**: system-ui → cuerpo, botones, navegación. 400 / 600 / 700.
-- **Kicker**: system-ui 11–12px, 700, MAYÚSCULAS, tracking 0.2em, cyan.
+- **Sitio institucional**: Plus Jakarta Sans (variable, autoalojada con @fontsource) para todo:
+  títulos 800 con tracking −0.025em, texto 400–600. Una parte del título va en color (`text-brand`/`text-aqua`).
+- **Periódico**: conserva Georgia (serif) + system-ui, su lenguaje editorial.
+- **Eyebrow**: 12px, 700, MAYÚSCULAS, tracking 0.06em, con ícono de Lucide.
 
 | Paso    | Tamaño (móvil → escritorio) | Interlineado | Uso |
 |---------|-----------------------------|--------------|-----|
@@ -89,7 +96,9 @@ suaviza con `radius-md`; la app de estudiantes llega a `radius-lg`.
 - **Fotos reales** del colegio (las del periódico). Nunca stock genérico.
   Sobre navy: degradado `navy-950 → transparente` para legibilidad.
 - Fotos de baja resolución: usarlas en tamaños medianos o con overlay; no a pantalla completa sin tratamiento.
-- **Íconos**: línea 1.8px, 24×24, estilo Heroicons outline (el mismo del periódico). Sin emojis.
+- **Íconos**: Lucide (`lucide-static`) con trazo 1.9; logos de marca con Simple Icons.
+  Componente `src/components/site/Icon.astro`. Cada ícono corresponde al texto que acompaña. Sin emojis.
+- **Hero**: video de stock de Mixkit (licencia gratuita) en `public/video/`, hasta tener video propio.
 
 ## 7. Movimiento
 
@@ -105,5 +114,6 @@ Todo animado con propósito, todo desactivable con `prefers-reduced-motion`.
 | Línea de tiempo | La línea se "dibuja" al hacer scroll |
 | Tarjetas | Hover: elevación + zoom 1.04 de la foto (300ms) |
 | App Estudiantes | Presionar = escala 0.97; cambio de pestaña con deslizamiento; hoja inferior con resorte |
-| Entre páginas | View Transitions nativas (fundido 250ms) |
+| Carga de fotos | Skeleton con brillo → barrido de color (cian/azul) → foto con zoom de salida (`.ld`) |
+| Tarjetas | Entrada en cascada (`data-stagger`), 120 ms entre cada una |
 | WhatsApp | Pulso de halo cada 4s |

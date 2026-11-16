@@ -1,0 +1,89 @@
+# Configuración del administrador de contenidos (Sveltia CMS, compatible con Decap CMS)
+# Documentación: https://github.com/sveltia/sveltia-cms
+#
+# Cada artículo guardado aquí se convierte en un commit en GitHub
+# (src/content/articulos/<slug>.md) y el sitio se vuelve a publicar solo.
+
+backend:
+  name: github
+  repo: MrSot0/alcamunero
+  branch: main
+  commit_messages:
+    create: "Periódico: nuevo artículo «{{slug}}»"
+    update: "Periódico: actualizar «{{slug}}»"
+    delete: "Periódico: eliminar «{{slug}}»"
+    uploadMedia: "Periódico: subir imagen {{path}}"
+    deleteMedia: "Periódico: eliminar imagen {{path}}"
+
+locale: es
+# site_url: https://TU-DOMINIO  ← agregar cuando el sitio tenga dominio
+logo_url: /logo.png
+
+# Fotos que se suben desde el administrador
+media_folder: public/uploads/articulos
+public_folder: /uploads/articulos
+
+collections:
+  - name: articulos
+    label: Artículos del periódico
+    label_singular: Artículo
+    description: Noticias, reportajes y opinión de Alcamunero.
+    folder: src/content/articulos
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    slug: "{{fields.title}}"
+    summary: "{{title}} · {{section}} · {{publishedAt | date('DD/MM/YYYY')}}"
+    sortable_fields:
+      fields: [publishedAt, title, section]
+      default: { field: publishedAt, direction: descending }
+    view_filters:
+      - { label: Portada, field: featured, pattern: true }
+      - { label: Destacados, field: highlight, pattern: true }
+    preview_path: /articulo/{{slug}}
+    fields:
+      - { name: title, label: Título, widget: string }
+      - { name: kicker, label: "Antetítulo (kicker)", widget: string, required: false, hint: "Etiqueta corta sobre el título. Ej.: Orgullo aplicatense" }
+      - name: section
+        label: Sección
+        widget: select
+        options:
+          - { label: "Actualidad", value: "actualidad" }
+          - { label: "Eventos", value: "eventos" }
+          - { label: "Cultura", value: "cultura" }
+          - { label: "Deportes", value: "deportes" }
+          - { label: "Religión", value: "religion" }
+          - { label: "Comunidad", value: "comunidad" }
+          - { label: "Ciencia y Tecnología", value: "ciencia" }
+          - { label: "Efemérides", value: "efemerides" }
+          - { label: "Opinión", value: "opinion" }
+          - { label: "Reportajes", value: "reportajes" }
+          - { label: "Editorial", value: "editorial" }
+      - { name: author, label: Firma, widget: string, default: "Redacción Alcamunero", hint: "Ej.: Por Niria Colina" }
+      - { name: publishedAt, label: Fecha de publicación, widget: datetime, format: "YYYY-MM-DDTHH:mm", hint: "Ordena la edición: lo más reciente aparece primero." }
+      - { name: date, label: Fecha visible, widget: string, required: false, hint: "Opcional. Ej.: 21 de septiembre, 2026. Si se deja vacía se usa la fecha de publicación." }
+      - { name: excerpt, label: Resumen, widget: text, hint: "Una o dos frases para la portada." }
+      - name: slides
+        label: Fotos (carrusel)
+        label_singular: Foto
+        widget: list
+        min: 1
+        summary: "{{fields.alt}}"
+        fields:
+          - { name: src, label: Imagen, widget: image, hint: "Usa .webp o .jpg de máximo 1600 px de ancho." }
+          - { name: alt, label: Descripción de la foto, widget: string, hint: "Describe lo que se ve (accesibilidad y buscadores)." }
+      - { name: caption, label: Pie de foto, widget: string, required: false }
+      - { name: featured, label: Nota principal de portada, widget: boolean, default: false, hint: "Si hay varias, se usa la más reciente." }
+      - { name: highlight, label: Destacado, widget: boolean, default: false }
+      - name: video
+        label: Video de YouTube (opcional)
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: youtube, label: ID del video, widget: string, required: false, hint: "Lo que va después de watch?v= o de /shorts/. Ej.: mwMJf8NRXfc" }
+          - { name: titulo, label: Título del bloque, widget: string, required: false }
+          - { name: pie, label: Pie del video, widget: string, required: false }
+          - { name: vertical, label: Video vertical (Short), widget: boolean, default: false }
+      - { name: body, label: Texto del artículo, widget: markdown, buttons: [bold, italic, link, heading-three, quote, bulleted-list, numbered-list], editor_components: [image] }

@@ -29,8 +29,11 @@ export const contact = {
   phone: '+58 414-000-0000',
   email: 'fundacioncolegioaplicacion.ue.@gmail.com',
   instagram: 'colegioaplicacionsc',
-  address: 'Palo Gordo, municipio Cárdenas, estado Táchira, Venezuela',
-  mapQuery: 'Colegio Aplicación Palo Gordo Táchira',
+  address: 'Toico, Palo Gordo, municipio Cárdenas, estado Táchira, Venezuela',
+  addressShort: 'Palo Gordo, municipio Cárdenas, Táchira',
+  // Google Maps encuentra el plantel con esta búsqueda (Plus Code RR65+75G).
+  mapQuery: 'Colegio Aplicación, Toico, Palo Gordo, Táchira',
+  plusCode: 'RR65+75G Palo Gordo, Táchira',
   hours: 'Lunes a viernes · 7:00 a. m. – 12:30 p. m.',
 };
 
@@ -47,39 +50,43 @@ export interface NavItem {
   id: string;
   label: string;
   href: string;
-  children?: { label: string; href: string; description?: string }[];
+  /** Ícono de Lucide (https://lucide.dev/icons) */
+  icon: string;
+  children?: { label: string; href: string; description?: string; icon: string }[];
 }
 
 export const nav: NavItem[] = [
-  { id: 'inicio', label: 'Inicio', href: '/' },
+  { id: 'inicio', label: 'Inicio', href: '/', icon: 'house' },
   {
     id: 'nosotros',
     label: 'Nosotros',
     href: '/nosotros',
+    icon: 'landmark',
     children: [
-      { label: 'Misión y visión', href: '/nosotros#mision', description: 'Lo que somos y hacia dónde vamos' },
-      { label: 'Historia', href: '/nosotros#historia', description: `Desde ${site.founded}, educando para servir` },
-      { label: 'Valores', href: '/nosotros#valores', description: 'Los principios que nos guían' },
-      { label: 'Staff', href: '/nosotros#staff', description: 'Directivos y docentes' },
-      { label: 'Instalaciones', href: '/nosotros#instalaciones', description: 'Espacios para aprender' },
+      { label: 'Misión y visión', href: '/nosotros#mision', description: 'Lo que somos y hacia dónde vamos', icon: 'flag' },
+      { label: 'Historia', href: '/nosotros#historia', description: `Desde ${site.founded}, educando para servir`, icon: 'history' },
+      { label: 'Valores', href: '/nosotros#valores', description: 'Los principios que nos guían', icon: 'heart-handshake' },
+      { label: 'Staff', href: '/nosotros#staff', description: 'Directivos y docentes', icon: 'users-round' },
+      { label: 'Instalaciones', href: '/nosotros#instalaciones', description: 'Espacios para aprender', icon: 'school' },
     ],
   },
   {
     id: 'programa',
     label: 'Programa',
     href: '/programa',
+    icon: 'graduation-cap',
     children: [
-      { label: 'Kinder', href: '/programa/kinder', description: 'Educación Inicial' },
-      { label: 'Primaria', href: '/programa/primaria', description: '1.º a 6.º grado' },
-      { label: 'Bachillerato', href: '/programa/bachillerato', description: 'Media General, 1.º a 5.º año' },
-      { label: 'Metodología', href: '/programa/metodologia', description: 'Cómo aprendemos' },
-      { label: 'Currículum', href: '/programa/curriculum', description: 'Áreas de formación' },
+      { label: 'Kinder', href: '/programa/kinder', description: 'Educación Inicial', icon: 'blocks' },
+      { label: 'Primaria', href: '/programa/primaria', description: '1.º a 6.º grado', icon: 'book-open' },
+      { label: 'Bachillerato', href: '/programa/bachillerato', description: 'Media General, 1.º a 5.º año', icon: 'graduation-cap' },
+      { label: 'Metodología', href: '/programa/metodologia', description: 'Cómo aprendemos', icon: 'lightbulb' },
+      { label: 'Currículum', href: '/programa/curriculum', description: 'Áreas de formación', icon: 'notebook-pen' },
     ],
   },
-  { id: 'admisiones', label: 'Admisiones', href: '/admisiones' },
-  { id: 'estudiantes', label: 'Estudiantes', href: '/estudiantes' },
-  { id: 'periodico', label: 'Periódico', href: '/periodico' },
-  { id: 'contacto', label: 'Contacto', href: '/contacto' },
+  { id: 'admisiones', label: 'Admisiones', href: '/admisiones', icon: 'file-check' },
+  { id: 'estudiantes', label: 'Estudiantes', href: '/estudiantes', icon: 'backpack' },
+  { id: 'periodico', label: 'Periódico', href: '/periodico', icon: 'newspaper' },
+  { id: 'contacto', label: 'Contacto', href: '/contacto', icon: 'map-pin' },
 ];
 
 // ───────── Nosotros ─────────
@@ -92,32 +99,40 @@ export const identity = {
 };
 
 export const values = [
-  { title: 'Fe y servicio', text: 'Valores cristianos que se traducen en compromiso con el prójimo y la comunidad.', icon: 'heart' },
-  { title: 'Excelencia', text: 'Rigor académico y mejora continua en cada aula y en cada proceso.', icon: 'star' },
-  { title: 'Respeto', text: 'Espacios donde cada voz es escuchada y cada diferencia es valorada.', icon: 'users' },
-  { title: 'Responsabilidad', text: 'Ética, honestidad y cumplimiento en lo que hacemos día a día.', icon: 'check' },
-  { title: 'Liderazgo', text: 'Estudiantes, docentes y directivos como agentes de cambio.', icon: 'bolt' },
-  { title: 'Pertenencia', text: 'Un segundo hogar construido entre escuela, familia y comunidad.', icon: 'home' },
+  { title: 'Fe y servicio', text: 'Valores cristianos que se traducen en compromiso con el prójimo y la comunidad.', icon: 'church' },
+  { title: 'Excelencia', text: 'Rigor académico y mejora continua en cada aula y en cada proceso.', icon: 'award' },
+  { title: 'Respeto', text: 'Espacios donde cada voz es escuchada y cada diferencia es valorada.', icon: 'users-round' },
+  { title: 'Responsabilidad', text: 'Ética, honestidad y cumplimiento en lo que hacemos día a día.', icon: 'shield-check' },
+  { title: 'Liderazgo', text: 'Estudiantes, docentes y directivos como agentes de cambio.', icon: 'trophy' },
+  { title: 'Pertenencia', text: 'Un segundo hogar construido entre escuela, familia y comunidad.', icon: 'house-heart' },
 ];
 
 export const timeline = [
   {
     year: '1970',
+    icon: 'church',
+    image: '/colegio.webp',
     title: 'Fundación',
     text: 'El 5 de noviembre, por iniciativa de monseñor Dr. Alejandro Fernández Feo, obispo de la Diócesis del Táchira, nace el plantel como centro de prácticas pedagógicas.',
   },
   {
-    year: 'Décadas de crecimiento',
+    year: 'Raíces',
+    icon: 'map-pin',
+    image: '/semblanza1.webp',
     title: 'Raíces en Palo Gordo',
     text: 'Consolidado en el municipio Cárdenas, el colegio se convierte en referente formativo para Palo Gordo y la región andina.',
   },
   {
-    year: 'Hoy',
+    year: 'Promo 44',
+    icon: 'graduation-cap',
+    image: '/graduacion3.webp',
     title: 'Educación Inicial, Primaria y Media General',
     text: 'Una comunidad que forma generaciones de profesionales y ciudadanos ejemplares, afiliada a la Asociación Venezolana de Educación Católica (AVEC).',
   },
   {
     year: '2026',
+    icon: 'sparkles',
+    image: '/cumple.webp',
     title: '56 aniversario y nuevo periódico digital',
     text: 'La Semana Aniversaria reúne a toda la familia aplicatense y nace Alcamunero en formato web.',
   },
@@ -160,9 +175,9 @@ export interface Program {
   grades?: string;
   image: string;
   imageAlt: string;
-  color: string; // clase tailwind de acento para la tarjeta
+  icon: string;
   intro: string;
-  highlights: { title: string; text: string }[];
+  highlights: { title: string; text: string; icon?: string }[];
   areas?: string[];
   kind: 'nivel' | 'enfoque';
 }
@@ -177,7 +192,7 @@ export const programs: Program[] = [
     grades: '1.º, 2.º y 3.er nivel',
     image: '/bienvenida2.webp',
     imageAlt: 'Niños de Educación Inicial con crayones gigantes en la ambientación de bienvenida',
-    color: 'from-cyan-400 to-sky-500',
+    icon: 'blocks',
     kind: 'nivel',
     intro:
       'Los primeros años son la base de todo. En Educación Inicial acompañamos a cada niño y niña en su desarrollo emocional, social, motor y cognitivo, en un ambiente cálido donde el juego es la principal herramienta de aprendizaje.',
@@ -198,7 +213,7 @@ export const programs: Program[] = [
     grades: '1.º a 6.º grado',
     image: '/prosecucion4.webp',
     imageAlt: 'Estudiantes de Primaria con medallas y diplomas en el acto de prosecución',
-    color: 'from-blue-500 to-indigo-600',
+    icon: 'book-open',
     kind: 'nivel',
     intro:
       'En Primaria consolidamos la lectura, la escritura y el razonamiento matemático, mientras despertamos la curiosidad científica, el amor por la cultura y los hábitos de estudio que acompañarán a nuestros estudiantes toda la vida.',
@@ -219,7 +234,7 @@ export const programs: Program[] = [
     grades: '1.º a 5.º año',
     image: '/graduacion3.webp',
     imageAlt: 'Graduandos de Media General en el escenario del Teatro de la UNET',
-    color: 'from-blue-800 to-blue-950',
+    icon: 'graduation-cap',
     kind: 'nivel',
     intro:
       'En Media General preparamos a los jóvenes para la universidad y para la vida: formación académica exigente, orientación vocacional y espacios para liderar, crear y servir. Al culminar, obtienen el título de Bachiller en Educación Media General.',
@@ -238,19 +253,19 @@ export const programs: Program[] = [
     tagline: 'El estudiante en el centro, el docente como guía.',
     image: '/semblanza2.webp',
     imageAlt: 'Docente acompañando a un estudiante en una exposición de ciencias',
-    color: 'from-cyan-500 to-blue-700',
+    icon: 'lightbulb',
     kind: 'enfoque',
     intro:
       'Nuestro modelo pedagógico combina la tradición formativa del colegio con metodologías activas. Buscamos que cada estudiante piense con criterio propio, trabaje en equipo y aplique lo aprendido a su realidad.',
     highlights: [
-      { title: 'Aprendizaje basado en proyectos', text: 'Proyectos de aula e institucionales que integran varias áreas.' },
-      { title: 'Pensamiento crítico', text: 'Preguntar, investigar, argumentar y decidir con fundamento.' },
-      { title: 'Liderazgo transformacional', text: 'Formar agentes de cambio con visión, compromiso e inclusión.' },
-      { title: 'Tecnología con propósito', text: 'Herramientas digitales al servicio del aprendizaje, no al revés.' },
-      { title: 'Atención a la diversidad', text: 'Flexibilidad y empatía ante distintos estilos y ritmos de aprendizaje.' },
-      { title: 'Evaluación continua', text: 'Seguimiento formativo que acompaña el progreso de cada estudiante.' },
-      { title: 'Escuela–familia–comunidad', text: 'Corresponsabilidad: los representantes son parte activa del proceso.' },
-      { title: 'Docentes en formación', text: 'Jornadas permanentes de actualización pedagógica y desarrollo emocional.' },
+      { title: 'Aprendizaje basado en proyectos', icon: 'puzzle', text: 'Proyectos de aula e institucionales que integran varias áreas.' },
+      { title: 'Pensamiento crítico', icon: 'brain', text: 'Preguntar, investigar, argumentar y decidir con fundamento.' },
+      { title: 'Liderazgo transformacional', icon: 'trophy', text: 'Formar agentes de cambio con visión, compromiso e inclusión.' },
+      { title: 'Tecnología con propósito', icon: 'laptop', text: 'Herramientas digitales al servicio del aprendizaje, no al revés.' },
+      { title: 'Atención a la diversidad', icon: 'hand-heart', text: 'Flexibilidad y empatía ante distintos estilos y ritmos de aprendizaje.' },
+      { title: 'Evaluación continua', icon: 'chart-line', text: 'Seguimiento formativo que acompaña el progreso de cada estudiante.' },
+      { title: 'Escuela–familia–comunidad', icon: 'house-heart', text: 'Corresponsabilidad: los representantes son parte activa del proceso.' },
+      { title: 'Docentes en formación', icon: 'presentation', text: 'Jornadas permanentes de actualización pedagógica y desarrollo emocional.' },
     ],
   },
   {
@@ -260,7 +275,7 @@ export const programs: Program[] = [
     tagline: 'Plan oficial del MPPE, enriquecido con identidad propia.',
     image: '/semblanza1.webp',
     imageAlt: 'Estudiantes con trajes folclóricos junto a una docente',
-    color: 'from-sky-400 to-blue-600',
+    icon: 'notebook-pen',
     kind: 'enfoque',
     intro:
       'Seguimos el currículo nacional del Ministerio del Poder Popular para la Educación (MPPE) en todos los niveles, y lo complementamos con formación en valores cristianos, inglés, arte, deporte y proyectos institucionales que definen la identidad aplicatense.',
@@ -279,11 +294,11 @@ export const approaches = programs.filter((p) => p.kind === 'enfoque');
 // ───────── Admisiones ─────────
 
 export const admissionSteps = [
-  { title: 'Contáctanos', text: 'Escríbenos por WhatsApp o visítanos para conocer cupos disponibles por nivel.' },
-  { title: 'Visita guiada', text: 'Conoce las instalaciones y conversa con la Coordinación.' },
-  { title: 'Entrega de recaudos', text: 'Consigna la documentación del estudiante y del representante.' },
-  { title: 'Entrevista', text: 'Encuentro con el estudiante y la familia; en algunos niveles, evaluación diagnóstica.' },
-  { title: 'Inscripción', text: 'Formalización del cupo y bienvenida a la familia aplicatense.' },
+  { title: 'Contáctanos', text: 'Escríbenos por WhatsApp o visítanos para conocer cupos disponibles por nivel.', icon: 'message-circle' },
+  { title: 'Visita guiada', text: 'Conoce las instalaciones y conversa con la Coordinación.', icon: 'school' },
+  { title: 'Entrega de recaudos', text: 'Consigna la documentación del estudiante y del representante.', icon: 'folder-check' },
+  { title: 'Entrevista', text: 'Encuentro con el estudiante y la familia; en algunos niveles, evaluación diagnóstica.', icon: 'notebook-pen' },
+  { title: 'Inscripción', text: 'Formalización del cupo y bienvenida a la familia aplicatense.', icon: 'badge-check' },
 ];
 
 export const requirements = [
@@ -333,11 +348,11 @@ export const studentEvents = [
 
 export const studentResources = [
   { title: 'Horario de clases', text: 'Consulta tu horario por sección', icon: 'clock', href: null },
-  { title: 'Calendario escolar', text: 'Lapsos, feriados y actividades', icon: 'calendar', href: '#agenda' },
-  { title: 'Normas de convivencia', text: 'Acuerdos para una sana convivencia', icon: 'shield', href: null },
+  { title: 'Calendario escolar', text: 'Lapsos, feriados y actividades', icon: 'calendar-days', href: '#agenda' },
+  { title: 'Normas de convivencia', text: 'Acuerdos para una sana convivencia', icon: 'shield-check', href: null },
   { title: 'Uniforme escolar', text: 'Diario y deportivo, por nivel', icon: 'shirt', href: null },
-  { title: 'Lista de útiles', text: 'Materiales por grado y año', icon: 'list', href: null },
-  { title: 'Periódico Alcamunero', text: 'Noticias de tu colegio', icon: 'news', href: '/periodico' },
+  { title: 'Lista de útiles', text: 'Materiales por grado y año', icon: 'list-checks', href: null },
+  { title: 'Periódico Alcamunero', text: 'Noticias de tu colegio', icon: 'newspaper', href: '/periodico' },
 ];
 
 export const studentLife = [

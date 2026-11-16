@@ -1,0 +1,289 @@
+---
+// src/layouts/SiteLayout.astro
+// Layout del sitio institucional. El periódico sigue usando Layout.astro.
+//   - Escritorio: cabecera horizontal (transparente sobre el hero en la portada).
+//   - Móvil: barra superior compacta + barra de pestañas inferior + hoja "Más" (estilo app).
+import '../styles/site.css';
+import Icon from '../components/site/Icon.astro';
+import SiteFooter from '../components/site/SiteFooter.astro';
+import { site, nav, contact, whatsappLink } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** id del menú activo: 'inicio' | 'nosotros' | 'programa' | ... */
+  active?: string;
+  /** 'overlay' = cabecera transparente sobre un hero oscuro (solo la portada) */
+  header?: 'overlay' | 'solid';
+  image?: string;
+  /** JSON-LD extra (FAQPage, BreadcrumbList…) */
+  schema?: Record<string, unknown>[];
+}
+
+const { title, description, active = 'inicio', header = 'solid', image = '/video/hero-poster.webp', schema = [] } = Astro.props;
+
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
+
+const schoolSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'School',
+  name: site.name,
+  alternateName: site.legalName,
+  slogan: site.motto,
+  foundingDate: '1970-11-05',
+  email: contact.email,
+  telephone: contact.phone,
+  logo: Astro.site ? new URL('/logo.png', Astro.site).href : '/logo.png',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Toico, Palo Gordo',
+    addressLocality: 'Cárdenas',
+    addressRegion: 'Táchira',
+    addressCountry: 'VE',
+  },
+  sameAs: [`https://www.instagram.com/${contact.instagram}`],
+};
+
+// Barra de pestañas (móvil): 4 accesos + "Más"
+const tabIds = ['inicio', 'nosotros', 'programa', 'admisiones'];
+const tabs = nav.filter((n) => tabIds.includes(n.id));
+const moreItems = nav.filter((n) => !tabIds.includes(n.id));
+const moreActive = moreItems.some((n) => n.id === active);
+const overlay = header === 'overlay';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta name="theme-color" content="#172554" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_VE" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <script type="application/ld+json" set:html={JSON.stringify(schoolSchema)} />
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+
+  <body class="has-tabbar">
+    <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] btn-light">Saltar al contenido</a>
+
+    <!-- ===== Móvil: barra superior estilo app ===== -->
+    <header class="lg:hidden sticky top-0 z-40 bg-ivory/90 backdrop-blur-md">
+      <div class="h-16 px-4 flex items-center gap-3">
+        <a href="/" class="flex items-center gap-3 min-w-0" aria-label="Inicio">
+          <span class="w-10 h-10 rounded-full bg-white grid place-items-center shadow-sm shrink-0"><img src="/logo.png" alt="" class="w-7 h-7 object-contain" /></span>
+          <span class="leading-tight min-w-0">
+            <span class="block font-extrabold text-[15px] text-navy truncate">Colegio Aplicación</span>
+            <span class="block text-[11px] text-gray-500">Palo Gordo · Táchira</span>
+          </span>
+        </a>
+        <a href={`https://www.instagram.com/${contact.instagram}`} target="_blank" rel="noopener" class="ml-auto w-10 h-10 rounded-full bg-white grid place-items-center text-navy shadow-sm press" aria-label="Instagram del colegio">
+          <Icon brand name="instagram" class="w-[18px] h-[18px]" />
+        </a>
+        <a href="/admisiones" class="w-10 h-10 rounded-full bg-navy grid place-items-center text-aqua press" aria-label="Admisiones">
+          <Icon name="file-check" class="w-5 h-5" />
+        </a>
+      </div>
+    </header>
+
+    <!-- ===== Escritorio: cabecera ===== -->
+    <header
+      id="desk-header"
+      class:list={[
+        'hidden lg:block z-40 transition-colors duration-300',
+        overlay ? 'absolute inset-x-0 top-0 text-white' : 'sticky top-0 bg-ivory/90 backdrop-blur-md text-navy border-b border-navy/5',
+      ]}
+    >
+      <div class="max-w-[1400px] mx-auto px-10 h-24 flex items-center gap-8">
+        <a href="/" class="flex items-center gap-3 shrink-0">
+          <span class:list={['rounded-full bg-ivory grid place-items-center', overlay ? 'w-16 h-16 ring-4 ring-white/20' : 'w-14 h-14 shadow-sm']}>
+            <img src="/logo.png" alt="Logo del Colegio Aplicación" class="w-[70%] object-contain" />
+          </span>
+          <span class="leading-tight">
+            <span class="block text-lg font-extrabold">Colegio Aplicación</span>
+            <span class:list={['block text-[13px] font-semibold', overlay ? 'text-aqua' : 'text-brand']}>Educando para servir · desde 1970</span>
+          </span>
+        </a>
+        <nav aria-label="Principal" class="ml-auto">
+          <ul class="flex items-center gap-1 text-[15px] font-semibold">
+            {nav.filter((n) => n.id !== 'inicio').map((item) => (
+              <li class="relative group">
+                <a
+                  href={item.href}
+                  aria-current={active === item.id ? 'page' : undefined}
+                  class:list={[
+                    'flex items-center gap-1 px-3.5 py-2 rounded-full transition-colors',
+                    active === item.id ? (overlay ? 'bg-white/15' : 'bg-navy text-white') : overlay ? 'hover:bg-white/10' : 'hover:bg-white',
+                  ]}
+                >
+                  {item.label}
+                  {item.children && <Icon name="chevron-down" class="w-4 h-4 transition-transform group-hover:rotate-180" />}
+                </a>
+                {item.children && (
+                  <div class="absolute left-1/2 -translate-x-1/2 top-full pt-3 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 transition-all duration-300">
+                    <ul class="w-80 card p-2 text-navy">
+                      {item.children.map((c) => (
+                        <li>
+                          <a href={c.href} class="group/item flex items-center gap-3 p-3 rounded-2xl hover:bg-ivory transition-colors">
+                            <span class="chip-icon w-10 h-10 bg-brand/10 text-brand"><Icon name={c.icon} class="w-5 h-5" /></span>
+                            <span class="flex-1">
+                              <span class="block text-sm font-bold">{c.label}</span>
+                              <span class="block text-xs text-gray-500 font-medium">{c.description}</span>
+                            </span>
+                            <Icon name="arrow-right" class="w-4 h-4 text-gray-300 group-hover/item:text-brand group-hover/item:translate-x-0.5 transition" />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <a href="/admisiones" class={overlay ? 'btn-aqua' : 'btn-primary'}><Icon name="file-check" class="w-5 h-5" />Inscríbete</a>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <SiteFooter />
+
+    <!-- ===== Móvil: barra de pestañas ===== -->
+    <nav aria-label="Navegación principal" class="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-gray-200 pb-[env(safe-area-inset-bottom)]">
+      <ul class="grid grid-cols-5 text-[10px] font-bold text-gray-500 max-w-lg mx-auto">
+        {tabs.map((t) => (
+          <li>
+            <a href={t.href} aria-current={active === t.id ? 'page' : undefined} class:list={['flex flex-col items-center gap-1 pt-2.5 pb-2 press', active === t.id && 'text-brand']}>
+              <span class:list={['h-8 w-14 rounded-full grid place-items-center transition-colors', active === t.id && 'bg-brand/10']}><Icon name={t.icon} class="w-[22px] h-[22px]" /></span>
+              {t.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <button type="button" id="more-toggle" aria-haspopup="dialog" aria-expanded="false" aria-controls="more-sheet" class:list={['w-full flex flex-col items-center gap-1 pt-2.5 pb-2 press', moreActive && 'text-brand']}>
+            <span class:list={['h-8 w-14 rounded-full grid place-items-center', moreActive && 'bg-brand/10']}><Icon name="layout-grid" class="w-[22px] h-[22px]" /></span>
+            Más
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- ===== Móvil: hoja "Más" ===== -->
+    <div id="more-sheet" class="sheet lg:hidden fixed inset-0 z-[60]" data-open="false" role="dialog" aria-modal="true" aria-label="Más secciones">
+      <div class="sheet-backdrop absolute inset-0 bg-deep/60" data-close></div>
+      <div class="sheet-panel absolute bottom-0 inset-x-0 bg-ivory rounded-t-[28px] p-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
+        <div class="mx-auto h-1.5 w-10 rounded-full bg-gray-300 mb-4"></div>
+        <div class="grid grid-cols-3 gap-3">
+          {moreItems.map((m) => (
+            <a href={m.href} class:list={['card !rounded-3xl p-4 flex flex-col items-center gap-2 text-center press', active === m.id && 'ring-2 ring-brand']}>
+              <span class="chip-icon w-12 h-12 bg-brand/10 text-brand rounded-2xl"><Icon name={m.icon} class="w-6 h-6" /></span>
+              <span class="text-xs font-bold text-navy">{m.label}</span>
+            </a>
+          ))}
+        </div>
+        <p class="mt-5 mb-2 px-1 text-xs font-bold text-gray-400 uppercase tracking-wider">Programa</p>
+        <div class="card !rounded-3xl divide-y divide-gray-100">
+          {nav.find((n) => n.id === 'programa')!.children!.map((c) => (
+            <a href={c.href} class="flex items-center gap-3 px-4 py-3 press">
+              <span class="text-brand"><Icon name={c.icon} class="w-5 h-5" /></span>
+              <span class="flex-1 text-sm font-semibold text-navy">{c.label}</span>
+              <Icon name="chevron-right" class="w-4 h-4 text-gray-300" />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Burbuja de WhatsApp ===== -->
+    <a
+      href={whatsappLink()}
+      target="_blank"
+      rel="noopener"
+      aria-label="Escríbenos por WhatsApp"
+      class="group fixed right-4 bottom-[92px] lg:right-7 lg:bottom-7 z-50 flex items-center gap-3"
+    >
+      <span class="hidden lg:block opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all bg-white text-navy text-sm font-bold px-4 py-2 rounded-full shadow-lg">¿Hablamos?</span>
+      <span class="pulse w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-whatsapp text-white grid place-items-center shadow-2xl press">
+        <Icon brand name="whatsapp" class="w-7 h-7" />
+      </span>
+    </a>
+
+    <script>
+      // ── Animaciones: aparición, cascadas, carga de fotos, contadores ──
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        }),
+        { threshold: 0.18 }
+      );
+      document.querySelectorAll('.reveal, [data-observe]').forEach((el) => io.observe(el));
+      document.querySelectorAll<HTMLElement>('[data-stagger]').forEach((g) => {
+        [...g.children].forEach((c, i) => ((c as HTMLElement).style.transitionDelay = `${i * 0.12}s`));
+        io.observe(g);
+      });
+
+      // Fotos: skeleton hasta que cargan y entran en pantalla; luego barrido de color
+      const lo = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          lo.unobserve(e.target);
+          const media = e.target.querySelector('img');
+          const done = () => setTimeout(() => e.target.classList.add('loaded'), reduce ? 0 : 150 + Math.random() * 350);
+          if (!media || media.complete) done();
+          else { media.addEventListener('load', done, { once: true }); media.addEventListener('error', done, { once: true }); }
+        }),
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.ld').forEach((el) => lo.observe(el));
+
+      // Contadores
+      const co = new IntersectionObserver(
+        (entries) => entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          co.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const end = Number(el.dataset.count);
+          if (reduce) { el.textContent = String(end); return; }
+          const t0 = performance.now();
+          const step = (t: number) => {
+            const p = Math.min((t - t0) / 1600, 1);
+            el.textContent = String(Math.round(end * (1 - Math.pow(1 - p, 3))));
+            if (p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+        }),
+        { threshold: 0.6 }
+      );
+      document.querySelectorAll('[data-count]').forEach((el) => co.observe(el));
+
+      // ── Hoja "Más" (móvil) ──
+      const sheet = document.getElementById('more-sheet');
+      const toggle = document.getElementById('more-toggle');
+      const setSheet = (open: boolean) => {
+        if (!sheet || !toggle) return;
+        sheet.dataset.open = String(open);
+        toggle.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+      };
+      toggle?.addEventListener('click', () => setSheet(sheet?.dataset.open !== 'true'));
+      sheet?.querySelectorAll('[data-close]').forEach((el) => el.addEventListener('click', () => setSheet(false)));
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setSheet(false); });
+      addEventListener('resize', () => { if (innerWidth >= 1024) setSheet(false); });
+    </script>
+  </body>
+</html>

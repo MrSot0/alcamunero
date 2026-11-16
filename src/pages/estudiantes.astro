@@ -1,0 +1,198 @@
+---
+// src/pages/estudiantes.astro — Portal de estudiantes con estética de app móvil.
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/site/Icon.astro';
+import { studentEvents, studentResources, studentLife } from '../data/site';
+import { sortedArticles, sections } from '../data/articles';
+
+const feed = sortedArticles.slice(0, 6);
+const tabs = [
+  { id: 'inicio', label: 'Inicio', icon: 'house' },
+  { id: 'agenda', label: 'Agenda', icon: 'calendar-days' },
+  { id: 'recursos', label: 'Recursos', icon: 'folder-open' },
+  { id: 'vida', label: 'Vida', icon: 'sparkles' },
+];
+const tagColor: Record<string, string> = {
+  Institucional: 'bg-navy text-aqua',
+  Lapso: 'bg-brand/10 text-brand',
+  Cultura: 'bg-aqua/20 text-aqua-ink',
+  Eventos: 'bg-amber-100 text-amber-700',
+};
+const resourceTint = ['bg-brand/10 text-brand', 'bg-aqua/20 text-aqua-ink', 'bg-amber-100 text-amber-600', 'bg-rose-100 text-rose-600', 'bg-emerald-100 text-emerald-600', 'bg-navy text-aqua'];
+---
+
+<SiteLayout
+  title="Portal de estudiantes · Colegio Aplicación"
+  description="Horarios, calendario escolar, normas, útiles, uniforme y noticias del Colegio Aplicación en un portal pensado para el teléfono."
+  active="estudiantes"
+>
+  <div class="max-w-6xl mx-auto px-4 lg:px-8 pt-2 lg:pt-8">
+    <!-- Pestañas segmentadas (sticky, estilo app) -->
+    <div class="sticky top-16 lg:top-24 z-30 -mx-4 px-4 py-3 bg-ivory/90 backdrop-blur-md">
+      <div role="tablist" aria-label="Portal de estudiantes" class="relative flex p-1 rounded-full bg-navy text-sm font-bold lg:max-w-lg">
+        <span id="tab-pill" class="absolute top-1 bottom-1 left-1 rounded-full bg-white shadow transition-all duration-300 ease-[cubic-bezier(.22,1,.36,1)]" aria-hidden="true"></span>
+        {tabs.map((t, i) => (
+          <button role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? 'true' : 'false'} data-tab={t.id} class="relative z-10 flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-full text-blue-200 aria-selected:text-navy transition-colors">
+            <Icon name={t.icon} class="w-4 h-4 hidden sm:block" />{t.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- ===== INICIO ===== -->
+    <section id="panel-inicio" role="tabpanel" aria-labelledby="tab-inicio" class="app-panel active">
+      <div class="lg:grid lg:grid-cols-12 lg:gap-8">
+        <div class="lg:col-span-8 space-y-6">
+          <div class="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-brand to-deep text-white p-6 lg:p-8">
+            <div class="absolute -right-12 -bottom-20 w-60 h-60 rounded-full border-[28px] border-white/10"></div>
+            <p class="text-sm text-blue-200" id="today">Hoy</p>
+            <h1 class="mt-1 text-3xl lg:text-4xl font-extrabold">¡Hola, aplicatense!</h1>
+            <p class="mt-1 text-sm text-blue-100">Todo lo de tu colegio, en un solo lugar.</p>
+            <div class="mt-5 flex items-center gap-3 bg-white/10 rounded-2xl p-3 max-w-sm">
+              <span class="chip-icon w-12 h-12 rounded-xl bg-aqua text-deep text-xs font-extrabold uppercase text-center leading-tight">{studentEvents[0].date}</span>
+              <div class="text-sm"><p class="font-bold">{studentEvents[0].title}</p><p class="text-xs text-blue-200">Próximo evento institucional</p></div>
+            </div>
+          </div>
+
+          <!-- Historias -->
+          <div class="flex gap-4 overflow-x-auto -mx-4 px-4 pb-1 [scrollbar-width:none]" data-stagger>
+            {studentLife.map((s, i) => (
+              <button type="button" data-tab-go="vida" class="flex flex-col items-center gap-1.5 shrink-0 press">
+                <span class:list={['w-[70px] h-[70px] rounded-full p-[3px]', i < 3 ? 'bg-gradient-to-tr from-aqua to-brand' : 'bg-gray-300']}>
+                  <img src={s.image} alt="" class="w-full h-full rounded-full object-cover border-[3px] border-ivory" loading="lazy" />
+                </span>
+                <span class="text-[11px] font-semibold max-w-[74px] truncate">{s.title}</span>
+              </button>
+            ))}
+          </div>
+
+          <!-- Accesos rápidos -->
+          <div>
+            <h2 class="font-extrabold text-navy mb-3">Accesos rápidos</h2>
+            <div class="grid grid-cols-3 lg:grid-cols-6 gap-3" data-stagger>
+              {studentResources.map((r, i) => (
+                <a href={r.href ?? '#recursos'} data-tab-go={r.href ? undefined : 'recursos'} class="card !rounded-[20px] p-3 flex flex-col items-center text-center gap-2 press">
+                  <span class:list={['chip-icon w-12 h-12 rounded-2xl', resourceTint[i]]}><Icon name={r.icon} class="w-6 h-6" /></span>
+                  <span class="text-xs font-bold leading-tight">{r.title.split(' ')[0] === 'Periódico' ? 'Periódico' : r.title.replace('Horario de clases', 'Horario').replace('Calendario escolar', 'Calendario').replace('Normas de convivencia', 'Normas').replace('Uniforme escolar', 'Uniforme').replace('Lista de útiles', 'Útiles')}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <!-- Novedades -->
+          <div>
+            <div class="flex items-center justify-between mb-3"><h2 class="font-extrabold text-navy">Novedades</h2><a href="/periodico" class="text-sm font-bold text-brand inline-flex items-center gap-1">Ver todo <Icon name="arrow-right" class="w-4 h-4" /></a></div>
+            <div class="space-y-3" data-stagger>
+              {feed.map((a, i) => i === 0 ? (
+                <a href={`/articulo/${a.slug}`} class="block card !rounded-[24px] overflow-hidden press">
+                  <div class="ld aspect-[16/9]"><img src={a.slides[0].src} alt={a.slides[0].alt} class="w-full h-full object-cover" loading="lazy" /></div>
+                  <div class="p-4"><span class="text-[10px] font-extrabold uppercase tracking-wider text-aqua-ink bg-aqua/15 px-2 py-0.5 rounded-full">{a.kicker}</span><h3 class="mt-2 font-extrabold leading-snug">{a.title}</h3><p class="text-xs text-gray-500 mt-1">{a.date}</p></div>
+                </a>
+              ) : (
+                <a href={`/articulo/${a.slug}`} class="card !rounded-[24px] p-3 flex gap-3 items-center press">
+                  <div class="ld w-20 h-20 rounded-2xl shrink-0"><img src={a.slides[0].src} alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+                  <div class="min-w-0"><span class="text-[10px] font-extrabold uppercase tracking-wider text-brand">{sections[a.section].label}</span><h3 class="font-bold text-sm leading-snug mt-0.5 line-clamp-2">{a.title}</h3><p class="text-xs text-gray-500 mt-0.5">{a.date}</p></div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <aside class="lg:col-span-4 mt-6 lg:mt-0 space-y-6">
+          <div class="card p-5">
+            <h2 class="font-extrabold text-navy flex items-center gap-2 mb-4"><span class="text-brand"><Icon name="calendar-days" /></span>Agenda del año</h2>
+            <ol class="space-y-3">
+              {studentEvents.slice(0, 4).map((e, i) => (
+                <li class="flex items-center gap-3"><span class:list={['chip-icon w-12 h-12 rounded-2xl text-xs font-extrabold uppercase', i === 0 ? 'bg-navy text-aqua' : 'bg-brand/10 text-brand']}>{e.date}</span><div class="text-sm"><p class="font-bold leading-snug">{e.title}</p><p class="text-xs text-gray-500">{e.tag}</p></div></li>
+              ))}
+            </ol>
+            <button type="button" data-tab-go="agenda" class="mt-4 text-sm font-bold text-brand inline-flex items-center gap-1">Ver agenda completa <Icon name="arrow-right" class="w-4 h-4" /></button>
+          </div>
+          <div class="rounded-[28px] bg-aqua text-deep p-5">
+            <span class="chip-icon w-11 h-11 rounded-xl bg-deep text-aqua"><Icon name="pen-line" /></span>
+            <p class="mt-3 text-xl font-extrabold leading-snug">¿Tienes una historia? Escribe para Alcamunero.</p>
+            <a href="/periodico" class="btn mt-4 bg-deep text-white !h-11">Quiero participar</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== AGENDA ===== -->
+    <section id="panel-agenda" role="tabpanel" aria-labelledby="tab-agenda" class="app-panel" hidden>
+      <h1 class="text-2xl lg:text-3xl font-extrabold text-navy">Agenda del año escolar</h1>
+      <p class="text-sm text-gray-500 mt-1">Fechas de referencia; las fechas exactas se confirman por circular.</p>
+      <ol class="mt-6 relative space-y-4 before:absolute before:left-[27px] before:top-4 before:bottom-4 before:w-[3px] before:rounded-full before:bg-brand/15">
+        {studentEvents.map((e, i) => (
+          <li class="relative flex items-center gap-4">
+            <span class:list={['relative chip-icon w-14 h-14 rounded-2xl text-xs font-extrabold uppercase ring-4 ring-ivory', i === 0 ? 'bg-navy text-aqua' : 'bg-white text-navy shadow-sm']}>{e.date}</span>
+            <div class="card !rounded-2xl flex-1 p-4">
+              <span class:list={['inline-block text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full', tagColor[e.tag] ?? 'bg-gray-100 text-gray-600']}>{e.tag}</span>
+              <p class="mt-1.5 font-bold text-navy leading-snug">{e.title}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- ===== RECURSOS ===== -->
+    <section id="panel-recursos" role="tabpanel" aria-labelledby="tab-recursos" class="app-panel" hidden>
+      <h1 class="text-2xl lg:text-3xl font-extrabold text-navy">Recursos</h1>
+      <p class="text-sm text-gray-500 mt-1">Documentos y guías para el día a día.</p>
+      <div class="mt-6 grid sm:grid-cols-2 gap-3">
+        {studentResources.map((r, i) => (
+          <a href={r.href ?? undefined} aria-disabled={r.href ? undefined : 'true'} class:list={['card !rounded-[24px] p-4 flex items-center gap-4', r.href ? 'press' : 'opacity-90']}>
+            <span class:list={['chip-icon w-14 h-14 rounded-2xl', resourceTint[i]]}><Icon name={r.icon} class="w-7 h-7" /></span>
+            <div class="flex-1"><p class="font-bold text-navy">{r.title}</p><p class="text-xs text-gray-500">{r.text}</p></div>
+            {r.href ? <Icon name="chevron-right" class="w-5 h-5 text-gray-400" /> : <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400 bg-gray-100 rounded-full px-2 py-1">Pronto</span>}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- ===== VIDA ESTUDIANTIL ===== -->
+    <section id="panel-vida" role="tabpanel" aria-labelledby="tab-vida" class="app-panel" hidden>
+      <h1 class="text-2xl lg:text-3xl font-extrabold text-navy">Vida estudiantil</h1>
+      <p class="text-sm text-gray-500 mt-1">Cultura, deporte, fe y comunidad más allá del aula.</p>
+      <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {studentLife.map((s) => (
+          <article class="relative overflow-hidden rounded-[24px] aspect-[4/5] text-white">
+            <div class="ld ld-dark absolute inset-0"><img src={s.image} alt={s.title} class="w-full h-full object-cover" loading="lazy" /></div>
+            <span class="absolute inset-0 bg-gradient-to-t from-deep via-deep/20 to-transparent z-[6]"></span>
+            <div class="absolute bottom-0 p-5 z-[7]"><h2 class="text-xl font-extrabold">{s.title}</h2><p class="text-sm text-blue-100 mt-1">{s.text}</p></div>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Pestañas con píldora deslizante; recuerda la pestaña en la URL (#agenda, #recursos, #vida)
+    const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-tab]')];
+    const pill = document.getElementById('tab-pill')!;
+    const movePill = (btn: HTMLElement) => { pill.style.left = `${btn.offsetLeft}px`; pill.style.width = `${btn.offsetWidth}px`; };
+    const select = (id: string, push = true) => {
+      const btn = buttons.find((b) => b.dataset.tab === id) ?? buttons[0];
+      buttons.forEach((b) => {
+        const on = b === btn;
+        b.setAttribute('aria-selected', String(on));
+        const panel = document.getElementById(`panel-${b.dataset.tab}`)!;
+        panel.hidden = !on;
+        panel.classList.toggle('active', on);
+      });
+      movePill(btn);
+      document.querySelectorAll(`#panel-${btn.dataset.tab} .ld`).forEach((el) => el.classList.add('loaded'));
+      if (push) history.replaceState(null, '', btn.dataset.tab === 'inicio' ? location.pathname : `#${btn.dataset.tab}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    buttons.forEach((b) => b.addEventListener('click', () => select(b.dataset.tab!)));
+    document.querySelectorAll<HTMLElement>('[data-tab-go]').forEach((el) => el.addEventListener('click', (e) => { e.preventDefault(); select(el.dataset.tabGo!); }));
+    addEventListener('resize', () => movePill(buttons.find((b) => b.getAttribute('aria-selected') === 'true')!));
+    select(location.hash.slice(1) || 'inicio', false);
+
+    const today = document.getElementById('today');
+    if (today) {
+      const f = new Date().toLocaleDateString('es-VE', { weekday: 'long', day: 'numeric', month: 'long' });
+      today.textContent = f.charAt(0).toUpperCase() + f.slice(1);
+    }
+  </script>
+</SiteLayout>

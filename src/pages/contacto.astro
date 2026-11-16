@@ -1,0 +1,80 @@
+---
+// src/pages/contacto.astro
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHeader from '../components/site/PageHeader.astro';
+import Icon from '../components/site/Icon.astro';
+import { contact, mapEmbed, mapLink, whatsappLink } from '../data/site';
+
+const cards = [
+  { icon: 'whatsapp', brand: true, title: 'WhatsApp', text: contact.phone, href: whatsappLink(), tint: 'bg-whatsapp text-white', ext: true },
+  { icon: 'mail', title: 'Correo', text: contact.email, href: `mailto:${contact.email}`, tint: 'bg-brand/10 text-brand' },
+  { icon: 'instagram', brand: true, title: 'Instagram', text: `@${contact.instagram}`, href: `https://www.instagram.com/${contact.instagram}`, tint: 'bg-rose-100 text-rose-600', ext: true },
+  { icon: 'clock', title: 'Horario', text: contact.hours, tint: 'bg-aqua/20 text-aqua-ink' },
+];
+---
+
+<SiteLayout
+  title="Contacto y ubicación · Colegio Aplicación, Palo Gordo"
+  description={`Dirección, WhatsApp, correo e Instagram del Colegio Aplicación. ${contact.address}.`}
+  active="contacto"
+>
+  <PageHeader
+    eyebrow="Contacto"
+    icon="map-pin"
+    title="Te esperamos"
+    highlight="en Palo Gordo"
+    intro={contact.address}
+    image="/serenata2.webp"
+    imageAlt="Familias reunidas en la cancha del colegio"
+    crumbs={[{ label: 'Contacto' }]}
+  />
+
+  <section class="container-site py-10 lg:py-16">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4" data-stagger>
+      {cards.map((c) => {
+        const Tag = c.href ? 'a' : 'div';
+        return (
+          <Tag href={c.href} target={c.ext ? '_blank' : undefined} rel={c.ext ? 'noopener' : undefined} class:list={['group card !rounded-[24px] p-4 lg:p-6', c.href && 'press']}>
+            <span class:list={['icon-pop chip-icon w-12 h-12 rounded-2xl', c.tint]}><Icon name={c.icon} brand={c.brand} class="w-6 h-6" /></span>
+            <p class="mt-4 font-extrabold text-navy">{c.title}</p>
+            <p class="text-xs lg:text-sm text-gray-500 break-words">{c.text}</p>
+          </Tag>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="px-3 lg:px-6">
+    <div class="max-w-[1300px] mx-auto grid lg:grid-cols-12 gap-4 lg:gap-6">
+      <div class="lg:col-span-8 rounded-[28px] lg:rounded-[44px] overflow-hidden bg-deep h-[360px] lg:h-[560px] reveal">
+        <iframe class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación del Colegio Aplicación en Google Maps" src={mapEmbed}></iframe>
+      </div>
+      <div class="lg:col-span-4 rounded-[28px] lg:rounded-[44px] bg-navy text-white p-6 lg:p-8 relative overflow-hidden">
+        <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-brand/60 blur-3xl"></div>
+        <p class="relative eyebrow text-aqua"><Icon name="message-circle" class="w-4 h-4" />Escríbenos</p>
+        <h2 class="relative mt-3 text-2xl font-extrabold">¿En qué te ayudamos?</h2>
+        <form id="contact-form" class="relative mt-5 space-y-3">
+          <label class="block"><span class="text-xs font-bold text-blue-200">Tu nombre</span>
+            <input name="nombre" required autocomplete="name" class="mt-1 w-full h-12 rounded-xl bg-white/10 border border-white/15 px-4 text-white placeholder:text-blue-200/60 focus:outline-none focus:border-aqua" placeholder="Nombre y apellido" /></label>
+          <label class="block"><span class="text-xs font-bold text-blue-200">Motivo</span>
+            <select name="motivo" class="mt-1 w-full h-12 rounded-xl bg-white/10 border border-white/15 px-4 text-white focus:outline-none focus:border-aqua [&>option]:text-navy">
+              <option>Información de admisiones</option><option>Agendar una visita</option><option>Control de estudios</option><option>Otro</option>
+            </select></label>
+          <label class="block"><span class="text-xs font-bold text-blue-200">Mensaje</span>
+            <textarea name="mensaje" rows="4" required class="mt-1 w-full rounded-xl bg-white/10 border border-white/15 px-4 py-3 text-white placeholder:text-blue-200/60 focus:outline-none focus:border-aqua" placeholder="Escribe tu consulta"></textarea></label>
+          <button type="submit" class="btn w-full !h-14 bg-whatsapp text-white"><Icon brand name="whatsapp" class="w-6 h-6" />Enviar por WhatsApp</button>
+        </form>
+        <a href={mapLink} target="_blank" rel="noopener" class="relative btn w-full mt-3 bg-white/10 text-white hover:bg-white/20"><Icon name="navigation" class="w-5 h-5" />Cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ phone: contact.whatsapp }}>
+    document.getElementById('contact-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const d = new FormData(e.currentTarget);
+      const msg = `Hola, soy ${d.get('nombre')}. Motivo: ${d.get('motivo')}.\n${d.get('mensaje')}`;
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    });
+  </script>
+</SiteLayout>

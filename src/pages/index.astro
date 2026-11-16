@@ -1,0 +1,374 @@
+---
+// src/pages/index.astro — Portada del sitio institucional.
+// Resume cada sección y lleva a su página interna.
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Icon from '../components/site/Icon.astro';
+import { site, nav, levels, approaches, timeline, admissionSteps, studentEvents, contact, mapEmbed, mapLink, whatsappLink, yearsOfHistory } from '../data/site';
+import { sortedArticles, sections } from '../data/articles';
+
+const years = yearsOfHistory();
+const about = nav.find((n) => n.id === 'nosotros')!.children!.filter((c) => c.label !== 'Historia');
+const method = approaches.find((a) => a.slug === 'metodologia')!;
+const methodPhotos: Record<string, string> = {
+  'Aprendizaje basado en proyectos': '/semblanza2.webp',
+  'Pensamiento crítico': '/formacion3.webp',
+  'Liderazgo transformacional': '/liderazgo1.webp',
+  'Tecnología con propósito': '/tec.webp',
+  'Escuela–familia–comunidad': '/opinion.webp',
+};
+const methodItems = method.highlights.filter((h) => methodPhotos[h.title]);
+const tints = ['from-deep via-deep/30', 'from-brand via-brand/40', 'from-aqua-ink via-aqua-ink/40', 'from-navy via-navy/40', 'from-brand via-brand/40'];
+const levelStyle = [
+  { card: 'card', chip: 'bg-aqua/20 text-aqua-ink', sub: 'text-gray-500', body: 'text-gray-600', sweep: '#22d3ee', ld: '' },
+  { card: 'card', chip: 'bg-brand/10 text-brand', sub: 'text-gray-500', body: 'text-gray-600', sweep: '#2b54a8', ld: '' },
+  { card: 'bg-navy text-white rounded-[28px]', chip: 'bg-white/10 text-aqua', sub: 'text-blue-200', body: 'text-blue-100', sweep: '#22d3ee', ld: 'ld-dark' },
+];
+const steps = [admissionSteps[0], admissionSteps[1], { ...admissionSteps[2], title: 'Recaudos y entrevista', icon: 'notebook-pen' }, admissionSteps[4]];
+const news = sortedArticles.filter((a) => a.section !== 'opinion' && a.section !== 'editorial').slice(0, 3);
+const newsTint = ['from-deep/90 via-transparent', 'from-brand via-brand/40', 'from-aqua-ink via-aqua-ink/40'];
+---
+
+<SiteLayout
+  title="Colegio Aplicación · Kinder, Primaria y Bachillerato en Palo Gordo, Táchira"
+  description={`Colegio católico en Palo Gordo, Cárdenas. Kinder, Primaria y Bachillerato desde 1970. ${site.motto}. Conoce admisiones y agenda una visita.`}
+  active="inicio"
+  header="overlay"
+>
+  <!-- ============ HERO VIDEO ============ -->
+  <section class="px-4 lg:px-0">
+    <div class="relative h-[64svh] min-h-[460px] lg:h-[100svh] lg:min-h-[640px] rounded-[28px] lg:rounded-none overflow-hidden text-white bg-deep">
+      <video autoplay muted loop playsinline preload="metadata" poster="/video/hero-poster.webp" class="absolute inset-0 w-full h-full object-cover" aria-hidden="true">
+        <source src="/video/hero.webm" type="video/webm" />
+        <source src="/video/hero.mp4" type="video/mp4" />
+      </video>
+      <div class="absolute inset-0 bg-gradient-to-b from-deep/70 via-deep/15 to-deep/90"></div>
+      <div class="absolute inset-x-0 bottom-0 p-6 lg:p-0 lg:bottom-24 lg:text-center">
+        <p class="eyebrow text-aqua fade-in"><Icon name="sparkles" class="w-4 h-4" />Kinder · Primaria · Bachillerato</p>
+        <h1 class="mt-3 font-extrabold leading-[1.02]">
+          <span class="line text-[2.4rem] lg:text-[min(5.6rem,6vw,11vh)]"><span>{site.motto}</span></span>
+          <span class="line text-[1.1rem] lg:text-[min(1.6rem,3vh)] font-medium text-white/85 mt-2"><span>Un colegio católico en Palo Gordo desde {site.founded}</span></span>
+        </h1>
+        <div class="mt-6 flex flex-wrap gap-3 lg:justify-center fade-in">
+          <a href={whatsappLink('Hola, quisiera agendar una visita al Colegio Aplicación.')} target="_blank" rel="noopener" class="btn-light"><Icon name="calendar-days" class="w-5 h-5" />Agenda una visita</a>
+          <a href="/nosotros" class="btn-ghost"><Icon name="landmark" class="w-5 h-5" />Conócenos</a>
+        </div>
+      </div>
+      <a href="#nosotros" class="hidden lg:flex absolute left-10 bottom-10 items-center gap-2 text-sm font-semibold text-white/80 hover:text-white fade-in"><Icon name="mouse" class="w-5 h-5" />Desliza para explorar</a>
+    </div>
+  </section>
+
+  <!-- ============ ACCESOS RÁPIDOS (móvil) ============ -->
+  <section class="lg:hidden px-4 mt-5" aria-label="Accesos rápidos">
+    <div class="grid grid-cols-4 gap-2" data-stagger>
+      {[
+        { label: 'Admisiones', icon: 'file-check', href: '/admisiones', dark: true },
+        { label: 'Estudiantes', icon: 'backpack', href: '/estudiantes' },
+        { label: 'Periódico', icon: 'newspaper', href: '/periodico' },
+        { label: 'Ubicación', icon: 'map-pin', href: '/contacto' },
+      ].map((q) => (
+        <a href={q.href} class="press flex flex-col items-center gap-2 text-center">
+          <span class:list={['chip-icon w-14 h-14 rounded-2xl', q.dark ? 'bg-navy text-aqua' : 'bg-white text-brand shadow-sm']}><Icon name={q.icon} class="w-6 h-6" /></span>
+          <span class="text-[11px] font-bold">{q.label}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ NOSOTROS ============ -->
+  <section id="nosotros" class="container-site pt-12 pb-10 lg:py-28 grid lg:grid-cols-12 gap-8 lg:gap-14 items-center scroll-mt-24">
+    <div class="lg:col-span-5 relative">
+      <div class="ld rounded-[28px] lg:rounded-[40px] aspect-[4/3] lg:aspect-[4/5]" style="--sweep:#2b54a8">
+        <img src="/equipo.webp" alt="Equipo directivo y docente del Colegio Aplicación" class="w-full h-full object-cover" loading="lazy" />
+      </div>
+      <div class="float absolute -bottom-5 right-4 lg:-right-8 card !rounded-2xl px-4 py-3 flex items-center gap-3">
+        <span class="chip-icon w-11 h-11 bg-aqua/20 text-aqua-ink"><Icon name="church" class="w-6 h-6" /></span>
+        <span class="text-sm leading-tight"><b class="block text-navy">Colegio católico</b><span class="text-gray-500 text-xs">Afiliado a AVEC</span></span>
+      </div>
+    </div>
+    <div class="lg:col-span-7 pt-4 lg:pt-0">
+      <p class="eyebrow text-brand reveal"><Icon name="landmark" class="w-4 h-4" />Nosotros</p>
+      <h2 class="h-section mt-3 text-navy reveal">Formamos personas <span class="text-brand">que sirven a su comunidad</span></h2>
+      <p class="mt-4 lg:text-lg text-gray-600 leading-relaxed max-w-xl reveal">Fundado por iniciativa de la Diócesis del Táchira, somos una comunidad donde cada estudiante es conocido por su nombre y acompañado en lo académico, lo humano y la fe.</p>
+      <div class="mt-6 grid sm:grid-cols-2 gap-3" data-stagger>
+        {about.map((c) => (
+          <a href={c.href} class="group card !rounded-2xl flex items-center gap-3 p-4 press">
+            <span class="icon-pop chip-icon w-11 h-11 bg-brand/10 text-brand"><Icon name={c.icon} class="w-5 h-5" /></span>
+            <span class="flex-1"><b class="block text-sm">{c.label}</b><span class="text-xs text-gray-500">{c.description}</span></span>
+            <Icon name="chevron-right" class="w-5 h-5 text-gray-400 group-hover:translate-x-0.5 transition" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HISTORIA + cifras ============ -->
+  <section class="bg-white lg:rounded-[56px] lg:mx-6 py-12 lg:py-24">
+    <div class="container-site">
+      <div class="grid lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-6">
+          <p class="eyebrow text-brand reveal"><Icon name="history" class="w-4 h-4" />Nuestra historia</p>
+          <h2 class="h-section mt-3 text-navy reveal">Más de cinco décadas <span class="text-brand">educando en Palo Gordo</span></h2>
+        </div>
+        <div class="lg:col-span-6 grid grid-cols-2 lg:grid-cols-4 gap-3" data-stagger>
+          <div class="rounded-2xl bg-ivory p-4"><span class="text-brand"><Icon name="calendar-heart" /></span><p class="text-3xl font-extrabold text-navy mt-2" data-count={years}>{years}</p><p class="text-xs text-gray-500">años de historia</p></div>
+          <div class="rounded-2xl bg-ivory p-4"><span class="text-brand"><Icon name="graduation-cap" /></span><p class="text-3xl font-extrabold text-navy mt-2" data-count="44">44</p><p class="text-xs text-gray-500">promociones</p></div>
+          <div class="rounded-2xl bg-ivory p-4"><span class="text-brand"><Icon name="layers" /></span><p class="text-3xl font-extrabold text-navy mt-2" data-count="3">3</p><p class="text-xs text-gray-500">niveles educativos</p></div>
+          <div class="rounded-2xl bg-navy text-white p-4"><span class="text-aqua"><Icon name="award" /></span><p class="text-3xl font-extrabold mt-2">Top 8</p><p class="text-xs text-blue-200">promedios del Táchira</p></div>
+        </div>
+      </div>
+      <div class="relative mt-10 lg:mt-14 reveal">
+        <div class="hidden lg:block absolute left-0 right-0 top-[22px] h-[3px] bg-brand/15 rounded-full"><div class="grow-x h-full bg-gradient-to-r from-aqua to-brand rounded-full"></div></div>
+        <ol class="snap-row lg:grid-cols-4 lg:gap-6">
+          {timeline.map((t: any, i: number) => (
+            <li class="w-[78%] sm:w-[46%]">
+              <span class:list={['relative z-10 chip-icon w-11 h-11 rounded-full ring-8 ring-white', i === 0 ? 'bg-navy text-aqua' : i === timeline.length - 1 ? 'bg-aqua text-deep' : 'bg-brand text-white']}><Icon name={t.icon} class="w-5 h-5" /></span>
+              <div class="ld rounded-3xl aspect-[4/3] mt-4"><img src={t.image} alt={t.title} class="w-full h-full object-cover" loading="lazy" /></div>
+              <p class="text-2xl font-extrabold text-brand mt-3">{t.year}</p>
+              <p class="text-sm text-gray-600">{t.text}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <a href="/nosotros#historia" class="inline-flex items-center gap-2 mt-8 font-bold text-brand hover:gap-3 transition-all">Conoce nuestra historia <Icon name="arrow-right" /></a>
+    </div>
+  </section>
+
+  <!-- ============ PROGRAMA ============ -->
+  <section class="container-site py-12 lg:py-28">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="eyebrow text-brand reveal"><Icon name="book-open" class="w-4 h-4" />Programa académico</p>
+        <h2 class="h-section mt-3 text-navy reveal">De los 3 años <span class="text-brand">al título de bachiller</span></h2>
+      </div>
+      <a href="/programa" class="hidden lg:inline-flex items-center gap-2 font-bold text-brand hover:gap-3 transition-all shrink-0">Ver programa <Icon name="arrow-right" /></a>
+    </div>
+    <div class="snap-row lg:grid-cols-3 lg:gap-6 mt-8" data-stagger>
+      {levels.map((l, i) => (
+        <a href={`/programa/${l.slug}`} class:list={['group press w-[78%] sm:w-[46%] p-3', levelStyle[i].card]}>
+          <div class:list={['ld zoom rounded-[22px] aspect-[4/3]', levelStyle[i].ld]} style={`--sweep:${levelStyle[i].sweep}`}>
+            <img src={l.image} alt={l.imageAlt} class="w-full h-full object-cover" loading="lazy" />
+          </div>
+          <div class="p-3 lg:p-4">
+            <div class="flex items-center gap-3">
+              <span class:list={['icon-pop chip-icon w-11 h-11', levelStyle[i].chip]}><Icon name={l.icon} class="w-6 h-6" /></span>
+              <div><h3 class="font-extrabold text-xl">{l.label}</h3><p class:list={['text-xs', levelStyle[i].sub]}>{l.title} · {l.ages}</p></div>
+            </div>
+            <p class:list={['text-sm mt-3', levelStyle[i].body]}>{l.tagline}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+    <a href="/programa" class="lg:hidden inline-flex items-center gap-2 mt-6 font-bold text-brand">Ver programa completo <Icon name="arrow-right" /></a>
+  </section>
+
+  <!-- ============ METODOLOGÍA ============ -->
+  <section class="relative bg-deep text-white overflow-hidden rounded-[32px] lg:rounded-[56px] mx-3 lg:mx-6">
+    <div class="absolute -right-32 -top-32 w-[460px] h-[460px] rounded-full bg-brand/50 blur-3xl"></div>
+    <div class="absolute -left-20 bottom-0 w-80 h-80 rounded-full bg-aqua/20 blur-3xl"></div>
+    <div class="relative container-site py-12 lg:py-24">
+      <div class="grid lg:grid-cols-12 gap-4 lg:gap-6 items-end">
+        <div class="lg:col-span-7">
+          <p class="eyebrow text-aqua reveal"><Icon name="lightbulb" class="w-4 h-4" />Metodología</p>
+          <h2 class="h-section mt-3 reveal">Aprendemos haciendo, <span class="text-aqua">pensando y sirviendo</span></h2>
+        </div>
+        <p class="lg:col-span-5 text-blue-100/80 reveal">La tradición formativa del colegio unida a metodologías activas, para que cada estudiante piense con criterio propio.</p>
+      </div>
+
+      <!-- Escritorio: paneles que se expanden -->
+      <div class="accordion !hidden lg:!flex mt-12 reveal" data-accordion>
+        {methodItems.map((m, i) => (
+          <div class:list={['acc-item', i === 0 && 'on']} tabindex="0" role="button" aria-label={m.title}>
+            <img src={methodPhotos[m.title]} alt="" loading="lazy" />
+            <span class:list={['absolute inset-0 bg-gradient-to-t to-transparent', tints[i]]}></span>
+            <span class="acc-label absolute inset-x-0 bottom-6 flex flex-col items-center gap-2 font-bold text-sm text-center px-2">
+              <span class="w-12 h-12 rounded-full bg-white/15 backdrop-blur grid place-items-center"><Icon name={m.icon!} class="w-6 h-6" /></span>
+              {m.title.split(' ')[0]}
+            </span>
+            <div class="acc-txt absolute inset-x-0 bottom-0 p-8">
+              <span class="chip-icon w-12 h-12 rounded-2xl bg-aqua text-deep"><Icon name={m.icon!} class="w-6 h-6" /></span>
+              <h3 class="text-3xl font-extrabold mt-4">{m.title}</h3>
+              <p class="text-sm text-blue-100/90 mt-2 max-w-md">{m.text}</p>
+              <span class="block mt-5 h-[3px] bg-white/20 rounded-full overflow-hidden"><span class="acc-bar block h-full bg-aqua"></span></span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Móvil: carrusel -->
+      <div class="snap-row lg:!hidden mt-8" data-stagger>
+        {methodItems.map((m, i) => (
+          <article class="w-[72%] sm:w-[44%] relative rounded-[24px] overflow-hidden aspect-[3/4]">
+            <img src={methodPhotos[m.title]} alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <span class:list={['absolute inset-0 bg-gradient-to-t to-transparent', tints[i]]}></span>
+            <div class="absolute bottom-0 p-5">
+              <span class="chip-icon w-11 h-11 rounded-2xl bg-aqua text-deep"><Icon name={m.icon!} class="w-5 h-5" /></span>
+              <h3 class="text-xl font-extrabold mt-3">{m.title}</h3>
+              <p class="text-xs text-blue-100/90 mt-1">{m.text}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <a href="/programa/metodologia" class="inline-flex mt-8 lg:mt-10 items-center gap-2 font-bold text-aqua hover:gap-3 transition-all">Metodología y currículum <Icon name="arrow-right" /></a>
+    </div>
+  </section>
+
+  <!-- ============ ADMISIONES ============ -->
+  <section class="container-site py-12 lg:py-28">
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+      <div class="lg:col-span-4">
+        <p class="eyebrow text-brand reveal"><Icon name="file-check" class="w-4 h-4" />Admisiones</p>
+        <h2 class="h-section mt-3 text-navy reveal">Tu camino <span class="text-brand">empieza aquí</span></h2>
+        <p class="mt-4 text-gray-600 reveal">Cuatro pasos sencillos para unirte a la familia aplicatense. Te acompañamos en cada uno.</p>
+        <a href="/admisiones" class="btn-primary mt-6 reveal"><Icon name="list-checks" class="w-5 h-5" />Requisitos e inscripción</a>
+      </div>
+      <div class="lg:col-span-8" data-observe>
+        <div class="hidden md:block relative">
+          <svg viewBox="0 0 800 300" class="w-full overflow-visible" aria-hidden="true"><path class="path-draw" d="M60 220 C 170 40, 260 40, 300 150 S 460 280, 520 150 S 680 20, 740 90" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" /></svg>
+          {steps.map((s, i) => {
+            const pos = [['7.5%', '73%'], ['37.5%', '50%'], ['65%', '50%'], ['92.5%', '30%']][i];
+            const color = i === 0 ? 'bg-navy text-aqua' : i === 3 ? 'bg-aqua text-deep w-20 h-20' : 'bg-brand text-white';
+            return (
+              <div class="node absolute flex flex-col items-center gap-2" style={`left:${pos[0]};top:${pos[1]};transition-delay:${0.2 + i * 0.6}s`}>
+                <span class:list={['chip-icon rounded-full shadow-lg w-16 h-16', color]}><Icon name={s.icon} class="w-7 h-7" /></span>
+                <b class="text-sm text-navy whitespace-nowrap">{i + 1} · {s.title}</b>
+              </div>
+            );
+          })}
+        </div>
+        <ol class="md:hidden space-y-3" data-stagger>
+          {steps.map((s, i) => (
+            <li class="card !rounded-2xl flex items-center gap-4 p-3">
+              <span class:list={['chip-icon w-12 h-12', i === 0 ? 'bg-navy text-aqua' : i === 3 ? 'bg-aqua text-deep' : 'bg-brand text-white']}><Icon name={s.icon} class="w-6 h-6" /></span>
+              <div><p class="text-[11px] font-bold text-gray-400">PASO {i + 1}</p><b class="text-sm">{s.title}</b></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ESTUDIANTES ============ -->
+  <section class="px-3 lg:px-6">
+    <div class="relative max-w-[1300px] mx-auto rounded-[32px] lg:rounded-[56px] overflow-hidden bg-gradient-to-br from-brand via-[#23479a] to-deep text-white px-6 lg:px-16 pt-10 lg:pt-16 grid lg:grid-cols-12 gap-8 items-end">
+      <div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-aqua/30 blur-3xl"></div>
+      <div class="relative lg:col-span-6 lg:pb-20 self-center">
+        <p class="eyebrow text-aqua reveal"><Icon name="backpack" class="w-4 h-4" />Estudiantes</p>
+        <h2 class="h-section mt-3 reveal">Tu colegio, <span class="text-aqua">en tu bolsillo</span></h2>
+        <p class="mt-4 text-blue-100 max-w-md reveal">Horarios, calendario, normas, útiles y noticias en un portal pensado para tu teléfono.</p>
+        <div class="mt-5 flex flex-wrap gap-2 reveal">
+          {[['clock', 'Horarios'], ['calendar-days', 'Calendario'], ['shield-check', 'Normas'], ['shirt', 'Uniforme']].map(([ic, t]) => (
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold bg-white/10 rounded-full px-3 py-1.5"><Icon name={ic} class="w-4 h-4" />{t}</span>
+          ))}
+        </div>
+        <a href="/estudiantes" class="btn-light mt-6 reveal"><Icon name="smartphone" class="w-5 h-5" />Entrar al portal</a>
+      </div>
+      <div class="relative lg:col-span-6 flex justify-center" aria-hidden="true">
+        <span class="float absolute left-0 lg:left-4 top-8 bg-white text-navy rounded-2xl shadow-xl px-3 py-2.5 text-xs lg:text-sm font-bold flex items-center gap-2 z-10"><span class="chip-icon w-8 h-8 bg-aqua/20 text-aqua-ink"><Icon name="clock" class="w-4 h-4" /></span>Horario de hoy</span>
+        <span class="float float-2 absolute right-0 lg:right-2 top-36 bg-aqua text-deep rounded-2xl shadow-xl px-3 py-2.5 text-xs lg:text-sm font-bold z-10 flex items-center gap-2"><Icon name="calendar-heart" class="w-4 h-4" />{studentEvents[0].date.toUpperCase()} · Aniversario</span>
+        <span class="float float-3 absolute left-2 bottom-20 bg-white text-navy rounded-2xl shadow-xl px-3 py-2.5 text-xs lg:text-sm font-bold z-10 hidden sm:flex items-center gap-2"><Icon name="newspaper" class="w-4 h-4" />Nuevo en Alcamunero</span>
+        <div class="reveal w-[240px] lg:w-[300px] rounded-t-[40px] bg-[#0a0f1f] p-3 pb-0 shadow-2xl">
+          <div class="rounded-t-[30px] bg-slate-100 overflow-hidden h-[380px] lg:h-[470px] text-navy">
+            <div class="bg-navy text-white px-4 pt-6 pb-3">
+              <div class="mx-auto w-20 h-5 rounded-full bg-black/80 -mt-3 mb-3"></div>
+              <p class="font-extrabold">Estudiantes</p>
+              <div class="mt-2 flex p-1 rounded-full bg-blue-900/70 text-[10px] font-bold"><span class="flex-1 text-center py-1 rounded-full bg-white text-navy">Inicio</span><span class="flex-1 text-center py-1">Agenda</span><span class="flex-1 text-center py-1">Recursos</span></div>
+            </div>
+            <div class="p-3 space-y-3">
+              <div class="rounded-3xl bg-gradient-to-br from-brand to-deep text-white p-4"><p class="text-[10px] text-blue-200">Hoy</p><p class="font-extrabold">¡Hola, aplicatense!</p></div>
+              <div class="flex gap-2">
+                {['/cultura1.webp', '/deporte1.webp', '/cultura4.webp', '/serenata2.webp', '/reinas1.webp'].map((s, i) => (
+                  <img src={s} alt="" class:list={['w-10 h-10 rounded-full object-cover ring-2', i < 3 ? 'ring-aqua' : 'ring-gray-300']} loading="lazy" />
+                ))}
+              </div>
+              <div class="grid grid-cols-3 gap-2 text-[9px] font-bold text-center">
+                {[['clock', 'Horario'], ['calendar-days', 'Calendario'], ['shield-check', 'Normas'], ['list-checks', 'Útiles'], ['shirt', 'Uniforme']].map(([ic, t]) => (
+                  <span class="bg-white rounded-2xl py-2.5 flex flex-col items-center gap-1"><span class="text-brand"><Icon name={ic} class="w-4 h-4" /></span>{t}</span>
+                ))}
+                <span class="bg-navy text-white rounded-2xl py-2.5 flex flex-col items-center gap-1"><span class="text-aqua"><Icon name="newspaper" class="w-4 h-4" /></span>Periódico</span>
+              </div>
+              <div class="ld bg-white rounded-3xl overflow-hidden h-24"><img src="/frank1.webp" alt="" class="w-full h-full object-cover" loading="lazy" /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PERIÓDICO ============ -->
+  <section class="container-site py-12 lg:py-28">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="eyebrow text-brand reveal"><Icon name="newspaper" class="w-4 h-4" />Periódico Alcamunero</p>
+        <h2 class="h-section mt-3 text-navy reveal">Lo que pasa <span class="text-brand">en el colegio</span></h2>
+      </div>
+      <a href="/periodico" class="inline-flex items-center gap-1 font-bold text-brand text-sm lg:text-base shrink-0 hover:gap-2 transition-all">Ver todo <Icon name="arrow-right" /></a>
+    </div>
+    <div class="mt-8 grid lg:grid-cols-12 gap-6">
+      <div class="snap-row lg:col-span-8 lg:grid-cols-2 lg:gap-6" data-stagger>
+        {news.map((a, i) => (
+          <a href={`/articulo/${a.slug}`} class:list={['press w-[80%] sm:w-[46%] ld ld-dark zoom relative rounded-[28px] min-h-[300px]', i === 0 ? 'lg:row-span-2 lg:min-h-[420px]' : 'lg:min-h-0 lg:h-[198px]']} style={i === 1 ? '--sweep:#2b54a8' : undefined}>
+            <img src={a.slides[0].src} alt={a.slides[0].alt} class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
+            <span class:list={['absolute inset-0 bg-gradient-to-t z-[1]', newsTint[i]]}></span>
+            <span class="absolute left-5 right-5 bottom-5 text-white z-[3]">
+              <span class="inline-flex items-center gap-1 bg-aqua text-deep text-[11px] font-extrabold px-2.5 py-1 rounded-full">{sections[a.section].label}</span>
+              <span class:list={['font-extrabold block mt-2 leading-tight', i === 0 ? 'text-xl lg:text-2xl' : 'text-lg']}>{a.title.length > 90 ? a.kicker : a.title}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+      <div class="lg:col-span-4 card p-5 lg:p-6 reveal">
+        <p class="font-extrabold text-navy flex items-center gap-2"><span class="text-brand"><Icon name="calendar-days" /></span>Agenda del año</p>
+        <ol class="mt-4 space-y-4">
+          {studentEvents.slice(0, 4).map((e, i) => (
+            <li class="flex gap-4 items-center">
+              <span class:list={['w-14 h-14 shrink-0 rounded-2xl grid place-items-center text-center text-xs font-extrabold uppercase', i === 0 ? 'bg-navy text-aqua' : 'bg-brand/10 text-navy']}>{e.date}</span>
+              <div><p class="font-bold text-sm leading-snug">{e.title}</p><p class="text-xs text-gray-500 mt-0.5">{e.tag}</p></div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO + MAPA ============ -->
+  <section class="px-3 lg:px-6">
+    <div class="max-w-[1300px] mx-auto rounded-[32px] lg:rounded-[56px] bg-navy text-white overflow-hidden grid lg:grid-cols-12">
+      <div class="lg:col-span-5 p-6 lg:p-14">
+        <p class="eyebrow text-aqua reveal"><Icon name="map-pin" class="w-4 h-4" />Contacto</p>
+        <h2 class="h-section mt-3 reveal">Te esperamos <span class="text-aqua">en Palo Gordo</span></h2>
+        <ul class="mt-6 space-y-3" data-stagger>
+          <li class="flex gap-3 items-center"><span class="chip-icon w-11 h-11 bg-white/10 text-aqua"><Icon name="map-pin" /></span><span class="text-sm">{contact.addressShort}</span></li>
+          <li class="flex gap-3 items-center"><span class="chip-icon w-11 h-11 bg-white/10 text-aqua"><Icon name="clock" /></span><span class="text-sm">{contact.hours}</span></li>
+          <li class="flex gap-3 items-center"><span class="chip-icon w-11 h-11 bg-white/10 text-aqua"><Icon name="mail" /></span><span class="text-sm break-all">{contact.email}</span></li>
+          <li class="flex gap-3 items-center"><span class="chip-icon w-11 h-11 bg-white/10 text-aqua"><Icon brand name="instagram" class="w-[18px] h-[18px]" /></span><span class="text-sm">@{contact.instagram}</span></li>
+        </ul>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href={whatsappLink()} target="_blank" rel="noopener" class="pulse btn !h-14 bg-whatsapp text-white"><Icon brand name="whatsapp" class="w-6 h-6" />Escríbenos por WhatsApp</a>
+          <a href={mapLink} target="_blank" rel="noopener" class="btn !h-14 bg-white/10 text-white hover:bg-white/20"><Icon name="navigation" class="w-5 h-5" />Cómo llegar</a>
+        </div>
+      </div>
+      <div class="lg:col-span-7 p-3 lg:p-4">
+        <div class="rounded-[24px] lg:rounded-[44px] overflow-hidden h-[320px] lg:h-full lg:min-h-[480px] bg-deep">
+          <iframe class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación del Colegio Aplicación en Google Maps" src={mapEmbed}></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Metodología: rota sola cada 4 s; el cursor o el teclado la controlan
+    document.querySelectorAll<HTMLElement>('[data-accordion]').forEach((acc) => {
+      const items = [...acc.querySelectorAll<HTMLElement>('.acc-item')];
+      let cur = 0;
+      let timer: number | undefined;
+      const show = (i: number) => { items.forEach((x, j) => x.classList.toggle('on', j === i)); cur = i; };
+      const auto = () => { clearInterval(timer); timer = window.setInterval(() => show((cur + 1) % items.length), 4000); };
+      items.forEach((it, i) => {
+        it.addEventListener('mouseenter', () => { show(i); auto(); });
+        it.addEventListener('focus', () => { show(i); auto(); });
+        it.addEventListener('click', () => { show(i); auto(); });
+      });
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) auto();
+    });
+  </script>
+</SiteLayout>

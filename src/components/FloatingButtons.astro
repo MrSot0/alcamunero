@@ -1,5 +1,7 @@
 ---
 // src/components/FloatingButtons.astro
+import Icon from './site/Icon.astro';
+import { whatsappLink } from '../data/site';
 ---
 
 <div class="fixed bottom-24 lg:bottom-6 right-4 lg:right-6 z-40 flex flex-col gap-3">
@@ -17,6 +19,17 @@
     Volver arriba
   </span>
 </button>
+
+{/* Burbuja de WhatsApp (la misma del sitio institucional) */}
+<a
+  href={whatsappLink('Hola, vengo del periódico Alcamunero.')}
+  target="_blank"
+  rel="noopener"
+  aria-label="Escríbenos por WhatsApp"
+  class="flex items-center justify-center w-12 h-12 rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 active:scale-95"
+>
+  <Icon brand name="whatsapp" class="w-6 h-6" />
+</a>
 
 </div>
 

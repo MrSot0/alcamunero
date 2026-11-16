@@ -1,0 +1,42 @@
+---
+// src/components/site/Icon.astro
+// Íconos SVG en línea, leídos al compilar (cero JavaScript, cero CDN).
+//   <Icon name="graduation-cap" class="w-5 h-5" />          → Lucide (https://lucide.dev/icons)
+//   <Icon brand name="whatsapp" class="w-6 h-6" />          → Simple Icons (logos de marca)
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+interface Props {
+  name: string;
+  brand?: boolean;
+  class?: string;
+  /** Texto para lectores de pantalla; si no se da, el ícono es decorativo. */
+  label?: string;
+  strokeWidth?: number;
+}
+
+const { name, brand = false, class: className = 'w-5 h-5', label, strokeWidth = 1.9 } = Astro.props;
+
+const pkg = brand ? 'simple-icons' : 'lucide-static';
+const file = join(process.cwd(), 'node_modules', pkg, 'icons', `${name}.svg`);
+
+let svg: string;
+try {
+  svg = readFileSync(file, 'utf8');
+} catch {
+  throw new Error(`Ícono no encontrado: ${pkg}/icons/${name}.svg`);
+}
+
+const a11y = label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"';
+svg = svg
+  .replace(/<!--[\s\S]*?-->/g, '')
+  .replace(/\s(class|width|height)="[^"]*"/g, '')
+  .replace('stroke-width="2"', `stroke-width="${strokeWidth}"`)
+  .replace(
+    '<svg',
+    `<svg class="${className} shrink-0" ${brand ? 'fill="currentColor"' : ''} ${a11y} focusable="false"`
+  )
+  .trim();
+---
+
+<Fragment set:html={svg} />
