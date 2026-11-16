@@ -18,16 +18,18 @@ interface Props {
 const { eyebrow, icon, title, highlight, intro, image, imageAlt, crumbs = [] } = Astro.props;
 ---
 
-<section class="px-3 lg:px-6 pt-2 lg:pt-6">
-  <div class="relative max-w-[1400px] mx-auto rounded-[28px] lg:rounded-[48px] overflow-hidden bg-deep text-white min-h-[340px] lg:min-h-[440px] flex items-end">
+<section class="lg:px-6 lg:pt-6">
+  <div class="relative max-w-[1400px] mx-auto rounded-b-[36px] lg:rounded-[48px] overflow-hidden bg-deep text-white min-h-[400px] lg:min-h-[440px] flex items-end">
     <div class="ld ld-dark absolute inset-0" style="--sweep:#2b54a8">
       <img src={image} alt={imageAlt} class="w-full h-full object-cover" fetchpriority="high" />
     </div>
     <div class="absolute inset-0 bg-gradient-to-t from-deep via-deep/55 to-deep/10"></div>
     <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-brand/40 blur-3xl"></div>
-    <div class="relative w-full container-site !px-6 lg:!px-14 pb-8 lg:pb-14 pt-24">
+    <!-- Móvil: logo (no hay barra superior) -->
+    <a href="/" aria-label="Inicio" class="lg:hidden absolute left-5 top-[calc(1rem+env(safe-area-inset-top))] z-10 w-12 h-12 rounded-full bg-ivory grid place-items-center ring-4 ring-white/20 fade-in"><img src="/logo.png" alt="Logo del Colegio Aplicación" class="w-8 h-8 object-contain" /></a>
+    <div class="relative w-full container-site !px-6 lg:!px-14 pb-10 lg:pb-14 pt-24 text-center lg:text-left">
       {crumbs.length > 0 && (
-        <nav aria-label="Ruta" class="fade-in mb-4 flex flex-wrap items-center gap-1.5 text-xs font-semibold text-blue-100/80">
+        <nav aria-label="Ruta" class="hidden lg:flex fade-in mb-4 flex-wrap items-center gap-1.5 text-xs font-semibold text-blue-100/80">
           <a href="/" class="hover:text-aqua">Inicio</a>
           {crumbs.map((c) => (
             <>
@@ -38,11 +40,11 @@ const { eyebrow, icon, title, highlight, intro, image, imageAlt, crumbs = [] } =
         </nav>
       )}
       <p class="eyebrow text-aqua fade-in"><Icon name={icon} class="w-4 h-4" />{eyebrow}</p>
-      <h1 class="mt-3 font-extrabold text-[2.1rem] leading-[1.05] lg:text-6xl max-w-4xl">
+      <h1 class="mt-3 font-extrabold text-[2.1rem] leading-[1.05] lg:text-6xl max-w-4xl mx-auto lg:mx-0">
         <span class="line"><span>{title}</span></span>
         {highlight && <span class="line text-aqua"><span>{highlight}</span></span>}
       </h1>
-      {intro && <p class="fade-in mt-4 lg:text-lg text-blue-100/90 max-w-2xl leading-relaxed">{intro}</p>}
+      {intro && <p class="hidden lg:block fade-in mt-4 text-lg text-blue-100/90 max-w-2xl leading-relaxed">{intro}</p>}
       <slot />
     </div>
   </div>

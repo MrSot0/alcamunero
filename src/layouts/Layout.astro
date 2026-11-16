@@ -16,10 +16,14 @@ interface Props {
 
 const {
   title = "Alcamunero | Periódico Digital",
-  description = "Alcamunero - Periódico digital de San Cristóbal, Táchira, Venezuela",
+  description = "Alcamunero - Periódico digital del Colegio Aplicación, Palo Gordo, Táchira, Venezuela",
   active = 'inicio',
-  image,
+  image = '/og/og-default.jpg',
 } = Astro.props;
+
+// URLs absolutas para redes sociales (site definido en astro.config.mjs)
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
 ---
 
 <!doctype html>
@@ -31,7 +35,15 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    {image && <meta property="og:image" content={image} />}
+    <meta property="og:locale" content="es_VE" />
+    <meta property="og:site_name" content="Alcamunero · Colegio Aplicación" />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>

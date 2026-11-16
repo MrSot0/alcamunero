@@ -30,11 +30,12 @@ try {
 const a11y = label ? `role="img" aria-label="${label}"` : 'aria-hidden="true"';
 svg = svg
   .replace(/<!--[\s\S]*?-->/g, '')
-  .replace(/\s(class|width|height)="[^"]*"/g, '')
-  .replace('stroke-width="2"', `stroke-width="${strokeWidth}"`)
-  .replace(
-    '<svg',
-    `<svg class="${className} shrink-0" ${brand ? 'fill="currentColor"' : ''} ${a11y} focusable="false"`
+  // Solo en la etiqueta <svg> raíz: los <rect>/<circle> internos necesitan su width/height
+  .replace(/<svg\b[^>]*>/, (tag) =>
+    tag
+      .replace(/\s(class|width|height)="[^"]*"/g, '')
+      .replace('stroke-width="2"', `stroke-width="${strokeWidth}"`)
+      .replace('<svg', `<svg class="${className} shrink-0" ${brand ? 'fill="currentColor"' : ''} ${a11y} focusable="false"`)
   )
   .trim();
 ---
