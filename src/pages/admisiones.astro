@@ -38,14 +38,14 @@ const faqSchema = {
   <section class="container-site py-12 lg:py-20">
     <p class="eyebrow text-brand reveal"><Icon name="route" class="w-4 h-4" />Proceso</p>
     <h2 class="h-section mt-3 text-navy reveal">Cinco pasos <span class="text-brand">sencillos</span></h2>
-    <ol class="mt-8 grid lg:grid-cols-5 gap-3 lg:gap-4 relative" data-stagger>
+    <ol class="mt-8 grid grid-cols-2 lg:grid-cols-5 gap-3 lg:gap-4 relative" data-stagger>
       {admissionSteps.map((s, i) => (
-        <li class:list={['group relative rounded-[24px] p-5 flex lg:flex-col gap-4 lg:gap-0', i === admissionSteps.length - 1 ? 'bg-navy text-white' : 'card']}>
+        <li class:list={['group relative rounded-[24px] p-4 lg:p-5 flex flex-col items-center text-center lg:items-start lg:text-left', i === admissionSteps.length - 1 ? 'bg-navy text-white col-span-2 lg:col-span-1' : 'card']}>
           <span class:list={['icon-pop chip-icon w-12 h-12 rounded-2xl', i === admissionSteps.length - 1 ? 'bg-aqua text-deep' : 'bg-brand/10 text-brand']}><Icon name={s.icon} class="w-6 h-6" /></span>
-          <div class="lg:mt-5">
+          <div class="mt-3 lg:mt-5">
             <p class:list={['text-[11px] font-bold', i === admissionSteps.length - 1 ? 'text-aqua' : 'text-gray-400']}>PASO {i + 1}</p>
-            <h3 class="font-extrabold text-lg leading-tight">{s.title}</h3>
-            <p class:list={['mt-1 text-sm leading-relaxed', i === admissionSteps.length - 1 ? 'text-blue-100' : 'text-gray-600']}>{s.text}</p>
+            <h3 class="font-extrabold text-base lg:text-lg leading-tight">{s.title}</h3>
+            <p class:list={['hidden lg:block mt-1 text-sm leading-relaxed', i === admissionSteps.length - 1 ? 'text-blue-100' : 'text-gray-600']}>{s.text}</p>
           </div>
         </li>
       ))}
@@ -55,11 +55,11 @@ const faqSchema = {
   <!-- Requisitos (checklist marcable, se recuerda en este dispositivo) -->
   <section id="requisitos" class="px-3 lg:px-6 scroll-mt-24">
     <div class="max-w-[1300px] mx-auto rounded-[32px] lg:rounded-[56px] bg-white px-6 lg:px-14 py-10 lg:py-16 grid lg:grid-cols-12 gap-8">
-      <div class="lg:col-span-5">
+      <div class="lg:col-span-5 text-center lg:text-left">
         <p class="eyebrow text-brand reveal"><Icon name="folder-check" class="w-4 h-4" />Requisitos</p>
         <h2 class="h-section mt-3 text-navy reveal">Prepara tus <span class="text-brand">recaudos</span></h2>
-        <p class="mt-4 text-gray-600 reveal">Marca cada documento a medida que lo tengas listo. Los requisitos pueden variar según el nivel; confírmalos con Control de Estudios.</p>
-        <div class="mt-6 rounded-2xl bg-ivory p-4 reveal">
+        <p class="hidden lg:block mt-4 text-gray-600 reveal">Marca cada documento a medida que lo tengas listo. Los requisitos pueden variar según el nivel; confírmalos con Control de Estudios.</p>
+        <div class="mt-6 rounded-2xl bg-ivory p-4 text-left reveal">
           <div class="flex items-center justify-between text-sm font-bold text-navy"><span>Tu progreso</span><span id="req-count">0/{requirements.length}</span></div>
           <div class="mt-2 h-2.5 rounded-full bg-white overflow-hidden"><div id="req-bar" class="h-full w-0 rounded-full bg-gradient-to-r from-aqua to-brand transition-[width] duration-500"></div></div>
         </div>
@@ -81,12 +81,12 @@ const faqSchema = {
   <!-- Solicitud por WhatsApp + FAQ -->
   <section class="container-site py-12 lg:py-20 grid lg:grid-cols-12 gap-8 lg:gap-12">
     <div id="solicitud" class="lg:col-span-5 scroll-mt-24">
-      <div class="rounded-[32px] bg-navy text-white p-6 lg:p-8 relative overflow-hidden">
+      <div class="rounded-[32px] bg-navy text-white p-6 lg:p-8 relative overflow-hidden text-center lg:text-left">
         <div class="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-brand/60 blur-3xl"></div>
         <p class="relative eyebrow text-aqua"><Icon name="send" class="w-4 h-4" />Solicitud</p>
         <h2 class="relative mt-3 text-2xl lg:text-3xl font-extrabold">Pide información de cupos</h2>
         <p class="relative mt-2 text-sm text-blue-100">Completa los datos y te contactaremos por WhatsApp.</p>
-        <form id="adm-form" class="relative mt-6 space-y-3">
+        <form id="adm-form" class="relative mt-6 space-y-3 text-left">
           <label class="block"><span class="text-xs font-bold text-blue-200">Nombre del representante</span>
             <input name="rep" required autocomplete="name" class="mt-1 w-full h-12 rounded-xl bg-white/10 border border-white/15 px-4 text-white placeholder:text-blue-200/60 focus:outline-none focus:border-aqua" placeholder="Nombre y apellido" /></label>
           <label class="block"><span class="text-xs font-bold text-blue-200">Nombre del estudiante</span>
@@ -109,10 +109,10 @@ const faqSchema = {
       </div>
     </div>
 
-    <div class="lg:col-span-7">
+    <div class="lg:col-span-7 text-center lg:text-left">
       <p class="eyebrow text-brand reveal"><Icon name="message-circle-question" class="w-4 h-4" />Preguntas frecuentes</p>
       <h2 class="h-section mt-3 text-navy reveal">Resolvemos <span class="text-brand">tus dudas</span></h2>
-      <div class="mt-6 space-y-3" data-stagger>
+      <div class="mt-6 space-y-3 text-left" data-stagger>
         {faqs.map((f, i) => (
           <details class="group card !rounded-2xl" open={i === 0}>
             <summary class="flex items-center gap-3 p-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden">

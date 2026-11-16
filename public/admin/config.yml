@@ -16,7 +16,7 @@ backend:
     deleteMedia: "Periódico: eliminar imagen {{path}}"
 
 locale: es
-# site_url: https://TU-DOMINIO  ← agregar cuando el sitio tenga dominio
+site_url: https://alcamunero.vercel.app
 logo_url: /logo.png
 
 # Fotos que se suben desde el administrador

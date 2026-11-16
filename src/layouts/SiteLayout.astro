@@ -2,7 +2,7 @@
 // src/layouts/SiteLayout.astro
 // Layout del sitio institucional. El periódico sigue usando Layout.astro.
 //   - Escritorio: cabecera horizontal (transparente sobre el hero en la portada).
-//   - Móvil: barra superior compacta + barra de pestañas inferior + hoja "Más" (estilo app).
+//   - Móvil: sin barra superior; barra de pestañas inferior + hoja "Más" (estilo app).
 import '../styles/site.css';
 import Icon from '../components/site/Icon.astro';
 import SiteFooter from '../components/site/SiteFooter.astro';
@@ -20,7 +20,7 @@ interface Props {
   schema?: Record<string, unknown>[];
 }
 
-const { title, description, active = 'inicio', header = 'solid', image = '/video/hero-poster.webp', schema = [] } = Astro.props;
+const { title, description, active = 'inicio', header = 'solid', image = '/og/og-default.jpg', schema = [] } = Astro.props;
 
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const ogImage = Astro.site ? new URL(image, Astro.site).href : image;
@@ -67,8 +67,15 @@ const overlay = header === 'overlay';
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={`${site.name} · ${site.motto}`} />
+    {image === '/og/og-default.jpg' && <><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /></>}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="apple-touch-icon" href="/logo.png" />
     <script type="application/ld+json" set:html={JSON.stringify(schoolSchema)} />
@@ -77,25 +84,6 @@ const overlay = header === 'overlay';
 
   <body class="has-tabbar">
     <a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] btn-light">Saltar al contenido</a>
-
-    <!-- ===== Móvil: barra superior estilo app ===== -->
-    <header class="lg:hidden sticky top-0 z-40 bg-ivory/90 backdrop-blur-md">
-      <div class="h-16 px-4 flex items-center gap-3">
-        <a href="/" class="flex items-center gap-3 min-w-0" aria-label="Inicio">
-          <span class="w-10 h-10 rounded-full bg-white grid place-items-center shadow-sm shrink-0"><img src="/logo.png" alt="" class="w-7 h-7 object-contain" /></span>
-          <span class="leading-tight min-w-0">
-            <span class="block font-extrabold text-[15px] text-navy truncate">Colegio Aplicación</span>
-            <span class="block text-[11px] text-gray-500">Palo Gordo · Táchira</span>
-          </span>
-        </a>
-        <a href={`https://www.instagram.com/${contact.instagram}`} target="_blank" rel="noopener" class="ml-auto w-10 h-10 rounded-full bg-white grid place-items-center text-navy shadow-sm press" aria-label="Instagram del colegio">
-          <Icon brand name="instagram" class="w-[18px] h-[18px]" />
-        </a>
-        <a href="/admisiones" class="w-10 h-10 rounded-full bg-navy grid place-items-center text-aqua press" aria-label="Admisiones">
-          <Icon name="file-check" class="w-5 h-5" />
-        </a>
-      </div>
-    </header>
 
     <!-- ===== Escritorio: cabecera ===== -->
     <header
@@ -229,11 +217,11 @@ const overlay = header === 'overlay';
         (entries) => entries.forEach((e) => {
           if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
         }),
-        { threshold: 0.18 }
+        { threshold: 0.08 }
       );
       document.querySelectorAll('.reveal, [data-observe]').forEach((el) => io.observe(el));
       document.querySelectorAll<HTMLElement>('[data-stagger]').forEach((g) => {
-        [...g.children].forEach((c, i) => ((c as HTMLElement).style.transitionDelay = `${i * 0.12}s`));
+        [...g.children].forEach((c, i) => ((c as HTMLElement).style.transitionDelay = `${Math.min(i, 6) * 0.05}s`));
         io.observe(g);
       });
 
@@ -243,11 +231,11 @@ const overlay = header === 'overlay';
           if (!e.isIntersecting) return;
           lo.unobserve(e.target);
           const media = e.target.querySelector('img');
-          const done = () => setTimeout(() => e.target.classList.add('loaded'), reduce ? 0 : 150 + Math.random() * 350);
+          const done = () => e.target.classList.add('loaded');
           if (!media || media.complete) done();
           else { media.addEventListener('load', done, { once: true }); media.addEventListener('error', done, { once: true }); }
         }),
-        { threshold: 0.15 }
+        { threshold: 0.05, rootMargin: '0px 0px 10% 0px' }
       );
       document.querySelectorAll('.ld').forEach((el) => lo.observe(el));
 
@@ -261,13 +249,13 @@ const overlay = header === 'overlay';
           if (reduce) { el.textContent = String(end); return; }
           const t0 = performance.now();
           const step = (t: number) => {
-            const p = Math.min((t - t0) / 1600, 1);
+            const p = Math.min((t - t0) / 900, 1);
             el.textContent = String(Math.round(end * (1 - Math.pow(1 - p, 3))));
             if (p < 1) requestAnimationFrame(step);
           };
           requestAnimationFrame(step);
         }),
-        { threshold: 0.6 }
+        { threshold: 0.4 }
       );
       document.querySelectorAll('[data-count]').forEach((el) => co.observe(el));
 

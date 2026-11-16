@@ -34,9 +34,9 @@ const subnav = [
   />
 
   <!-- Subnavegación tipo chips (sticky en móvil, estilo app) -->
-  <nav aria-label="Secciones de Nosotros" class="sticky top-16 lg:top-24 z-30 bg-ivory/90 backdrop-blur-md mt-4">
+  <nav aria-label="Secciones de Nosotros" class="sticky top-0 lg:top-24 z-30 bg-ivory/90 backdrop-blur-md mt-2 lg:mt-4">
     <div class="container-site">
-      <ul class="flex gap-2 overflow-x-auto py-3 [scrollbar-width:none]">
+      <ul class="flex gap-2 overflow-x-auto py-3 px-5 -mx-5 lg:mx-0 lg:px-0 [scrollbar-width:none]">
         {subnav.map((s) => (
           <li><a href={s.href} class="press inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-4 py-2 text-sm font-semibold text-navy shadow-sm hover:bg-navy hover:text-white transition-colors"><Icon name={s.icon} class="w-4 h-4" />{s.label}</a></li>
         ))}
@@ -47,16 +47,16 @@ const subnav = [
   <!-- Misión y visión -->
   <section id="mision" class="container-site py-12 lg:py-20 scroll-mt-40">
     <div class="grid lg:grid-cols-2 gap-5" data-stagger>
-      <article class="card p-7 lg:p-10">
+      <article class="card p-7 lg:p-10 text-center lg:text-left flex flex-col items-center lg:items-start">
         <span class="chip-icon w-14 h-14 rounded-2xl bg-brand text-white"><Icon name="flag" class="w-7 h-7" /></span>
         <h2 class="mt-5 text-2xl lg:text-3xl font-extrabold text-navy">Misión</h2>
-        <p class="mt-3 text-gray-600 leading-relaxed lg:text-lg">{identity.mission}</p>
+        <p class="mt-3 text-gray-600 leading-relaxed text-[15px] lg:text-lg">{identity.mission}</p>
       </article>
-      <article class="rounded-[28px] p-7 lg:p-10 bg-navy text-white relative overflow-hidden">
+      <article class="rounded-[28px] p-7 lg:p-10 bg-navy text-white relative overflow-hidden text-center lg:text-left flex flex-col items-center lg:items-start">
         <div class="absolute -right-16 -bottom-16 w-56 h-56 rounded-full bg-aqua/20 blur-2xl"></div>
         <span class="relative chip-icon w-14 h-14 rounded-2xl bg-aqua text-deep"><Icon name="telescope" class="w-7 h-7" /></span>
         <h2 class="relative mt-5 text-2xl lg:text-3xl font-extrabold">Visión</h2>
-        <p class="relative mt-3 text-blue-100 leading-relaxed lg:text-lg">{identity.vision}</p>
+        <p class="relative mt-3 text-blue-100 leading-relaxed text-[15px] lg:text-lg">{identity.vision}</p>
       </article>
     </div>
   </section>
@@ -67,10 +67,10 @@ const subnav = [
     <h2 class="h-section mt-3 text-navy reveal">Lo que nos <span class="text-brand">mueve cada día</span></h2>
     <div class="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-5" data-stagger>
       {values.map((v, i) => (
-        <article class:list={['group rounded-[24px] p-5 lg:p-7', i === 0 ? 'bg-brand text-white' : 'card']}>
+        <article class:list={['group rounded-[24px] p-5 lg:p-7 text-center lg:text-left flex flex-col items-center lg:items-start', i === 0 ? 'bg-brand text-white' : 'card']}>
           <span class:list={['icon-pop chip-icon w-12 h-12 rounded-2xl', i === 0 ? 'bg-white/15 text-aqua' : 'bg-brand/10 text-brand']}><Icon name={v.icon} class="w-6 h-6" /></span>
           <h3 class:list={['mt-4 font-extrabold lg:text-xl', i === 0 ? '' : 'text-navy']}>{v.title}</h3>
-          <p class:list={['mt-1 text-xs lg:text-sm leading-relaxed', i === 0 ? 'text-blue-100' : 'text-gray-600']}>{v.text}</p>
+          <p class:list={['hidden lg:block mt-1 text-sm leading-relaxed', i === 0 ? 'text-blue-100' : 'text-gray-600']}>{v.text}</p>
         </article>
       ))}
     </div>
@@ -79,11 +79,11 @@ const subnav = [
   <!-- Historia + cifras -->
   <section id="historia" class="bg-white lg:rounded-[56px] lg:mx-6 py-12 lg:py-24 scroll-mt-40">
     <div class="container-site grid lg:grid-cols-12 gap-10">
-      <div class="lg:col-span-5 lg:sticky lg:top-44 self-start">
+      <div class="lg:col-span-5 lg:sticky lg:top-44 self-start text-center lg:text-left">
         <p class="eyebrow text-brand reveal"><Icon name="history" class="w-4 h-4" />Historia</p>
         <h2 class="h-section mt-3 text-navy reveal">{years} años <span class="text-brand">educando para servir</span></h2>
-        <p class="mt-4 text-gray-600 leading-relaxed reveal">Inaugurado el {site.foundedDate} por iniciativa de monseñor Dr. Alejandro Fernández Feo, obispo de la Diócesis del Táchira, el plantel nació como centro de prácticas pedagógicas y hoy es un referente formativo de la región andina.</p>
-        <div class="mt-6 grid grid-cols-2 gap-3" data-stagger>
+        <p class="hidden lg:block mt-4 text-gray-600 leading-relaxed reveal">Inaugurado el {site.foundedDate} por iniciativa de monseñor Dr. Alejandro Fernández Feo, obispo de la Diócesis del Táchira, el plantel nació como centro de prácticas pedagógicas y hoy es un referente formativo de la región andina.</p>
+        <div class="mt-6 grid grid-cols-2 gap-3 text-left" data-stagger>
           <div class="rounded-2xl bg-ivory p-4"><span class="text-brand"><Icon name="calendar-heart" /></span><p class="text-3xl font-extrabold text-navy mt-2" data-count={years}>{years}</p><p class="text-xs text-gray-500">años de historia</p></div>
           <div class="rounded-2xl bg-ivory p-4"><span class="text-brand"><Icon name="graduation-cap" /></span><p class="text-3xl font-extrabold text-navy mt-2" data-count="44">44</p><p class="text-xs text-gray-500">promociones de bachilleres</p></div>
           <div class="rounded-2xl bg-ivory p-4"><span class="text-brand"><Icon name="layers" /></span><p class="text-3xl font-extrabold text-navy mt-2" data-count="3">3</p><p class="text-xs text-gray-500">niveles educativos</p></div>
@@ -96,7 +96,7 @@ const subnav = [
             <span class:list={['absolute left-0 top-0 chip-icon w-11 h-11 rounded-full ring-8 ring-white', i === 0 ? 'bg-navy text-aqua' : 'bg-brand text-white']}><Icon name={t.icon} class="w-5 h-5" /></span>
             <p class="text-sm font-bold text-brand">{t.year}</p>
             <h3 class="text-xl lg:text-2xl font-extrabold text-navy mt-1">{t.title}</h3>
-            <p class="mt-2 text-gray-600 leading-relaxed">{t.text}</p>
+            <p class="mt-2 text-gray-600 leading-relaxed text-[15px] lg:text-base">{t.text}</p>
             <div class="ld mt-4 rounded-3xl aspect-[16/9]"><img src={t.image} alt={t.title} class="w-full h-full object-cover" loading="lazy" /></div>
           </li>
         ))}
@@ -110,8 +110,8 @@ const subnav = [
     <h2 class="h-section mt-3 text-navy reveal">Las personas <span class="text-brand">detrás de cada logro</span></h2>
     {groups.map((g) => (
       <div class="mt-10">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500 mb-4">{g}</h3>
-        <div class="snap-row lg:grid-cols-4 lg:gap-5" data-stagger>
+        <h3 class="text-sm font-bold uppercase tracking-wider text-gray-500 mb-4 text-center lg:text-left">{g}</h3>
+        <div class:list={['snap-row lg:grid-cols-4 lg:gap-5', staff.filter((p) => p.group === g).length === 1 && 'max-lg:justify-center']} data-stagger>
           {staff.filter((p) => p.group === g).map((p) => (
             <article class="w-[62%] sm:w-[38%] card p-3 text-center">
               {p.image ? (
@@ -141,7 +141,7 @@ const subnav = [
               <img src={f.image} alt={f.title} class="w-full h-full object-cover" loading="lazy" />
             </div>
             <h3 class="mt-3 font-extrabold text-lg">{f.title}</h3>
-            <p class="text-sm text-blue-100/80">{f.text}</p>
+            <p class="hidden lg:block text-sm text-blue-100/80">{f.text}</p>
           </article>
         ))}
       </div>
@@ -150,10 +150,10 @@ const subnav = [
 
   <!-- CTA -->
   <section class="container-site pt-12 lg:pt-20">
-    <div class="card p-7 lg:p-12 flex flex-col lg:flex-row lg:items-center gap-6">
+    <div class="card p-7 lg:p-12 flex flex-col lg:flex-row items-center gap-5 lg:gap-6 text-center lg:text-left">
       <span class="chip-icon w-16 h-16 rounded-2xl bg-aqua/20 text-aqua-ink"><Icon name="calendar-days" class="w-8 h-8" /></span>
-      <div class="flex-1"><h2 class="text-2xl lg:text-3xl font-extrabold text-navy">Ven a conocernos</h2><p class="text-gray-600 mt-1">Agenda una visita guiada y recorre el colegio con la Coordinación.</p></div>
-      <div class="flex flex-wrap gap-3"><a href={whatsappLink('Hola, quisiera agendar una visita al Colegio Aplicación.')} target="_blank" rel="noopener" class="btn-primary"><Icon brand name="whatsapp" class="w-5 h-5" />Agendar visita</a><a href="/admisiones" class="btn bg-ivory text-navy hover:bg-white"><Icon name="file-check" class="w-5 h-5" />Admisiones</a></div>
+      <div class="flex-1"><h2 class="text-2xl lg:text-3xl font-extrabold text-navy">Ven a conocernos</h2><p class="hidden lg:block text-gray-600 mt-1">Agenda una visita guiada y recorre el colegio con la Coordinación.</p></div>
+      <div class="flex flex-wrap justify-center gap-3"><a href={whatsappLink('Hola, quisiera agendar una visita al Colegio Aplicación.')} target="_blank" rel="noopener" class="btn-primary"><Icon brand name="whatsapp" class="w-5 h-5" />Agendar visita</a><a href="/admisiones" class="btn bg-ivory text-navy hover:bg-white"><Icon name="file-check" class="w-5 h-5" />Admisiones</a></div>
     </div>
   </section>
 </SiteLayout>
